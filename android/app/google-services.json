@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "559114867006",
+    "firebase_url": "https://learningwell-bbfcf.firebaseio.com",
+    "project_id": "learningwell-bbfcf",
+    "storage_bucket": "learningwell-bbfcf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559114867006:android:0cc8658f25635754addc6f",
+        "android_client_info": {
+          "package_name": "com.learning_well"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559114867006-gnk7balacr4mh3b4796svl2g2n9lfbh2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGBrIM4xSKlFbtnOEp5Tm3SVKrB7oN7aE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559114867006-gnk7balacr4mh3b4796svl2g2n9lfbh2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
