@@ -1,53 +1,69 @@
-import { connect } from "react-redux";
-import React, { Component } from "react";
-import {
-  Text,
-  View,
-  ScrollView,
-  ImageBackground,
-  TextInput,
-  TouchableOpacity
-} from "react-native";
-import styles from "./styles";
-import { Images, Metrics, Colors } from "../../theme";
-import { Actions } from "react-native-router-flux";
+import React from 'react';
+import {Text, View, ImageBackground, ScrollView} from 'react-native';
 
-class HomeScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+import styles from './styles';
 
-  render() {
-    return (
-      <View style={styles.mainContainer}>
-        <ImageBackground
-          source={Images.homeBackgroundImage}
-          resizeMode="auto"
-          resizeMode="cover"
-          style={[styles.container, { alignItems: "center" }]}
-        >
-          <Text
-            style={{
-              fontSize: Metrics.ratio(24),
-              color: Colors.darkStaleBlue,
-              fontWeight: "bold",
-              marginTop: Metrics.screenHeight * 0.04
-            }}
-          >
-            Home Screen
-          </Text>
-        </ImageBackground>
+import {Images} from '../../theme';
+import {Header, Card} from '../../components';
+
+const Home = () => {
+  const cardList = [
+    {
+      name: 'Announcement',
+      image: Images.announcementIcon,
+      onPress: '',
+    },
+    {
+      name: 'Subject',
+      image: Images.subjectIcon,
+      onPress: '',
+    },
+    {
+      name: 'Homework',
+      image: Images.homeworkIcon,
+      onPress: '',
+    },
+    {
+      name: 'Assigned Test',
+      image: Images.assignedTestIcon,
+      onPress: '',
+    },
+    {
+      name: 'Result',
+      image: Images.resultIcon,
+      onPress: '',
+    },
+    {
+      name: 'Feedback',
+      image: Images.feedbackIcon,
+      onPress: '',
+    },
+  ];
+
+  return (
+    <ImageBackground
+      source={Images.homeBackgroundImage2}
+      resizeMode={'cover'}
+      style={{...styles.container}}>
+      <Header
+        leftImage={Images.sideMenuIcon2}
+        leftBtnPress={() => {}}
+        rightImage={Images.logo}
+        rightImageStyle={styles.rightImageStyle}
+      />
+      <View style={{...styles.messageContainer}}>
+        <Text style={{...styles.messageText}}>{'Hello !'}</Text>
+        <Text style={{...styles.messageName}}>{'Shariq'}</Text>
       </View>
-    );
-  }
-}
+      <ScrollView>
+        <View style={{...styles.cardListContainer}}>
+          {cardList.map((val) => (
+            <Card image={val.image} name={val.name} onPress={() => {}} />
+          ))}
+        </View>
+      </ScrollView>
+    </ImageBackground>
+  );
+};
 
-const mapStateToProps = () => ({});
-
-const actions = {};
-
-export default connect(
-  mapStateToProps,
-  actions
-)(HomeScreen);
+export default Home;

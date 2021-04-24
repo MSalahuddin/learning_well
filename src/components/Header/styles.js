@@ -1,44 +1,38 @@
 // @flow
-import { StyleSheet, Platform } from "react-native";
-import { Colors, Metrics, Fonts } from "../../theme";
+import {StyleSheet} from 'react-native';
+
+import {Colors, Metrics} from '../../theme';
 
 export default StyleSheet.create({
   container: {
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 1
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.0,
-
-    elevation: 4,
-    backgroundColor: "#0d1c2f",
-    height: Metrics.screenHeight * 0.08,
-    flexDirection: "row"
+    paddingVertical: Metrics.ratio(16),
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  menuImage: {
-    width: Metrics.ratio(25),
-    height: Metrics.ratio(25)
+  leftImageContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: Metrics.ratio(12),
   },
-  TouchableMenu: {
-    width: Metrics.ratio(65),
-    height: Metrics.ratio(65)
-
-    // justifyContent: "center",
-    // alignItems: "center"
+  leftImageStyle: {
+    width: Metrics.ratio(30),
+    height: Metrics.ratio(30),
   },
-
-  headerText: {
-    fontWeight: Platform.OS === "ios" ? "bold" : "bold",
-
-    width:
-      Metrics.screenWidth - (Metrics.doubleBaseMargin + Metrics.baseMargin),
-    //textAlign: "center",
-    fontSize: Metrics.ratio(18),
-    fontFamily: Fonts.type.AvenirNextDemiBold,
-    color: "white",
-    paddingLeft: Metrics.ratio(80),
-    marginTop: Metrics.ratio(20)
-  }
+  headerTextContainerStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerTextStyle: {
+    fontSize: Metrics.ratio(24),
+    color: Colors.white,
+  },
+  rightImageContainerStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: Metrics.ratio(12),
+  },
+  rightImageStyle: {
+    width: Metrics.ratio(30),
+    height: Metrics.ratio(30),
+  },
 });

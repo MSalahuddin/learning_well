@@ -1,112 +1,90 @@
-  
-import { connect } from "react-redux";
-import React, { Component } from "react";
-import { Text, View, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
-import { Images, Metrics } from "../../theme";
-import PropTypes from "prop-types";
+import React from 'react';
+import PropTypes from 'prop-types';
+import {Text, View, Image, TouchableOpacity} from 'react-native';
 
-class Header extends Component {
-  static propTypes = {
-    //selectedTab: PropTypes.oneOf(["mycars", "addcar"]),
-    headerText: PropTypes.string,
-    leftIcon: PropTypes.string,
-    rightIcon: PropTypes.string,
-    leftBtnPress: PropTypes.func,
-    rightBtnPress: PropTypes.func,
-    leftIconStyle: PropTypes.object,
-    headerTextStyle: PropTypes.object,
-    rightIconStyle: PropTypes.object,
-    productQuantity: PropTypes.number,
-    itemQuantity: PropTypes.number
-  };
-  static defaultProps = {
-    headerText: "",
-    leftIcon: undefined,
-    rightIcon: undefined,
-    leftBtnPress: undefined,
-    leftIconStyle: undefined,
-    headerTextStyle: undefined,
-    rightIconStyle: undefined,
-    rightBtnPress: undefined,
-    productQuantity: undefined,
-    itemQuantity: undefined
-  };
-  render() {
-    const {
-      headerText,
-      leftIcon,
-      rightIcon,
-      leftBtnPress,
-      headerTextStyle,
-      rightIconStyle,
-      rightBtnPress,
-      itemQuantity
-    } = this.props;
+import styles from './styles';
 
-    return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          style={[
-            styles.TouchableMenu,
-            { justifyContent: "center", alignItems: "center" }
-          ]}
-          onPress={leftBtnPress}
-        >
-          <Image style={styles.menuImage} source={leftIcon} />
-        </TouchableOpacity>
+const Header = (props) => {
+  const {
+    headerText,
+    headerTextContainerStyle,
+    headerTextStyle,
+    leftImage,
+    leftImageContainerStyle,
+    leftImageStyle,
+    leftBtnPress,
+    rightImage,
+    rightImageContainerStyle,
+    rightImageStyle,
+    rightBtnPress,
+  } = props;
 
-        <Text style={[styles.headerText, headerTextStyle]}>{headerText}</Text>
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        disabled={!leftBtnPress}
+        style={{...styles.leftImageContainerStyle, ...leftImageContainerStyle}}
+        onPress={leftBtnPress}>
+        <Image
+          resizeMode={'contain'}
+          style={{...styles.leftImageStyle, ...leftImageStyle}}
+          source={leftImage}
+        />
+      </TouchableOpacity>
 
-        <TouchableOpacity
-          onPress={rightBtnPress}
-          style={[
-            styles.TouchableMenu,
-            rightIconStyle,
-            { marginTop: Metrics.ratio(20), marginLeft: Metrics.ratio(30) }
-          ]}
-        >
-          {itemQuantity && (
-            <View
-              style={{
-                width: Metrics.ratio(20),
-                height: Metrics.ratio(20),
-                backgroundColor: "green",
-                borderRadius: Metrics.ratio(5),
-                borderWidth: Metrics.ratio(2),
-                borderColor: "white",
-                justifyContent: "center",
-                alignItems: "center",
-                position: "absolute",
-                zIndex: 1,
-                marginLeft: Metrics.ratio(-13),
-                marginTop: Metrics.ratio(-10)
-              }}
-            >
-              <Text
-                style={{
-                  color: "white"
-                }}
-              >
-                {itemQuantity}
-              </Text>
-            </View>
-          )}
-
-          <Image style={styles.menuImage} source={rightIcon} />
-        </TouchableOpacity>
+      <View
+        style={{
+          ...styles.headerTextContainerStyle,
+          ...headerTextContainerStyle,
+        }}>
+        <Text style={{...styles.headerTextStyle, ...headerTextStyle}}>
+          {headerText}
+        </Text>
       </View>
-    );
-  }
-}
 
-// const mapStateToProps = () => ({});
+      <TouchableOpacity
+        disabled={!rightBtnPress}
+        style={{
+          ...styles.rightImageContainerStyle,
+          ...rightImageContainerStyle,
+        }}
+        onPress={rightBtnPress}>
+        <Image
+          resizeMode={'contain'}
+          style={{...styles.rightImageStyle, ...rightImageStyle}}
+          source={rightImage}
+        />
+      </TouchableOpacity>
+    </View>
+  );
+};
 
-// const actions = {};
+Header.defaultProps = {
+  headerText: '',
+  headerTextContainerStyle: {},
+  headerTextStyle: {},
+  leftImage: undefined,
+  leftImageContainerStyle: {},
+  leftImageStyle: {},
+  leftBtnPress: undefined,
+  rightImage: undefined,
+  rightImageContainerStyle: {},
+  rightImageStyle: {},
+  rightBtnPress: undefined,
+};
 
-// export default connect(
-//   mapStateToProps,
-//   actions
-// )(Empty);
+Header.propTypes = {
+  headerText: PropTypes.string,
+  headerTextContainerStyle: PropTypes.object,
+  headerTextStyle: PropTypes.object,
+  leftImage: PropTypes.string,
+  leftImageContainerStyle: PropTypes.object,
+  leftImageStyle: PropTypes.object,
+  leftBtnPress: PropTypes.func,
+  rightImage: PropTypes.string,
+  rightImageContainerStyle: PropTypes.object,
+  rightImageStyle: PropTypes.object,
+  rightBtnPress: PropTypes.func,
+};
 
 export default Header;
