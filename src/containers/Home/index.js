@@ -1,10 +1,10 @@
 import React from 'react';
-import {Text, View, ImageBackground, ScrollView} from 'react-native';
-
+import { Text, View, ImageBackground, ScrollView } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import styles from './styles';
 
-import {Images} from '../../theme';
-import {Header, Card} from '../../components';
+import { Images } from '../../theme';
+import { Header, Card } from '../../components';
 
 const Home = () => {
   const cardList = [
@@ -16,7 +16,7 @@ const Home = () => {
     {
       name: 'Subject',
       image: Images.subjectIcon,
-      onPress: '',
+      onPress: () => Actions.Subjects(),
     },
     {
       name: 'Homework',
@@ -44,21 +44,21 @@ const Home = () => {
     <ImageBackground
       source={Images.homeBackgroundImage2}
       resizeMode={'cover'}
-      style={{...styles.container}}>
+      style={{ ...styles.container }}>
       <Header
         leftImage={Images.sideMenuIcon2}
-        leftBtnPress={() => {}}
+        leftBtnPress={() => { }}
         rightImage={Images.logo}
         rightImageStyle={styles.rightImageStyle}
       />
-      <View style={{...styles.messageContainer}}>
-        <Text style={{...styles.messageText}}>{'Hello !'}</Text>
-        <Text style={{...styles.messageName}}>{'Shariq'}</Text>
+      <View style={{ ...styles.messageContainer }}>
+        <Text style={{ ...styles.messageText }}>{'Hello !'}</Text>
+        <Text style={{ ...styles.messageName }}>{'Shariq'}</Text>
       </View>
       <ScrollView>
-        <View style={{...styles.cardListContainer}}>
+        <View style={{ ...styles.cardListContainer }}>
           {cardList.map((val) => (
-            <Card image={val.image} name={val.name} onPress={() => {}} />
+            <Card image={val.image} name={val.name} onPress={val.onPress} />
           ))}
         </View>
       </ScrollView>

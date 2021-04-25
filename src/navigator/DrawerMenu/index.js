@@ -14,8 +14,8 @@ import {
 import Sidebar from "../../containers/Sidebar";
 import { TabButtonLeft, Header } from "../../components";
 import { Images, Metrics, Colors, Fonts } from "../../theme";
-import DashboardScreen from "../../containers/Dashboard"
-
+import Subjects from "../../containers/Dashboard"
+import Home from "../../containers/Home";
 // const mapStateToProps = state => {
 //   return {
 //     cartData: state.cart.data
@@ -58,14 +58,25 @@ class DrawerMenu {
             {/* ///////////////////////tab////////////////////////////////// */}
             <Scene
               hideNavBar
-              key="dashboardScreen"
+              key="Home"
               renderLeftButton={() => (
                 <TabButtonLeft
                   imagesArray={["menu"]}
                   actions={[Actions.drawerOpen]}
                 />
               )}
-              component={DashboardScreen}
+              component={Home}
+            />
+            <Scene
+              hideNavBar
+              key="Subjects"
+              renderLeftButton={() => (
+                <TabButtonLeft
+                  imagesArray={["menu"]}
+                  actions={[Actions.drawerOpen]}
+                />
+              )}
+              component={Subjects}
             />
           </Stack>
         </Scene>

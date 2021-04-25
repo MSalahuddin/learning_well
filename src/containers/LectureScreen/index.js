@@ -538,9 +538,6 @@ class LectureScreen extends Component {
           <TouchableOpacity
             onPress={() => {
               Actions.dashboard();
-              // this.props.navigation.navigate("dashboard", {
-              // screen: "dashboard"
-              //   })
             }}
             style={styles.backIcon}>
             <Image

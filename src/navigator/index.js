@@ -40,15 +40,14 @@ import ContactUsScreen from '../containers/ContactUs';
 import utils from "../util";
 function onBackPress() {
   const scene = Actions.currentScene;
-  console.log(Actions.currentScene, "kkkkkkkkkkkkkk");
-  if (scene === "dashboardScreen" || scene === "loginScreen") {
+  if (scene === "Home" || scene === "loginScreen") {
     utils.showYesNoMessage(
       "Confirm",
       "Are you sure you want to exit?",
       () => {
         BackHandler.exitApp();
       },
-      () => {}
+      () => { }
     );
     return true;
   } else {
@@ -57,11 +56,11 @@ function onBackPress() {
   }
 }
 
-const auth =  <Stack
-titleStyle={styles.title}
-headerStyle={styles.header}
-key="root"
-tintColor={Colors.primary}
+const auth = <Stack
+  titleStyle={styles.title}
+  headerStyle={styles.header}
+  key="root"
+  tintColor={Colors.primary}
 >
 
 </Stack>
@@ -74,7 +73,7 @@ const navigator = Actions.create(
   >
     {/* <Scene key="tour" component={CounterComponent} /> */}
     {/* {DrawerMenu.getDrawerMenu()} */}
-   
+
     <Scene
       tintColor="white"
       title={"LoginScreen"}
@@ -85,7 +84,7 @@ const navigator = Actions.create(
         <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
       )}
     />
-      <Scene
+    <Scene
       tintColor="white"
       title={"SignupScreen"}
       hideNavBar
@@ -115,8 +114,8 @@ const navigator = Actions.create(
         <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
       )}
     />
-   
-   <Scene
+
+    <Scene
       tintColor="white"
       title={"EditProfileScreen"}
       hideNavBar
@@ -126,7 +125,7 @@ const navigator = Actions.create(
         <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
       )}
     />
-   <Scene
+    <Scene
       tintColor="white"
       title={"ContactUsScreen"}
       hideNavBar
@@ -136,22 +135,22 @@ const navigator = Actions.create(
         <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
       )}
     />
-   
-    
-{DrawerMenu.getDrawerMenu()}
-  
+
+
+    {DrawerMenu.getDrawerMenu()}
+
     <Scene
-  tintColor="white"
-  title={"LectureScreen"}
-  hideNavBar
-  key="lectureScreen"
-  component={LectureScreen}
-  renderLeftButton={() => (
-    <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
-  )}
-/>
- 
-<Scene
+      tintColor="white"
+      title={"LectureScreen"}
+      hideNavBar
+      key="lectureScreen"
+      component={LectureScreen}
+      renderLeftButton={() => (
+        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+      )}
+    />
+
+    <Scene
       tintColor="white"
       title={"VideoPlayerScreen"}
       hideNavBar
@@ -161,7 +160,7 @@ const navigator = Actions.create(
         <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
       )}
     />
-  
+
 
 
 
