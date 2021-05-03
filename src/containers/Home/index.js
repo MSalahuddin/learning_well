@@ -6,7 +6,7 @@ import styles from './styles';
 import {Images} from '../../theme';
 import {Header, Card} from '../../components';
 
-const Home = () => {
+const Home = (props) => {
   const cardList = [
     {
       name: 'Announcement',
@@ -47,7 +47,7 @@ const Home = () => {
       style={{...styles.container}}>
       <Header
         leftImage={Images.sideMenuIcon2}
-        leftBtnPress={() => {}}
+        leftBtnPress={() => props.navigation.openDrawer()}
         rightImage={Images.logo}
         rightImageStyle={styles.rightImageStyle}
       />

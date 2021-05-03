@@ -42,8 +42,13 @@ const english_power = require('../assets/english_power.png');
 
 const videoThumbnail = require('../assets/videoThumbnail.jpg');
 const backArrowIcon = require('../assets/backArrow.png');
+const backArrowIcon2 = require('../assets/icons/backArrowIcon.png');
 const editIcon = require('../assets/edit_icon.png');
 const logo = require('../assets/logo.png');
+const contactUsIcon = require('../assets/icons/contactUsIcon.png');
+const mailIcon = require('../assets/icons/mailIcon.png');
+const webIcon = require('../assets/icons/webIcon.png');
+const facebookIcon = require('../assets/icons/facebookIcon.png');
 
 //edit profile
 
@@ -109,8 +114,13 @@ export default {
   // others
   videoThumbnail,
   backArrowIcon,
+  backArrowIcon2,
   editIcon,
   logo,
+  contactUsIcon,
+  mailIcon,
+  webIcon,
+  facebookIcon,
 
   //quiz
   quizBackground,

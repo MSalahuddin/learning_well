@@ -1,6 +1,6 @@
 // @flow
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import React, {Component} from 'react';
 import {
   Text,
   View,
@@ -12,11 +12,11 @@ import {
   AsyncStorage,
 } from 'react-native';
 import styles from './styles';
-import { Metrics, Colors, Images } from '../../theme';
+import {Metrics, Colors, Images} from '../../theme';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { request as get_books } from '../../actions/GetBooks';
-import { Actions } from 'react-native-router-flux';
-import { SpinnerLoader } from '../../components';
+import {request as get_books} from '../../actions/GetBooks';
+import {Actions} from 'react-native-router-flux';
+import {SpinnerLoader} from '../../components';
 import Util from '../../util';
 
 class Subjects extends Component {
@@ -45,7 +45,7 @@ class Subjects extends Component {
         nextProps.getBooks.data.code == 1
       ) {
         this.setState(
-          { book: nextProps.getBooks.data.book[0], isloading: false },
+          {book: nextProps.getBooks.data.book[0], isloading: false},
           () => {
             console.log(nextProps.getBooks, 'lllllllllllll');
             Actions.lectureScreen({
@@ -56,7 +56,7 @@ class Subjects extends Component {
           },
         );
       } else if (nextProps.getBooks.failure && !nextProps.getBooks.isFetching) {
-        this.setState({ isloading: false });
+        this.setState({isloading: false});
       }
     }
   }
@@ -67,7 +67,7 @@ class Subjects extends Component {
       let user = JSON.parse(value);
       console.log(user, 'uuuuuuuuuuser');
       if (value !== null) {
-        this.setState({ user: user });
+        this.setState({user: user});
       }
     } catch (e) {
       console.log(e);
@@ -75,14 +75,14 @@ class Subjects extends Component {
   };
 
   getBooks = (book, classid, bookname, backgroundImage) => {
-    const { user } = this.state;
+    const {user} = this.state;
 
     let accessToken =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTMsImVtYWlsIjoidGVzdHVzZXJAbWFzb2xvZ3kuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkOVJSbzhVZWRzYm9LMmRoMUkvLnlRLkNIYjd5akZkME5ieUt3R0VaUzJqU0FGR1VPZjA5MHEiLCJpYXQiOjE1ODg3MDc4NDV9.sdCXG0bJf7zeT5SsyNb1eL7ka6jA_NJJhkNN8khNrrA';
     //user && user.access_token; //login.data && login.data.data && login.data.data.access_token;
     let bookName = book;
     let classId = classid;
-    const payload = { accessToken, bookName, classId };
+    const payload = {accessToken, bookName, classId};
     this.setState({
       bookName: bookname,
       backgroundImage: backgroundImage,
@@ -91,18 +91,18 @@ class Subjects extends Component {
     if (Util.isConnected()) {
       this.props.get_books(payload);
     } else {
-      this.setState({ isloading: false });
+      this.setState({isloading: false});
       Alert.alert('Learningwell', 'Please Check Your Internet Connection!');
     }
   };
 
   renderOverlaySpinner = () => {
-    const { isloading } = this.state;
+    const {isloading} = this.state;
     return <SpinnerLoader isloading={isloading} />;
   };
 
   render() {
-    const { user } = this.state;
+    const {user} = this.state;
     let classId = user && user.class_id;
     return (
       <View style={styles.mainContainer}>
@@ -123,7 +123,7 @@ class Subjects extends Component {
               justifyContent: 'center',
               alignItems: 'center',
             }}
-            onPress={() => this.props.navigation.openDrawer()}>
+            onPress={() => Actions.pop()}>
             {/* <Icon
               style={{}}
               size={20}
@@ -131,7 +131,7 @@ class Subjects extends Component {
               name={"bars"}
             /> */}
             <Image
-              source={Images.sidemenuIcon}
+              source={Images.backArrowIcon}
               style={{
                 width: Metrics.ratio(40),
                 height: Metrics.ratio(40),
@@ -139,7 +139,7 @@ class Subjects extends Component {
               }}
             />
           </TouchableOpacity>
-          <View style={{ marginTop: Metrics.ratio(20) }}>
+          <View style={{marginTop: Metrics.ratio(20)}}>
             <Text
               style={{
                 color: 'black',
@@ -149,7 +149,7 @@ class Subjects extends Component {
               Welcome
             </Text>
             <View
-              style={{ flexDirection: 'row', width: Metrics.screenWidth * 0.43 }}>
+              style={{flexDirection: 'row', width: Metrics.screenWidth * 0.43}}>
               {user && (
                 <Text
                   style={{
@@ -488,14 +488,11 @@ class Subjects extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   login: state.login,
   getBooks: state.getBooks,
 });
 
-const actions = { get_books };
+const actions = {get_books};
 
-export default connect(
-  mapStateToProps,
-  actions,
-)(Subjects);
+export default connect(mapStateToProps, actions)(Subjects);

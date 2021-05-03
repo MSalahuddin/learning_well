@@ -1,51 +1,109 @@
 // @flow
-import { connect } from "react-redux";
-import React, { Component } from "react";
-import { Text, View, ImageBackground, Image, TouchableOpacity } from "react-native";
-import styles from "./styles";
-import { Metrics, Colors, Images } from "../../theme";
-import { Actions } from "react-native-router-flux";
+import React from 'react';
+import {Text, View, ImageBackground, Image, ScrollView} from 'react-native';
+import {Actions} from 'react-native-router-flux';
 
-class ContactUsScreen extends Component {
-  render() {
-    return (
-      <ImageBackground resizeMethod = 'auto' resizeMode ='stretch' source = {Images.contactus} style={styles.container}>
-        <TouchableOpacity
-            style={{
-              width: Metrics.ratio(40),
-              height: Metrics.ratio(40),
-              backgroundColor: "transparent",
-              borderRadius: 100,
-              elevation: 8,
-              marginTop: Metrics.ratio(25),
-              marginLeft: Metrics.ratio(10),
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-            activeOpacity = {1}
-            onPress={() => Actions.pop()}
-          >
-            {/* <Icon
-              style={{}}
-              size={20}
-              color={Colors.darkStaleBlue}
-              name={"bars"}
-            /> */}
-            <Image source = {Images.backArrowIcon}  
-            style={{
-              width: Metrics.ratio(40),
-              height: Metrics.ratio(40),
-              borderRadius: 100,
+import styles from './styles';
 
-            }}/>
-          </TouchableOpacity>
-      </ImageBackground>
-    );
-  }
-}
+import {Images} from '../../theme';
+import {Header} from '../../components';
 
-const mapStateToProps = () => ({});
+const ContactUs = () => {
+  return (
+    <ImageBackground
+      resizeMethod="auto"
+      resizeMode="stretch"
+      source={Images.homeBackgroundImage2}
+      style={styles.container}>
+      <Header
+        leftImage={Images.backArrowIcon2}
+        leftBtnPress={() => Actions.pop()}
+        rightImage={Images.contactUsIcon}
+        rightImageStyle={styles.rightImageStyle}
+      />
 
-const actions = {};
+      <ScrollView>
+        <Image
+          source={Images.logo}
+          resizeMode={'contain'}
+          style={{...styles.logo}}
+        />
 
-export default connect(mapStateToProps, actions)(ContactUsScreen);
+        <View style={{...styles.contentContainer}}>
+          <View>
+            <View style={{...styles.bodyItem}}>
+              <Text style={{...styles.officeCity}}>
+                Karachi Corporate Office
+              </Text>
+              <Text style={{...styles.officeAddress}}>
+                Bungalow # B-50, Block-1, Near Continental Bakery,
+                Gulistan-e-Jauhar, Karachi-75290
+              </Text>
+              <Text style={{...styles.officeNo}}>
+                Tel: 021-34662780 - 34662790, Cell: 0333-1209813
+              </Text>
+            </View>
+
+            <View style={{...styles.bodyItem}}>
+              <Text style={{...styles.officeCity}}>Lahore Office</Text>
+              <Text style={{...styles.officeAddress}}>
+                Main Walton Road, Kouray Stop, Lahore.
+              </Text>
+              <Text style={{...styles.officeNo}}>
+                Tel: 042-36626012, Cell: 0333-1209808 - 0321-4320166
+              </Text>
+            </View>
+
+            <View style={{...styles.bodyItem, borderBottomWidth: 0}}>
+              <Text style={{...styles.officeCity}}>Islamabad Office</Text>
+              <Text style={{...styles.officeAddress}}>
+                Plot # 32, Flat # 1, 1st Floor, Shangrela Plaza, Razzaq Valley,
+                Express Way Islamabad.
+              </Text>
+              <Text style={{...styles.officeNo}}>
+                Cell: 0300-5175171 - 0333-1209811
+              </Text>
+            </View>
+          </View>
+
+          <View style={{...styles.footer}}>
+            <View style={{...styles.footerItem}}>
+              <Image
+                source={Images.mailIcon}
+                resizeMode={'contain'}
+                style={{...styles.footerItemImage}}
+              />
+              <Text style={{...styles.footerItemText}}>
+                info@learningwell.pk
+              </Text>
+            </View>
+
+            <View style={{...styles.footerItem}}>
+              <Image
+                source={Images.webIcon}
+                resizeMode={'contain'}
+                style={{...styles.footerItemImage}}
+              />
+              <Text style={{...styles.footerItemText}}>
+                www.learningwell.pk
+              </Text>
+            </View>
+
+            <View style={{...styles.footerItem}}>
+              <Image
+                source={Images.facebookIcon}
+                resizeMode={'contain'}
+                style={{...styles.footerItemImage}}
+              />
+              <Text style={{...styles.footerItemText}}>
+                facebook.com/LearningWellOfficial
+              </Text>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </ImageBackground>
+  );
+};
+
+export default ContactUs;
