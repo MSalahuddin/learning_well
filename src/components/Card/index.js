@@ -12,11 +12,13 @@ const Card = (props) => {
       disabled={!onPress}
       style={{...styles.containerStyle, ...containerStyle}}
       onPress={onPress}>
-      <Image
-        resizeMode={'contain'}
-        style={{...styles.imageStyle, ...imageStyle}}
-        source={image}
-      />
+      {image && (
+        <Image
+          resizeMode={'contain'}
+          style={{...styles.imageStyle, ...imageStyle}}
+          source={image}
+        />
+      )}
       <Text style={{...styles.nameStyle, ...nameStyle}}>{name}</Text>
     </TouchableOpacity>
   );

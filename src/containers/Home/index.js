@@ -1,12 +1,32 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, ImageBackground, ScrollView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
+
 import styles from './styles';
 
 import {Images} from '../../theme';
 import {Header, Card} from '../../components';
 
 const Home = (props) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    getUserDetails();
+  }, []);
+
+  const getUserDetails = async () => {
+    try {
+      const _user = await AsyncStorage.getItem('@storage_Key');
+      if (_user !== null) {
+        let userParsed = JSON.parse(_user);
+        setUser(userParsed);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   const cardList = [
     {
       name: 'Announcement',
@@ -53,7 +73,7 @@ const Home = (props) => {
       />
       <View style={{...styles.messageContainer}}>
         <Text style={{...styles.messageText}}>{'Hello !'}</Text>
-        <Text style={{...styles.messageName}}>{'Shariq'}</Text>
+        <Text style={{...styles.messageName}}>{user?.fullname}</Text>
       </View>
       <ScrollView>
         <View style={{...styles.cardListContainer}}>

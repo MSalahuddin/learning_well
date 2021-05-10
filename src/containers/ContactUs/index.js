@@ -11,8 +11,7 @@ import {Header} from '../../components';
 const ContactUs = () => {
   return (
     <ImageBackground
-      resizeMethod="auto"
-      resizeMode="stretch"
+      resizeMode={'cover'}
       source={Images.homeBackgroundImage2}
       style={styles.container}>
       <Header
@@ -54,7 +53,12 @@ const ContactUs = () => {
               </Text>
             </View>
 
-            <View style={{...styles.bodyItem, borderBottomWidth: 0}}>
+            <View
+              // eslint-disable-next-line react-native/no-inline-styles
+              style={{
+                ...styles.bodyItem,
+                borderBottomWidth: 0,
+              }}>
               <Text style={{...styles.officeCity}}>Islamabad Office</Text>
               <Text style={{...styles.officeAddress}}>
                 Plot # 32, Flat # 1, 1st Floor, Shangrela Plaza, Razzaq Valley,

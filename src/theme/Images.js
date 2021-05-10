@@ -49,6 +49,8 @@ const contactUsIcon = require('../assets/icons/contactUsIcon.png');
 const mailIcon = require('../assets/icons/mailIcon.png');
 const webIcon = require('../assets/icons/webIcon.png');
 const facebookIcon = require('../assets/icons/facebookIcon.png');
+const subjectNavIcon = require('../assets/icons/subjectNavIcon.png');
+const moreIcon = require('../assets/icons/moreIcon.png');
 
 //edit profile
 
@@ -121,6 +123,8 @@ export default {
   mailIcon,
   webIcon,
   facebookIcon,
+  subjectNavIcon,
+  moreIcon,
 
   //quiz
   quizBackground,

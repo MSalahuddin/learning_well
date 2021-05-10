@@ -25,9 +25,9 @@ export default StyleSheet.create({
   imageStyle: {
     width: Metrics.ratio(65),
     height: Metrics.ratio(65),
+    marginBottom: Metrics.ratio(8),
   },
   nameStyle: {
     fontSize: Metrics.ratio(14),
-    marginTop: Metrics.ratio(8),
   },
 });

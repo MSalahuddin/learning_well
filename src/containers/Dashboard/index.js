@@ -2,21 +2,21 @@
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
 import {
-  Text,
   View,
   ScrollView,
-  Image,
-  FlatList,
-  TouchableOpacity,
   ImageBackground,
-  AsyncStorage,
+  Alert,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
-import styles from './styles';
-import {Metrics, Colors, Images} from '../../theme';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {request as get_books} from '../../actions/GetBooks';
+import AsyncStorage from '@react-native-community/async-storage';
 import {Actions} from 'react-native-router-flux';
-import {SpinnerLoader} from '../../components';
+
+import styles from './styles';
+
+import {Images} from '../../theme';
+import {request as get_books} from '../../actions/GetBooks';
+import {SpinnerLoader, Header, Card} from '../../components';
 import Util from '../../util';
 
 class Subjects extends Component {
@@ -42,7 +42,7 @@ class Subjects extends Component {
       if (
         !nextProps.getBooks.failure &&
         !nextProps.getBooks.isFetching &&
-        nextProps.getBooks.data.code == 1
+        nextProps.getBooks.data.code === 1
       ) {
         this.setState(
           {book: nextProps.getBooks.data.book[0], isloading: false},
@@ -75,7 +75,7 @@ class Subjects extends Component {
   };
 
   getBooks = (book, classid, bookname, backgroundImage) => {
-    const {user} = this.state;
+    // const {user} = this.state;
 
     let accessToken =
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTMsImVtYWlsIjoidGVzdHVzZXJAbWFzb2xvZ3kuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkOVJSbzhVZWRzYm9LMmRoMUkvLnlRLkNIYjd5akZkME5ieUt3R0VaUzJqU0FGR1VPZjA5MHEiLCJpYXQiOjE1ODg3MDc4NDV9.sdCXG0bJf7zeT5SsyNb1eL7ka6jA_NJJhkNN8khNrrA';
@@ -105,385 +105,127 @@ class Subjects extends Component {
     const {user} = this.state;
     let classId = user && user.class_id;
     return (
-      <View style={styles.mainContainer}>
-        <ImageBackground
-          source={Images.homeBackgroundImage}
-          resizeMode="auto"
-          resizeMode="stretch"
-          style={[styles.container]}>
-          <TouchableOpacity
-            style={{
-              width: Metrics.ratio(40),
-              height: Metrics.ratio(40),
-              backgroundColor: 'transparent',
-              borderRadius: 100,
-              elevation: 8,
-              marginTop: Metrics.ratio(30),
-              marginLeft: Metrics.ratio(15),
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => Actions.pop()}>
-            {/* <Icon
-              style={{}}
-              size={20}
-              color={Colors.darkStaleBlue}
-              name={"bars"}
-            /> */}
-            <Image
-              source={Images.backArrowIcon}
-              style={{
-                width: Metrics.ratio(40),
-                height: Metrics.ratio(40),
-                borderRadius: 100,
-              }}
-            />
-          </TouchableOpacity>
-          <View style={{marginTop: Metrics.ratio(20)}}>
-            <Text
-              style={{
-                color: 'black',
-                marginLeft: Metrics.ratio(15),
-                fontSize: Metrics.ratio(16),
-              }}>
-              Welcome
-            </Text>
-            <View
-              style={{flexDirection: 'row', width: Metrics.screenWidth * 0.43}}>
-              {user && (
-                <Text
-                  style={{
-                    color: 'black',
-                    marginLeft: Metrics.ratio(15),
-                    fontSize: Metrics.ratio(16),
-                    fontWeight: 'bold',
-                  }}>
-                  {user && user.fullname}
-                </Text>
-              )}
-            </View>
+      <ImageBackground
+        source={Images.homeBackgroundImage2}
+        resizeMode={'cover'}
+        style={[styles.container]}>
+        <Header
+          leftImage={Images.backArrowIcon2}
+          leftBtnPress={() => Actions.pop()}
+          rightImage={Images.subjectNavIcon}
+          rightImageStyle={styles.rightImageStyle}
+        />
+
+        <ScrollView>
+          <View style={{...styles.cardListContainer}}>
+            {user && user.mathstep ? (
+              <Card
+                name={'Mathematics'}
+                onPress={() =>
+                  this.getBooks(
+                    'Math',
+                    classId,
+                    'Mathematics',
+                    'mathScreenBackImage',
+                  )
+                }
+                containerStyle={styles.cardContainerStyle}
+              />
+            ) : null}
+
+            {user && user.ilmoadab ? (
+              <Card
+                name={'Urdu'}
+                onPress={() =>
+                  this.getBooks('urdu', classId, 'Urdu', 'urduScreenBackImage')
+                }
+                containerStyle={styles.cardContainerStyle}
+              />
+            ) : null}
+
+            {user && user.rightscience ? (
+              <Card
+                name={'Science'}
+                onPress={() =>
+                  this.getBooks(
+                    'Right Science',
+                    classId,
+                    'Right Science',
+                    'scienceScreenBackImage',
+                  )
+                }
+                containerStyle={styles.cardContainerStyle}
+              />
+            ) : null}
+
+            {user && user.myworld ? (
+              <Card
+                name={'Social Studies'}
+                onPress={() =>
+                  this.getBooks(
+                    'my world',
+                    classId,
+                    'Social Studies',
+                    'socialScreenBackImage',
+                  )
+                }
+                containerStyle={styles.cardContainerStyle}
+              />
+            ) : null}
+
+            {user && user.islamiate ? (
+              <Card
+                name={'Islamiat'}
+                onPress={() =>
+                  this.getBooks(
+                    'Islam',
+                    classId,
+                    'Islamiat',
+                    'islamiatScreenBackImage',
+                  )
+                }
+                containerStyle={styles.cardContainerStyle}
+              />
+            ) : null}
+
+            {user && user.english ? (
+              <Card
+                name={'English'}
+                onPress={() =>
+                  this.getBooks(
+                    'English',
+                    classId,
+                    'English',
+                    'englishScreenBackground',
+                  )
+                }
+                containerStyle={styles.cardContainerStyle}
+              />
+            ) : null}
+
+            {user && user.englishpower ? (
+              <Card
+                name={'English Power'}
+                onPress={() =>
+                  this.getBooks(
+                    'English Power',
+                    classId,
+                    'English Power',
+                    'englishScreenBackground',
+                  )
+                }
+                containerStyle={styles.cardContainerStyle}
+              />
+            ) : null}
           </View>
-          <ScrollView
-            style={{
-              width: Metrics.screenWidth,
-              marginTop: Metrics.ratio(45),
-              bottom: Metrics.ratio(30),
-            }}>
-            <View
-              style={{
-                width: Metrics.screenWidth * 0.9,
-                flexDirection: 'row',
-                marginLeft: Metrics.screenWidth * 0.04,
-                marginVertical: Metrics.screenWidth * 0.025,
-                marginTop: Metrics.ratio(80),
-              }}>
-              {/*  */}
-              {user && user.mathstep ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.getBooks(
-                      'Math',
-                      classId,
-                      'Mathematics',
-                      'mathScreenBackImage',
-                    );
-                  }}>
-                  <ImageBackground
-                    style={{
-                      width: Metrics.screenWidth * 0.45,
-                      height: Metrics.ratio(80),
-                      marginRight: Metrics.screenWidth * 0.025,
-                    }}
-                    source={Images.mathematicsBackground}
-                    resizeMode="auto"
-                    resizeMode="cover">
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontSize: Metrics.ratio(14),
-                        fontWeight: 'bold',
-                        marginTop: Metrics.ratio(30),
-                        marginLeft: Metrics.ratio(45),
-                        width: Metrics.ratio(100),
-                      }}>
-                      Mathematics
-                    </Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-              ) : null}
-              {user && user.ilmoadab ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.getBooks(
-                      'urdu',
-                      classId,
-                      'Urdu',
-                      'urduScreenBackImage',
-                    );
-                  }}>
-                  <ImageBackground
-                    style={{
-                      width: Metrics.screenWidth * 0.45,
-                      height: Metrics.ratio(80),
-                      marginRight: Metrics.screenWidth * 0.025,
-                      borderRadius: 10,
-                    }}
-                    source={Images.urduBackground}
-                    resizeMode="auto"
-                    resizeMode="cover">
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontSize: Metrics.ratio(14),
-                        fontWeight: 'bold',
-                        marginTop: Metrics.ratio(30),
-                        marginLeft: Metrics.ratio(45),
-                        width: Metrics.ratio(100),
-                      }}>
-                      Urdu
-                    </Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-              ) : null}
-            </View>
-            <View
-              style={{
-                width: Metrics.screenWidth * 0.9,
-                flexDirection: 'row',
-                marginLeft: Metrics.screenWidth * 0.04,
+        </ScrollView>
 
-                marginVertical: Metrics.screenWidth * 0.025,
-              }}>
-              {user && user.rightscience ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.getBooks(
-                      'Right Science',
-                      classId,
-                      'Right Science',
-                      'scienceScreenBackImage',
-                    );
-                  }}>
-                  <ImageBackground
-                    style={{
-                      width: Metrics.screenWidth * 0.45,
-                      height: Metrics.ratio(80),
-                      marginRight: Metrics.screenWidth * 0.025,
-                      borderRadius: 10,
-                    }}
-                    source={Images.right_science}
-                    resizeMode="auto"
-                    resizeMode="cover">
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontSize: Metrics.ratio(14),
-                        fontWeight: 'bold',
-                        marginTop: Metrics.ratio(30),
-                        marginLeft: Metrics.ratio(45),
-                        width: Metrics.ratio(100),
-                      }}>
-                      Science
-                    </Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-              ) : null}
-              {user && user.myworld ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.getBooks(
-                      'my world',
-                      classId,
-                      'Social Studies',
-                      'socialScreenBackImage',
-                    );
-                  }}>
-                  <ImageBackground
-                    style={{
-                      width: Metrics.screenWidth * 0.45,
-                      height: Metrics.ratio(80),
-                      marginRight: Metrics.screenWidth * 0.025,
-                      borderRadius: 10,
-                    }}
-                    source={Images.socialBackground}
-                    resizeMode="auto"
-                    resizeMode="cover">
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontSize: Metrics.ratio(14),
-                        fontWeight: 'bold',
-                        marginTop: Metrics.ratio(30),
-                        marginLeft: Metrics.ratio(45),
-                        width: Metrics.ratio(100),
-                      }}>
-                      Social Studies
-                    </Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-              ) : null}
-            </View>
-            <View
-              style={{
-                width: Metrics.screenWidth * 0.95,
-                flexDirection: 'row',
-                marginHorizontal: Metrics.ratio(15),
+        <TouchableOpacity style={{...styles.moreBtn}}>
+          <Image source={Images.moreIcon} style={{...styles.moreIcon}} />
+        </TouchableOpacity>
 
-                marginVertical: Metrics.screenWidth * 0.025,
-              }}>
-              {user && user.islamiate ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.getBooks(
-                      'Islam',
-                      classId,
-                      'Islamiat',
-                      'islamiatScreenBackImage',
-                    );
-                  }}>
-                  <ImageBackground
-                    style={{
-                      width: Metrics.screenWidth * 0.45,
-                      height: Metrics.ratio(80),
-                      marginRight: Metrics.screenWidth * 0.025,
-                      borderRadius: 10,
-                    }}
-                    source={Images.competatitiveBackground}
-                    resizeMode="auto"
-                    resizeMode="cover">
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontSize: Metrics.ratio(14),
-                        fontWeight: 'bold',
-                        marginTop: Metrics.ratio(30),
-                        marginLeft: Metrics.ratio(45),
-                        width: Metrics.ratio(100),
-                      }}
-                    />
-                  </ImageBackground>
-                </TouchableOpacity>
-              ) : null}
-              {user && user.english ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.getBooks(
-                      'English',
-                      classId,
-                      'English',
-                      'englishScreenBackground',
-                    );
-                  }}>
-                  <ImageBackground
-                    style={{
-                      width: Metrics.screenWidth * 0.45,
-                      height: Metrics.ratio(80),
-                      marginRight: Metrics.screenWidth * 0.025,
-                      borderRadius: 10,
-                    }}
-                    source={Images.englishBackggroundImage}
-                    resizeMode="auto"
-                    resizeMode="cover">
-                    {/* <Text style = {{color: 'white', fontSize: Metrics.ratio(14), fontWeight: 'bold', marginTop: Metrics.ratio(30), marginLeft: Metrics.ratio(45), width: Metrics.ratio(100)}}>English</Text>  */}
-                  </ImageBackground>
-                </TouchableOpacity>
-              ) : null}
-            </View>
-
-            <View
-              style={{
-                width: Metrics.screenWidth * 0.95,
-                flexDirection: 'row',
-                marginHorizontal: Metrics.ratio(15),
-
-                marginVertical: Metrics.screenWidth * 0.025,
-              }}>
-              {/* <TouchableOpacity onPress = {() => {
-                 this.getBooks("Science",classId, "Science", "scienceScreenBackImage");
-              }}>
-              <ImageBackground
-                style={{
-                  width: Metrics.screenWidth * 0.45,
-                  height: Metrics.ratio(80),
-                  marginRight: Metrics.screenWidth * 0.025,
-                  borderRadius: 10,
-                }}
-                
-                source={Images.scienceBackground}
-                resizeMode="auto"
-                resizeMode="cover"
-              >
-              <Text style = {{color: 'white', fontSize: Metrics.ratio(14), fontWeight: 'bold', marginTop: Metrics.ratio(30), marginLeft: Metrics.ratio(45), width: Metrics.ratio(100)}}>Science</Text>
-              </ImageBackground>
-              </TouchableOpacity> */}
-              {user && user.englishpower ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.getBooks(
-                      'English Power',
-                      classId,
-                      'English Power',
-                      'englishScreenBackground',
-                    );
-                  }}>
-                  <ImageBackground
-                    style={{
-                      width: Metrics.screenWidth * 0.45,
-                      height: Metrics.ratio(80),
-                      // marginRight: Metrics.screenWidth * 0.025,
-                      borderRadius: 10,
-                    }}
-                    source={Images.english_power}
-                    resizeMode="auto"
-                    resizeMode="cover">
-                    <Text
-                      style={{
-                        color: 'white',
-                        fontSize: Metrics.ratio(14),
-                        fontWeight: 'bold',
-                        marginTop: Metrics.ratio(30),
-                        width: Metrics.ratio(100),
-                        marginLeft: Metrics.ratio(45),
-                      }}>
-                      English Power
-                    </Text>
-                  </ImageBackground>
-                </TouchableOpacity>
-              ) : null}
-            </View>
-
-            {/* <View
-              style={{
-                marginLeft: Metrics.screenWidth * 0.05,
-                width: Metrics.screenWidth * 0.9,
-                height: Metrics.ratio(80),
-                marginRight: Metrics.screenWidth * 0.025,
-                borderRadius: 10,
-                backgroundColor: Colors.darkStaleBlue,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: Metrics.ratio(14),
-                  fontWeight: 'bold',
-                }}>
-                Important Notice:
-              </Text>
-              <Text
-                style={{
-                  color: 'white',
-                  fontSize: Metrics.ratio(16),
-                  fontWeight: 'bold',
-                }}>
-                The Application in development mode
-              </Text>
-            </View> */}
-          </ScrollView>
-        </ImageBackground>
         {this.renderOverlaySpinner()}
-      </View>
+      </ImageBackground>
     );
   }
 }
