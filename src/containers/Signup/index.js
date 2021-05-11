@@ -9,11 +9,13 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import styles from './styles';
-import {Images, Metrics} from '../../theme';
 import {Actions} from 'react-native-router-flux';
-import {request as register_user} from '../../actions/RegisterAction';
 import ModalDropdown from 'react-native-modal-dropdown';
+
+import styles from './styles';
+
+import {Images, Metrics} from '../../theme';
+import {request as register_user} from '../../actions/RegisterAction';
 import Util from '../../util';
 import {SpinnerLoader} from '../../components';
 
@@ -23,7 +25,6 @@ class SignupScreen extends Component {
     this.state = {
       firstName: '',
       fatherName: '',
-      // lastName: '',
       userId: '',
       password: '',
       email: '',
@@ -49,7 +50,6 @@ class SignupScreen extends Component {
           isloading: false,
           firstName: '',
           fatherName: '',
-          // lastName: '',
           userId: '',
           password: '',
           email: '',
@@ -61,10 +61,6 @@ class SignupScreen extends Component {
       } else if (nextProps.register.failure && !nextProps.register.isFetching) {
         this.setState({isloading: false});
       }
-      // else if (nextProps.register.data.code == 0) {
-      //   Alert.alert("Error", nextProps.register.data.msg)
-      //   this.setState({ isloading: false });
-      // }
     }
   }
 
@@ -73,7 +69,6 @@ class SignupScreen extends Component {
   };
 
   verifyRegitration = () => {
-    console.log('helloooooooooooooooooooooooooo');
     const {
       firstName,
       fatherName,
@@ -91,13 +86,7 @@ class SignupScreen extends Component {
         'Validation',
         'Password is required or must be 6 characters long',
       );
-    } else if (
-      email === '' ||
-      email === ' '
-      // !email.match(
-      //   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      // )
-    ) {
+    } else if (email === '' || email === ' ') {
       Alert.alert('Validation', 'Email is required');
     } else if (mobileNo === '') {
       Alert.alert('Validation', 'Mobile number is required');
@@ -122,7 +111,6 @@ class SignupScreen extends Component {
     let payload = {
       first_name: firstName,
       fathername: fatherName,
-      // last_name: lastName,
       email: email,
       mobile_no: mobileNo,
       password: password,
