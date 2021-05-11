@@ -8,12 +8,14 @@ import {
   TextInput,
   TouchableOpacity,
   Alert,
-  AsyncStorage,
   Image,
 } from 'react-native';
-import styles from './styles';
-import {Images, Metrics, Colors} from '../../theme';
 import {Actions} from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
+
+import styles from './styles';
+
+import {Images, Metrics, Colors} from '../../theme';
 import {request as login_user} from '../../actions/Login';
 import {SpinnerLoader} from '../../components';
 import Util from '../../util';
@@ -46,87 +48,17 @@ class LoginScreen extends Component {
       } else if (nextProps.login.failure && !nextProps.login.isFetching) {
         this.setState({isloading: false});
       }
-      // else if( !nextProps.login.failure &&
-      //   !nextProps.login.isFetching &&
-      //   nextProps.login.data &&
-      //   nextProps.login.data.code == 0){
-      //     Alert.alert("LearningWell", "User does not exist")
-      //   this.setState({ isloading: false });
-      // }
     }
   }
-
-  // componentWillMount(){
-  //   this.getData()
-  //   // setTimeout(() => {
-
-  //   // },1000)
-  // }
-
-  // getData = async () => {
-  //   console.log("jjjjjjjjjjjjjjjjjjj")
-  //   try {
-  //     const value = await AsyncStorage.getItem('@storage_Key');
-  //     if (value !== null) {
-
-  //       // Actions.dashboard({type: 'reset'})
-  //       this.props.navigation.navigate("dashboard", {
-  //         screen: "dashboard"
-  //     });
-  //       setTimeout(() => {
-  //         SplashScreen.hide()
-  //       },1000)
-  //     }
-  //     else{
-  //       SplashScreen.hide()
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //     // error reading value
-  //   }
-  // };
 
   _storeUserdata = async (user) => {
     try {
       await AsyncStorage.setItem('@storage_Key', JSON.stringify(user));
       Actions.dashboard();
-      // this.props.navigation.navigate("dashboard", {
-      //   screen: "dashboard"
-      // });
-      // this.props.updateUser(user)
     } catch (e) {
-      // saving error
+      console.log(e);
     }
   };
-
-  // getData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('@storage_Key');
-  //     if (value !== null) {
-  //       console.log('asasassa', JSON.parse(value));
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //     // error reading value
-  //   }
-  // };
-
-  // geturl = () => {
-  //   axios
-  //     .get(`https://api.vimeo.com/users/104857318/videos/104857318`, {
-  //       headers: {
-  //         "Content-Type": "application/vnd.vimeo.video+json",
-
-  //       }
-  //     })
-  //     .then(response => {
-  //       console.log(response,eeeeeeeeeeee)
-  //     })
-  //     .catch(error => {
-  //       console.log(error,'rrrrrrrrrrrrrrrr')
-  //     });
-
-  // }
 
   verifyLogin = () => {
     const {userId, password} = this.state;
@@ -148,29 +80,6 @@ class LoginScreen extends Component {
       this.setState({isloading: true});
       this.handleLogin();
     }
-    // else if (userId != "") {
-    //   let x = userId;
-    //   var atpos = x.indexOf("@");
-    //   var dotpos = x.lastIndexOf(".");
-    //   if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length) {
-    //     this.setState({ validationError: { userIdErr: true, passErr: false } });
-    //     setTimeout(() => {
-    //       this.setState({
-    //         validationError: { userIdErr: false, passErr: false }
-    //       });
-    //     }, 3000);
-    //   } else if (password == "" || password == " " || password.length < 6) {
-    //     this.setState({ validationError: { userIdErr: false, passErr: true } });
-    //     setTimeout(() => {
-    //       this.setState({
-    //         validationError: { userIdErr: false, passErr: false }
-    //       });
-    //     }, 5000);
-    //   } else {
-    //     this.setState({ isloading: true });
-    //     this.handleLogin();
-    //   }
-    // }
   };
 
   handleLogin = () => {
@@ -187,15 +96,6 @@ class LoginScreen extends Component {
       this.setState({isloading: false});
       Alert.alert('Learningwell', 'Please Check Your Internet Connection!');
     }
-
-    // if (userId === "demo" || (userId === "Demo" && password === "112233")) {
-    //   this.setState({ userId: null, password: null });
-    //   this.props.navigation.navigate("dashboard", {
-    //     screen: "dashboard"
-    //   });
-    // } else {
-    //   Alert.alert("Error", "User ID and Password is incorrect");
-    // }
   };
 
   onChangeTextField = (text, state) => {
