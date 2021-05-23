@@ -1,5 +1,5 @@
 // @flow
-import React from "react";
+import React from 'react';
 
 import {
   TouchableOpacity,
@@ -9,9 +9,9 @@ import {
   Keyboard,
   Animated,
   Easing,
-  BackAndroid
-} from "react-native";
-import { connect } from "react-redux";
+  BackAndroid,
+} from 'react-native';
+import {connect} from 'react-redux';
 
 import {
   Stack,
@@ -21,17 +21,17 @@ import {
   ActionConst,
   Route,
   Schema,
-  Drawer
-} from "react-native-router-flux";
-import { TabButtonLeft } from "../components";
-import { Colors, Metrics, Images } from "../theme";
+  Drawer,
+} from 'react-native-router-flux';
+import {TabButtonLeft} from '../components';
+import {Colors, Metrics, Images} from '../theme';
 
-import styles from "./styles";
-import LoginScreen from "../containers/Login";
-import SignupScreen from "../containers/Signup";
-import HomeScreen from "../containers/Home";
-import DrawerMenu from "./DrawerMenu";
-import LectureScreen from '../containers/LectureScreen'
+import styles from './styles';
+import LoginScreen from '../containers/Login';
+import SignupScreen from '../containers/Signup';
+import HomeScreen from '../containers/Home';
+import DrawerMenu from './DrawerMenu';
+import LectureScreen from '../containers/LectureScreen';
 import VideoPlayerScreen from '../containers/VideoPlayerScreen';
 import EditProfileScreen from '../containers/EditProfile';
 import QuizScreen from '../containers/Quiz';
@@ -40,17 +40,18 @@ import ContactUsScreen from '../containers/ContactUs';
 import Exercises from '../containers/Exercises';
 import ExercisesVideo from '../containers/ExercisesVideo';
 import Homework from '../containers/Homework';
-import utils from "../util";
+import Result from '../containers/Result';
+import utils from '../util';
 function onBackPress() {
   const scene = Actions.currentScene;
-  if (scene === "Home" || scene === "loginScreen") {
+  if (scene === 'Home' || scene === 'loginScreen') {
     utils.showYesNoMessage(
-      "Confirm",
-      "Are you sure you want to exit?",
+      'Confirm',
+      'Are you sure you want to exit?',
       () => {
         BackHandler.exitApp();
       },
-      () => { }
+      () => {},
     );
     return true;
   } else {
@@ -59,143 +60,148 @@ function onBackPress() {
   }
 }
 
-const auth = <Stack
-  titleStyle={styles.title}
-  headerStyle={styles.header}
-  key="root"
-  tintColor={Colors.primary}
->
-
-</Stack>
-const navigator = Actions.create(
+const auth = (
   <Stack
     titleStyle={styles.title}
     headerStyle={styles.header}
     key="root"
     tintColor={Colors.primary}
-  >
+  />
+);
+const navigator = Actions.create(
+  <Stack
+    titleStyle={styles.title}
+    headerStyle={styles.header}
+    key="root"
+    tintColor={Colors.primary}>
     {/* <Scene key="tour" component={CounterComponent} /> */}
     {/* {DrawerMenu.getDrawerMenu()} */}
 
     <Scene
       tintColor="white"
-      title={"LoginScreen"}
+      title={'LoginScreen'}
       hideNavBar
       key="loginScreen"
       component={LoginScreen}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
     <Scene
       tintColor="white"
-      title={"SignupScreen"}
+      title={'SignupScreen'}
       hideNavBar
       key="signupScreen"
       component={SignupScreen}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
     <Scene
       tintColor="white"
-      title={"QuizScreen"}
+      title={'QuizScreen'}
       hideNavBar
       key="quizScreen"
       component={QuizScreen}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
     <Scene
       tintColor="white"
-      title={"QuizResultScreen"}
+      title={'QuizResultScreen'}
       hideNavBar
       key="quizResultScreen"
       component={QuizResultScreen}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
 
     <Scene
       tintColor="white"
-      title={"EditProfileScreen"}
+      title={'EditProfileScreen'}
       hideNavBar
       key="editProfileScreen"
       component={EditProfileScreen}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
     <Scene
       tintColor="white"
-      title={"ContactUsScreen"}
+      title={'ContactUsScreen'}
       hideNavBar
       key="contactUsScreen"
       component={ContactUsScreen}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
     <Scene
       tintColor="white"
-      title={"Exercises"}
+      title={'Exercises'}
       hideNavBar
       key="exercises"
       component={Exercises}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
     <Scene
       tintColor="white"
-      title={"ExercisesVideo"}
+      title={'ExercisesVideo'}
       hideNavBar
       key="exercisesVideo"
       component={ExercisesVideo}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
     <Scene
       tintColor="white"
-      title={"Homework"}
+      title={'Homework'}
       hideNavBar
       key="Homework"
       component={Homework}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
-
+    <Scene
+      tintColor="white"
+      title={'Result'}
+      hideNavBar
+      key="Result"
+      component={Result}
+      renderLeftButton={() => (
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
+      )}
+    />
 
     {DrawerMenu.getDrawerMenu()}
 
     <Scene
       tintColor="white"
-      title={"LectureScreen"}
+      title={'LectureScreen'}
       hideNavBar
       key="lectureScreen"
       component={LectureScreen}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
 
     <Scene
       tintColor="white"
-      title={"VideoPlayerScreen"}
+      title={'VideoPlayerScreen'}
       hideNavBar
       key="videoPlayerScreen"
       component={VideoPlayerScreen}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
-
-
-
 
     <Scene
       tintColor="white"
@@ -203,10 +209,10 @@ const navigator = Actions.create(
       key="homeScreen"
       component={HomeScreen}
       renderLeftButton={() => (
-        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
     />
-  </Stack>
+  </Stack>,
 );
 
 export default () => (

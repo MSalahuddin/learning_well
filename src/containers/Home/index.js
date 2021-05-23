@@ -51,7 +51,7 @@ const Home = (props) => {
     {
       name: 'Result',
       image: Images.resultIcon,
-      onPress: '',
+      onPress: () => Actions.Result(),
     },
     {
       name: 'Feedback',

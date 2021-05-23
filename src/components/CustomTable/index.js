@@ -15,11 +15,13 @@ const CustomTable = (props) => {
             return (
               <View key={val.name} style={{...styles.th}}>
                 <Text style={{...styles.thText}}>{val.name}</Text>
-                <Image
-                  source={val.image}
-                  resizeMode={'contain'}
-                  style={{...styles.thImage}}
-                />
+                {val.image ? (
+                  <Image
+                    source={val.image}
+                    resizeMode={'contain'}
+                    style={{...styles.thImage}}
+                  />
+                ) : null}
               </View>
             );
           })}
