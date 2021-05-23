@@ -24,7 +24,6 @@ export default StyleSheet.create({
   },
   exercisesContainer: {
     marginTop: Metrics.ratio(8),
-    marginBottom: Metrics.screenHeight * 0.17,
     paddingHorizontal: Metrics.ratio(16),
   },
   chapterName: {
@@ -40,6 +39,7 @@ export default StyleSheet.create({
   },
   exerciseListContainer: {
     marginVertical: Metrics.ratio(24),
+    marginLeft: Metrics.ratio(16),
   },
   exerciseListItem: {
     flexDirection: 'row',
@@ -60,36 +60,54 @@ export default StyleSheet.create({
   exerciseNumber: {
     fontWeight: 'bold',
   },
-  exerciseVideoContainer: {
+  exerciseContainer: {
     marginBottom: Metrics.ratio(24),
   },
-  exerciseVideoName: {
+  exerciseNameHeading: {
     fontSize: Metrics.ratio(14),
     fontWeight: 'bold',
     color: '#000',
+    marginBottom: Metrics.ratio(8),
   },
-  exerciseVideo: {
-    marginRight: Metrics.ratio(16),
-    marginVertical: Metrics.ratio(8),
-    overflow: 'hidden',
-    borderRadius: Metrics.ratio(8),
-    width: Metrics.screenWidth * 0.5,
-    height: Metrics.ratio(120),
-    borderColor: Colors.white,
+  exerciseQuestionContainer: {
+    width: Metrics.screenWidth * 0.6,
+    height: Metrics.ratio(180),
+    backgroundColor: '#FFF',
+    marginBottom: Metrics.ratio(8),
+    paddingHorizontal: Metrics.ratio(8),
+    paddingVertical: Metrics.ratio(8),
+  },
+  questionImageContainer: {
+    flex: 1,
+  },
+  questionImage: {
+    width: '100%',
+    height: '100%',
+  },
+  answerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: Metrics.ratio(8),
+  },
+  answerTextInput: {
+    flex: 1,
+    borderColor: '#ccc',
     borderWidth: Metrics.ratio(1),
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    paddingVertical: 0,
+    fontSize: Metrics.ratio(14),
+    marginRight: Metrics.ratio(8),
+    color: '#000',
   },
-  exerciseProgressImage: {
-    width: Metrics.screenWidth * 0.5,
-    height: Metrics.ratio(120),
-    overflow: 'hidden',
+  checkBtn: {
+    paddingHorizontal: Metrics.ratio(8),
+    paddingVertical: Metrics.ratio(4),
+    backgroundColor: Colors.Venice_Blue,
+    borderColor: Colors.Venice_Blue,
+    borderWidth: Metrics.ratio(1),
+  },
+  checkBtnText: {
+    fontSize: Metrics.ratio(14),
+    color: '#FFF',
   },
   solutionBtnContainer: {
     flexDirection: 'row',

@@ -52,6 +52,7 @@ const facebookIcon = require('../assets/icons/facebookIcon.png');
 const subjectNavIcon = require('../assets/icons/subjectNavIcon.png');
 const moreIcon = require('../assets/icons/moreIcon.png');
 const lectureNavIcon = require('../assets/icons/lectureNavIcon.png');
+const exampleExercise = require('../assets/exampleExercise.png');
 
 //edit profile
 
@@ -127,6 +128,7 @@ export default {
   subjectNavIcon,
   moreIcon,
   lectureNavIcon,
+  exampleExercise,
 
   //quiz
   quizBackground,
