@@ -263,7 +263,7 @@ class LectureScreen extends Component {
                       ...styles.chapterVideoBtn,
                       marginLeft: Metrics.ratio(8),
                     }}
-                    onPress={() => {}}>
+                    onPress={() => Actions.exercises()}>
                     <Text style={{...styles.chapterVideoBtnText}}>
                       Exercise
                     </Text>
