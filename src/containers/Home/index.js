@@ -46,7 +46,7 @@ const Home = (props) => {
     {
       name: 'Assigned Test',
       image: Images.assignedTestIcon,
-      onPress: '',
+      onPress: () => Actions.AssignedTest(),
     },
     {
       name: 'Result',
