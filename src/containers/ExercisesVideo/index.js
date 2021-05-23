@@ -1,12 +1,6 @@
 // @flow
 import React from 'react';
-import {
-  Text,
-  View,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {Text, View, ImageBackground, TouchableOpacity} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import ProgressImage from 'react-native-image-progress';
 
@@ -59,7 +53,6 @@ const ExercisesVideo = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <ScrollView />
     </ImageBackground>
   );
 };

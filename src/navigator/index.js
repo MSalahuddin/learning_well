@@ -39,6 +39,7 @@ import QuizResultScreen from '../containers/QuizResult';
 import ContactUsScreen from '../containers/ContactUs';
 import Exercises from '../containers/Exercises';
 import ExercisesVideo from '../containers/ExercisesVideo';
+import Homework from '../containers/Homework';
 import utils from "../util";
 function onBackPress() {
   const scene = Actions.currentScene;
@@ -153,6 +154,16 @@ const navigator = Actions.create(
       hideNavBar
       key="exercisesVideo"
       component={ExercisesVideo}
+      renderLeftButton={() => (
+        <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
+      )}
+    />
+    <Scene
+      tintColor="white"
+      title={"Homework"}
+      hideNavBar
+      key="Homework"
+      component={Homework}
       renderLeftButton={() => (
         <TabButtonLeft imagesArray={["rightArrow"]} actions={[Actions.pop]} />
       )}

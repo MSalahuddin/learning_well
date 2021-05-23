@@ -41,7 +41,7 @@ const Home = (props) => {
     {
       name: 'Homework',
       image: Images.homeworkIcon,
-      onPress: '',
+      onPress: () => Actions.Homework(),
     },
     {
       name: 'Assigned Test',

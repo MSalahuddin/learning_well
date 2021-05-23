@@ -53,6 +53,8 @@ const subjectNavIcon = require('../assets/icons/subjectNavIcon.png');
 const moreIcon = require('../assets/icons/moreIcon.png');
 const lectureNavIcon = require('../assets/icons/lectureNavIcon.png');
 const exampleExercise = require('../assets/exampleExercise.png');
+const editPen = require('../assets/icons/editPen.png');
+const homeworkNavIcon = require('../assets/icons/homeworkNavIcon.png');
 
 //edit profile
 
@@ -129,6 +131,8 @@ export default {
   moreIcon,
   lectureNavIcon,
   exampleExercise,
+  editPen,
+  homeworkNavIcon,
 
   //quiz
   quizBackground,
