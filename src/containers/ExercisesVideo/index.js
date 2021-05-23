@@ -6,7 +6,6 @@ import {
   ImageBackground,
   TouchableOpacity,
   ScrollView,
-  Image,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import ProgressImage from 'react-native-image-progress';
@@ -16,7 +15,7 @@ import styles from './styles';
 import {Images, Colors} from '../../theme';
 import {Header} from '../../components';
 
-const Exercises = () => {
+const ExercisesVideo = () => {
   return (
     <ImageBackground
       resizeMode={'cover'}
@@ -38,32 +37,9 @@ const Exercises = () => {
 
       <View style={{...styles.exercisesContainer}}>
         <Text style={{...styles.chapterName}}>{'Chapter 1'}</Text>
-        <Text style={{...styles.chapterExercies}}>{'Exercises'}</Text>
-
-        <View style={{...styles.exerciseListContainer}}>
-          <View style={{...styles.exerciseListItem}}>
-            <View style={{...styles.listBullet}} />
-            <Text style={{...styles.exerciseName}}>
-              <Text style={{...styles.exerciseNumber}}>
-                {'Exercise 1.2: 1.'}
-              </Text>{' '}
-              {'Write the following numbers in expanded form.'}
-            </Text>
-          </View>
-
-          <View style={{...styles.exerciseListItem}}>
-            <View style={{...styles.listBullet}} />
-            <Text style={{...styles.exerciseName}}>
-              <Text style={{...styles.exerciseNumber}}>
-                {'Exercise 1.2: 1.'}
-              </Text>{' '}
-              {'Write the following numbers in expanded form.'}
-            </Text>
-          </View>
-        </View>
+        <Text style={{...styles.chapterExercies}}>{'Solution'}</Text>
 
         <View style={{...styles.exerciseVideoContainer}}>
-          <Text style={{...styles.exerciseVideoName}}>{'Exercise 1'}</Text>
           <TouchableOpacity
             style={{...styles.exerciseVideo}}
             onPress={() => {}}>
@@ -81,22 +57,6 @@ const Exercises = () => {
               }}
             />
           </TouchableOpacity>
-
-          <View style={{...styles.solutionBtnContainer}}>
-            <Image
-              source={Images.sidemenuArrowIcon}
-              resizeMode={'contain'}
-              style={{...styles.solutionBtnImage}}
-            />
-            <TouchableOpacity
-              style={{...styles.solutionTextContainer}}
-              onPress={() => Actions.exercisesVideo()}>
-              <Text style={{...styles.solutionBtnText}}>
-                <Text style={{color: Colors.Venice_Blue}}>{'Goto'}</Text>{' '}
-                {'Solution Video'}
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
       <ScrollView />
@@ -104,4 +64,4 @@ const Exercises = () => {
   );
 };
 
-export default Exercises;
+export default ExercisesVideo;
