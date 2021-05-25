@@ -1,5 +1,5 @@
-import {connect} from 'react-redux';
-import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -10,23 +10,23 @@ import {
   Alert,
   Image,
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import styles from './styles';
 
-import {Images, Metrics, Colors} from '../../theme';
-import {request as login_user} from '../../actions/Login';
-import {SpinnerLoader} from '../../components';
+import { Images, Metrics, Colors } from '../../theme';
+import { request as login_user } from '../../actions/Login';
+import { SpinnerLoader } from '../../components';
 import Util from '../../util';
 
 class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: '', //demo_student
-      password: '', //112233
-      validationError: {userIdErr: false, passErr: false},
+      userId: 'demo_student', //demo_student
+      password: '112233', //112233
+      validationError: { userIdErr: false, passErr: false },
       isloading: false,
     };
   }
@@ -43,10 +43,10 @@ class LoginScreen extends Component {
         nextProps.login.data &&
         nextProps.login.data.code === 1
       ) {
-        this.setState({isloading: false, userId: '', password: ''});
+        this.setState({ isloading: false, userId: '', password: '' });
         this._storeUserdata(nextProps.login.data.values[0]);
       } else if (nextProps.login.failure && !nextProps.login.isFetching) {
-        this.setState({isloading: false});
+        this.setState({ isloading: false });
       }
     }
   }
@@ -61,29 +61,29 @@ class LoginScreen extends Component {
   };
 
   verifyLogin = () => {
-    const {userId, password} = this.state;
+    const { userId, password } = this.state;
     if (userId === '' || userId === ' ') {
-      this.setState({validationError: {userIdErr: true, passErr: false}});
+      this.setState({ validationError: { userIdErr: true, passErr: false } });
       setTimeout(() => {
         this.setState({
-          validationError: {userIdErr: false, passErr: false},
+          validationError: { userIdErr: false, passErr: false },
         });
       }, 5000);
     } else if (password === '' || password === ' ' || password.length < 6) {
-      this.setState({validationError: {userIdErr: false, passErr: true}});
+      this.setState({ validationError: { userIdErr: false, passErr: true } });
       setTimeout(() => {
         this.setState({
-          validationError: {userIdErr: false, passErr: false},
+          validationError: { userIdErr: false, passErr: false },
         });
       }, 5000);
     } else {
-      this.setState({isloading: true});
+      this.setState({ isloading: true });
       this.handleLogin();
     }
   };
 
   handleLogin = () => {
-    const {userId, password} = this.state;
+    const { userId, password } = this.state;
 
     const payload = {
       email: userId,
@@ -93,17 +93,17 @@ class LoginScreen extends Component {
     if (Util.isConnected()) {
       this.props.login_user(payload);
     } else {
-      this.setState({isloading: false});
+      this.setState({ isloading: false });
       Alert.alert('Learningwell', 'Please Check Your Internet Connection!');
     }
   };
 
   onChangeTextField = (text, state) => {
-    this.setState({[state]: text});
+    this.setState({ [state]: text });
   };
 
   renderOverlaySpinner = () => {
-    const {isloading} = this.state;
+    const { isloading } = this.state;
     return <SpinnerLoader isloading={isloading} />;
   };
 
@@ -140,7 +140,7 @@ class LoginScreen extends Component {
               width: Metrics.screenWidth * 0.85,
               marginHorizontal: Metrics.screenWidth * 0.075,
             }}>
-            <Text style={{color: Colors.darkStaleBlue}}>**{ErrTxt}</Text>
+            <Text style={{ color: Colors.darkStaleBlue }}>**{ErrTxt}</Text>
           </View>
         )}
       </View>
@@ -148,17 +148,17 @@ class LoginScreen extends Component {
   };
 
   render() {
-    const {validationError} = this.state;
+    const { validationError } = this.state;
     return (
       <ImageBackground
         source={Images.homeBackgroundImage2}
         resizeMode={'cover'}
-        style={{...styles.container}}>
+        style={{ ...styles.container }}>
         <ScrollView>
-          <View style={{...styles.bodyContainer}}>
-            <Image source={Images.logo} style={{...styles.logo}} />
+          <View style={{ ...styles.bodyContainer }}>
+            <Image source={Images.logo} style={{ ...styles.logo }} />
 
-            <Text style={{...styles.headingText}}>Sign In</Text>
+            <Text style={{ ...styles.headingText }}>Sign In</Text>
 
             {this.renderInputfield(
               'User ID',
@@ -183,11 +183,11 @@ class LoginScreen extends Component {
             )}
 
             <TouchableOpacity
-              style={{...styles.button}}
+              style={{ ...styles.button }}
               onPress={() => {
                 this.verifyLogin();
               }}>
-              <Text style={{...styles.buttonText}}>Sign In</Text>
+              <Text style={{ ...styles.buttonText }}>Sign In</Text>
             </TouchableOpacity>
 
             {/* <View style={{...styles.forgotPasswordContainer}}>
@@ -197,18 +197,18 @@ class LoginScreen extends Component {
               <Text style={{...styles.clickHereText}}>Click here</Text>
             </View> */}
           </View>
-          <View style={{...styles.registerContainer}}>
+          <View style={{ ...styles.registerContainer }}>
             <TouchableOpacity onPress={() => Actions.signupScreen()}>
-              <Text style={{...styles.registerHeading}}>Register</Text>
+              <Text style={{ ...styles.registerHeading }}>Register</Text>
             </TouchableOpacity>
 
-            <View style={{...styles.registerMsgContainer}}>
-              <Text style={{...styles.registerMsgText}}>
+            <View style={{ ...styles.registerMsgContainer }}>
+              <Text style={{ ...styles.registerMsgText }}>
                 If you don't have an account please{' '}
               </Text>
 
               <TouchableOpacity onPress={() => Actions.signupScreen()}>
-                <Text style={{...styles.registerText}}>Register</Text>
+                <Text style={{ ...styles.registerText }}>Register</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -219,8 +219,8 @@ class LoginScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({login: state.login});
+const mapStateToProps = (state) => ({ login: state.login });
 
-const actions = {login_user};
+const actions = { login_user };
 
 export default connect(mapStateToProps, actions)(LoginScreen);

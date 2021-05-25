@@ -70,7 +70,7 @@ class ApiSauce {
   // for normal post requests
 
   async post(url, data, headers) {
-    
+
     //const updatedHeader = getUpdatedHeader(headers);
     updatedHeader = {
       "Content-Type": "application/x-www-form-urlencoded"
@@ -88,7 +88,6 @@ class ApiSauce {
       Authorization: `${token}`
     });
     const response = await api.get(url);
-    console.log(response, "respppppppppppp00000000000000");
 
     return new Promise((resolve, reject) => {
       this.handlePromise(resolve, reject, response);
@@ -126,16 +125,13 @@ class ApiSauce {
   //   }
 
   handlePromise = (resolve, reject, response) => {
-    
+    console.log(response, '//////////////')
     if (response.ok && response.status === 200) {
-      console.log("🚀 ~ file: apiSauce.js ~ line 133 ~ ApiSauce ~ response.ok", response.ok)
-      console.log("🚀 ~ file: apiSauce.js ~ line 133 ~ ApiSauce ~ response.status", response.status)
-      console.log("🚀 ~ file: apiSauce.js ~ line 136 ~ ApiSauce ~ response.data", response)
       resolve(response.data);
-    } else if(!response.ok && response.status === 400 && response.data && !response.data.success){
+    } else if (!response.ok && response.status === 400 && response.data && !response.data.success) {
       reject(response.data.message)
     }
-     else if(!response.ok && response.status === 400 && response.data && response.data.length){
+    else if (!response.ok && response.status === 400 && response.data && response.data.length) {
       reject(response.data)
     }
     // else if(!response.ok && response.status === 400 && response.data && !response.data.error ){
@@ -143,12 +139,12 @@ class ApiSauce {
     // } else if(!response.ok && response.status === 400 && response.data && response.data.error === 1){
     //   reject(response.data.message)
     // }
-    else if(!response.ok && response.originalError && response.status === null) {
+    else if (!response.ok && response.originalError && response.status === null) {
       reject(response.originalError.message)
     }
-    else if(!response.ok && response.originalError && response.status === 400) {
+    else if (!response.ok && response.originalError && response.status === 400) {
       reject(response.data)
-    }else if(!response.ok && response.status == 404 && response.originalError){
+    } else if (!response.ok && response.status == 404 && response.originalError) {
       reject(response.data.message)
     }
   };
