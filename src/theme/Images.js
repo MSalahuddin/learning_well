@@ -57,6 +57,9 @@ const editPen = require('../assets/icons/editPen.png');
 const homeworkNavIcon = require('../assets/icons/homeworkNavIcon.png');
 const resultNavIcon = require('../assets/icons/resultNavIcon.png');
 const assignedTestNavIcon = require('../assets/icons/assignedTestNavIcon.png');
+const quizNavIcon = require('../assets/icons/quizNavIcon.png');
+const quizResultNavIcon = require('../assets/icons/quizResultNavIcon.png');
+const greenTick = require('../assets/icons/greenTick.png');
 
 //edit profile
 
@@ -137,6 +140,9 @@ export default {
   homeworkNavIcon,
   resultNavIcon,
   assignedTestNavIcon,
+  quizNavIcon,
+  quizResultNavIcon,
+  greenTick,
 
   //quiz
   quizBackground,
