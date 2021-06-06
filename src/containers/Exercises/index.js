@@ -27,7 +27,8 @@ const Exercises = () => {
       <Header
         leftImage={Images.backArrowIcon2}
         leftBtnPress={() => Actions.pop()}
-        rightImage={Images.contactUsIcon}
+        leftImageContainerStyle={{...styles.leftImageContainerStyle}}
+        rightImage={Images.exerciseNavIcon}
         rightImageStyle={styles.rightImageStyle}
       />
 
@@ -92,7 +93,7 @@ const Exercises = () => {
 
             <View style={{...styles.solutionBtnContainer}}>
               <Image
-                source={Images.sidemenuArrowIcon}
+                source={Images.goToSolution}
                 resizeMode={'contain'}
                 style={{...styles.solutionBtnImage}}
               />

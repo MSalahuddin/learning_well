@@ -20,7 +20,7 @@ const AssignedTest = () => {
     },
     {
       name: 'Date',
-      image: Images.editPen,
+      image: Images.dateTable,
     },
   ];
 

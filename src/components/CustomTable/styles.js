@@ -26,8 +26,8 @@ export default StyleSheet.create({
     color: '#FFF',
   },
   thImage: {
-    width: Metrics.ratio(18),
-    height: Metrics.ratio(18),
+    width: Metrics.ratio(20),
+    height: Metrics.ratio(20),
     marginLeft: Metrics.ratio(4),
   },
   tbodyRow: {

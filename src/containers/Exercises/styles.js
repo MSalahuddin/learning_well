@@ -5,9 +5,12 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
+  leftImageContainerStyle: {
+    alignSelf: 'flex-start',
+  },
   rightImageStyle: {
     width: Metrics.ratio(125),
-    height: Metrics.ratio(50),
+    height: Metrics.ratio(85),
   },
   courseNameContainer: {
     marginHorizontal: Metrics.ratio(16),
@@ -114,11 +117,11 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   solutionBtnImage: {
-    width: Metrics.ratio(35),
-    height: Metrics.ratio(35),
+    width: Metrics.ratio(45),
+    height: Metrics.ratio(45),
   },
   solutionTextContainer: {
-    marginLeft: Metrics.ratio(16),
+    marginLeft: Metrics.ratio(8),
   },
   solutionBtnText: {
     fontSize: Metrics.ratio(13),

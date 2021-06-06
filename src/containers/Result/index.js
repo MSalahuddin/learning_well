@@ -20,7 +20,7 @@ const Result = () => {
     },
     {
       name: 'Date',
-      image: Images.editPen,
+      image: Images.dateTable,
     },
   ];
 

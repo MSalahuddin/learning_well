@@ -16,7 +16,7 @@ const Homework = () => {
     },
     {
       name: 'Submission Date',
-      image: Images.editPen,
+      image: Images.dateTable,
     },
   ];
 
