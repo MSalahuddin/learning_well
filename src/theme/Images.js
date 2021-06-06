@@ -63,6 +63,7 @@ const greenTick = require('../assets/icons/greenTick.png');
 const exerciseNavIcon = require('../assets/icons/exerciseNavIcon.png');
 const dateTable = require('../assets/icons/dateTable.png');
 const goToSolution = require('../assets/icons/goToSolution.png');
+const feedbackNavIcon = require('../assets/icons/feedbackNavIcon.png');
 
 //edit profile
 
@@ -149,6 +150,7 @@ export default {
   exerciseNavIcon,
   dateTable,
   goToSolution,
+  feedbackNavIcon,
 
   //quiz
   quizBackground,

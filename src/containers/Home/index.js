@@ -56,7 +56,7 @@ const Home = (props) => {
     {
       name: 'Feedback',
       image: Images.feedbackIcon,
-      onPress: '',
+      onPress: () => Actions.Feedback(),
     },
   ];
 

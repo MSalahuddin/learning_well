@@ -80,6 +80,7 @@ const salmon = 'rgba(255, 145, 121, 1)';
 const checkoutDetailArea = '#d9d9d9';
 const badgeCart = '#00c61e';
 const Venice_Blue = '#07509E';
+const Yellow_Orange = '#FCAE39';
 
 // app generic components colors
 
@@ -121,7 +122,6 @@ const text = {
   charcoallight: '#949494',
   chestnut: '#b94545',
   platinum: '#e5eced',
-  white: white,
   checkoutDetailArea: checkoutDetailArea,
   salmon: salmon,
 };
@@ -211,4 +211,5 @@ export default {
   placeholder,
 
   Venice_Blue,
+  Yellow_Orange,
 };
