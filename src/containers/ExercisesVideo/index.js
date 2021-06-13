@@ -18,8 +18,6 @@ const ExercisesVideo = () => {
       <Header
         leftImage={Images.backArrowIcon2}
         leftBtnPress={() => Actions.pop()}
-        rightImage={Images.contactUsIcon}
-        rightImageStyle={styles.rightImageStyle}
       />
 
       <View style={{...styles.courseNameContainer}}>

@@ -1,14 +1,65 @@
-// @flow
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {ImageBackground, ScrollView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import styles from './styles';
 
 import {Images} from '../../theme';
 import {Header, CustomTable} from '../../components';
+import {createResource} from '../../config/SimpleApiCalls';
+import {get_homework_API} from '../../config/WebServices';
 
 const Homework = () => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      getHomework();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  const getHomework = async () => {
+    let payload = new FormData();
+    payload.append('school_id', user.school_id);
+    payload.append('section_id', user.section_id);
+    payload.append('class_id', user.class_id);
+    payload.append('user_id', user.loginid);
+
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+
+    try {
+      const homework = await createResource(
+        get_homework_API,
+        payload,
+        null,
+        headers,
+      );
+      console.log(homework, 'homework');
+    } catch (error) {
+      console.log('error ==> ', error);
+    }
+  };
+
+  const getUserInfo = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key');
+      let parsedValue = JSON.parse(value);
+      if (value !== null) {
+        setUser(parsedValue);
+      }
+    } catch (error) {
+      console.log('error ==> ', error);
+    }
+  };
+
   const tableHead = [
     {
       name: 'Subject',
