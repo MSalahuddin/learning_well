@@ -8,7 +8,7 @@ import styles from './styles';
 import {Images} from '../../theme';
 import {Header, CustomTable} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
-import {get_homework_API} from '../../config/WebServices';
+import {HOMEWORK_API} from '../../config/WebServices';
 
 const Homework = () => {
   const [user, setUser] = useState(null);
@@ -37,7 +37,7 @@ const Homework = () => {
 
     try {
       const homework = await createResource(
-        get_homework_API,
+        HOMEWORK_API,
         payload,
         null,
         headers,

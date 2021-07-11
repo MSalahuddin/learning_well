@@ -1,12 +1,13 @@
-// @flow
 import React from 'react';
 import {Text, View, Image} from 'react-native';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import styles from './styles';
 
 const CustomTable = (props) => {
-  const {tableHead, tableData, tableKeys} = props;
+  const {tableHead, tableData, tableKeys, isDate, dateIndex} = props;
+
   return (
     <View style={{...styles.table}}>
       <View style={{...styles.thead}}>
@@ -34,7 +35,13 @@ const CustomTable = (props) => {
               {tableKeys.map((key, kIndex) => {
                 return (
                   <View key={`${iIndex}-${kIndex}`} style={{...styles.td}}>
-                    <Text style={{...styles.tdText}}>{item[key]}</Text>
+                    {isDate && dateIndex === kIndex ? (
+                      <Text style={{...styles.tdText}}>
+                        {moment(item[key]).format('DD-MMMM-YYYY')}
+                      </Text>
+                    ) : (
+                      <Text style={{...styles.tdText}}>{item[key]}</Text>
+                    )}
                   </View>
                 );
               })}

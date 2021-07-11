@@ -1,14 +1,72 @@
-// @flow
-import React from 'react';
-import {ImageBackground, ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ImageBackground, ScrollView, View, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import styles from './styles';
 
 import {Images} from '../../theme';
-import {Header, CustomTable} from '../../components';
+import {Header, CustomTable, SpinnerLoader} from '../../components';
+import {createResource} from '../../config/SimpleApiCalls';
+import {QUIZ_RESULT_API} from '../../config/WebServices';
 
 const Result = () => {
+  const [isLoading, setIsLoading] = useState(null);
+  const [user, setUser] = useState(null);
+  const [quizResults, setQuizResults] = useState([]);
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      getQuizResults();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  const getUserInfo = async () => {
+    try {
+      setIsLoading(true);
+      const value = await AsyncStorage.getItem('@storage_Key');
+      let parsedValue = JSON.parse(value);
+      setIsLoading(false);
+      if (value !== null) {
+        setUser(parsedValue);
+      }
+    } catch (error) {
+      console.log('error ==> ', error);
+      setIsLoading(false);
+    }
+  };
+
+  const getQuizResults = async () => {
+    let payload = new FormData();
+    payload.append('user_id', user.loginid);
+
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+
+    try {
+      setIsLoading(true);
+      const result = await createResource(
+        QUIZ_RESULT_API,
+        payload,
+        null,
+        headers,
+      );
+      if (result.code === 1) {
+        setQuizResults(result.quizresult);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log('error ==> ', error);
+      setIsLoading(false);
+    }
+  };
+
   const tableHead = [
     {
       name: 'Name',
@@ -24,25 +82,7 @@ const Result = () => {
     },
   ];
 
-  const tableKeys = ['name', 'subject', 'date'];
-
-  const tableData = [
-    {
-      name: 'Test 1',
-      subject: 'Subject 1',
-      date: '30-June-2021',
-    },
-    {
-      name: 'Test 2',
-      subject: 'Subject 2',
-      date: '25-July-2021',
-    },
-    {
-      name: 'Test 3',
-      subject: 'Subject 3',
-      date: '20-August-2021',
-    },
-  ];
+  const tableKeys = ['chapter_name', 'book_name', 'date'];
 
   return (
     <ImageBackground
@@ -55,14 +95,24 @@ const Result = () => {
         rightImage={Images.resultNavIcon}
         rightImageStyle={styles.rightImageStyle}
       />
-
       <ScrollView style={{...styles.tableContainer}}>
-        <CustomTable
-          tableHead={tableHead}
-          tableData={tableData}
-          tableKeys={tableKeys}
-        />
+        {quizResults.length > 0 && (
+          <CustomTable
+            tableHead={tableHead}
+            tableData={quizResults}
+            tableKeys={tableKeys}
+            isDate={true}
+            dateIndex={2}
+          />
+        )}
+
+        {!isLoading && quizResults.length < 1 && (
+          <View style={{...styles.notFoundContainer}}>
+            <Text style={{...styles.notFoundText}}>No Record Found!</Text>
+          </View>
+        )}
       </ScrollView>
+      <SpinnerLoader isloading={isLoading} />
     </ImageBackground>
   );
 };

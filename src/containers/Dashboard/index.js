@@ -1,4 +1,3 @@
-// @flow
 import {connect} from 'react-redux';
 import React, {Component} from 'react';
 import {
@@ -8,13 +7,15 @@ import {
   Alert,
   TouchableOpacity,
   Image,
+  Text,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {Actions} from 'react-native-router-flux';
+import {Modalize} from 'react-native-modalize';
 
 import styles from './styles';
 
-import {Images} from '../../theme';
+import {Images, Metrics} from '../../theme';
 import {request as get_books} from '../../actions/GetBooks';
 import {SpinnerLoader, Header, Card} from '../../components';
 import Util from '../../util';
@@ -28,6 +29,7 @@ class Subjects extends Component {
       bookName: '',
       backgroundImage: null,
       isloading: false,
+      selectedSubjectDetail: null,
       // classId: this.props.login && this.props.login.data && this.props.login.data.data && this.props.login.data.data.class_id
     };
   }
@@ -74,6 +76,20 @@ class Subjects extends Component {
     }
   };
 
+  onPressSubject = (book, classid, bookname, backgroundImage) => {
+    this.setState(
+      {
+        selectedSubjectDetail: {
+          book,
+          classid,
+          bookname,
+          backgroundImage,
+        },
+      },
+      () => this.modalizeRef.open(),
+    );
+  };
+
   getBooks = (book, classid, bookname, backgroundImage) => {
     // const {user} = this.state;
 
@@ -94,6 +110,37 @@ class Subjects extends Component {
       this.setState({isloading: false});
       Alert.alert('Learningwell', 'Please Check Your Internet Connection!');
     }
+  };
+
+  renderModalizeContent = () => {
+    const {selectedSubjectDetail} = this.state;
+    return (
+      <View style={{...styles.modalizeContentContainer}}>
+        <View>
+          <Text style={{...styles.modalizeHeadingText}}>Please Choose</Text>
+          <View style={{...styles.modalizeHeadingUnderline}} />
+        </View>
+        <View style={{...styles.buttonRow}}>
+          <TouchableOpacity
+            style={{...styles.bookBtn}}
+            onPress={() => Actions.BookPdfScreen()}>
+            <Text style={{...styles.bookBtnText}}>Book</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{...styles.lectureBtn}}
+            onPress={() =>
+              this.getBooks(
+                selectedSubjectDetail.book,
+                selectedSubjectDetail.classid,
+                selectedSubjectDetail.bookname,
+                selectedSubjectDetail.backgroundImage,
+              )
+            }>
+            <Text style={{...styles.lectureBtnText}}>Lectures</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
   };
 
   renderOverlaySpinner = () => {
@@ -122,7 +169,7 @@ class Subjects extends Component {
               <Card
                 name={'Mathematics'}
                 onPress={() =>
-                  this.getBooks(
+                  this.onPressSubject(
                     'Math',
                     classId,
                     'Mathematics',
@@ -137,7 +184,12 @@ class Subjects extends Component {
               <Card
                 name={'Urdu'}
                 onPress={() =>
-                  this.getBooks('urdu', classId, 'Urdu', 'urduScreenBackImage')
+                  this.onPressSubject(
+                    'urdu',
+                    classId,
+                    'Urdu',
+                    'urduScreenBackImage',
+                  )
                 }
                 containerStyle={styles.cardContainerStyle}
               />
@@ -147,7 +199,7 @@ class Subjects extends Component {
               <Card
                 name={'Science'}
                 onPress={() =>
-                  this.getBooks(
+                  this.onPressSubject(
                     'Right Science',
                     classId,
                     'Right Science',
@@ -162,7 +214,7 @@ class Subjects extends Component {
               <Card
                 name={'Social Studies'}
                 onPress={() =>
-                  this.getBooks(
+                  this.onPressSubject(
                     'my world',
                     classId,
                     'Social Studies',
@@ -177,7 +229,7 @@ class Subjects extends Component {
               <Card
                 name={'Islamiat'}
                 onPress={() =>
-                  this.getBooks(
+                  this.onPressSubject(
                     'Islam',
                     classId,
                     'Islamiat',
@@ -192,7 +244,7 @@ class Subjects extends Component {
               <Card
                 name={'English'}
                 onPress={() =>
-                  this.getBooks(
+                  this.onPressSubject(
                     'English',
                     classId,
                     'English',
@@ -207,7 +259,7 @@ class Subjects extends Component {
               <Card
                 name={'English Power'}
                 onPress={() =>
-                  this.getBooks(
+                  this.onPressSubject(
                     'English Power',
                     classId,
                     'English Power',
@@ -223,6 +275,18 @@ class Subjects extends Component {
         <TouchableOpacity style={{...styles.moreBtn}}>
           <Image source={Images.moreIcon} style={{...styles.moreIcon}} />
         </TouchableOpacity>
+
+        <Modalize
+          ref={(ref) => (this.modalizeRef = ref)}
+          modalStyle={{...styles.modalStyle}}
+          handleStyle={{...styles.handleStyle}}
+          closeOnOverlayTap={true}
+          handlePosition={'inside'}
+          adjustToContentHeight={false}
+          modalTopOffset={Metrics.screenHeight * 0.6}
+          onClosed={() => this.setState({selectedSubjectDetail: null})}>
+          {this.renderModalizeContent()}
+        </Modalize>
 
         {this.renderOverlaySpinner()}
       </ImageBackground>

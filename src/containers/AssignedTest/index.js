@@ -1,14 +1,75 @@
-// @flow
-import React from 'react';
-import {ImageBackground, ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {ImageBackground, ScrollView, View, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import styles from './styles';
 
 import {Images} from '../../theme';
-import {Header, CustomTable} from '../../components';
+import {Header, CustomTable, SpinnerLoader} from '../../components';
+import {createResource} from '../../config/SimpleApiCalls';
+import {ASSIGNED_TEST_API} from '../../config/WebServices';
 
 const AssignedTest = () => {
+  const [isLoading, setIsLoading] = useState(null);
+  const [user, setUser] = useState(null);
+  const [assignedTest, setAssignedTest] = useState([]);
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      getAssignedTest();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
+
+  const getUserInfo = async () => {
+    try {
+      setIsLoading(true);
+      const value = await AsyncStorage.getItem('@storage_Key');
+      let parsedValue = JSON.parse(value);
+      setIsLoading(false);
+      if (value !== null) {
+        setUser(parsedValue);
+      }
+    } catch (error) {
+      console.log('error ==> ', error);
+      setIsLoading(false);
+    }
+  };
+
+  const getAssignedTest = async () => {
+    let payload = new FormData();
+    payload.append('school_id', user.school_id);
+    payload.append('class_id', user.class_id);
+    payload.append('sec_id', user.section_id);
+
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+
+    try {
+      setIsLoading(true);
+      const result = await createResource(
+        ASSIGNED_TEST_API,
+        payload,
+        null,
+        headers,
+      );
+      console.log(result, 'result');
+      if (result.code === 1) {
+        setAssignedTest(result.assignedtest);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log('error ==> ', error);
+      setIsLoading(false);
+    }
+  };
+
   const tableHead = [
     {
       name: 'Name',
@@ -24,25 +85,7 @@ const AssignedTest = () => {
     },
   ];
 
-  const tableKeys = ['name', 'subject', 'date'];
-
-  const tableData = [
-    {
-      name: 'Test 1',
-      subject: 'Subject 1',
-      date: '30-June-2021',
-    },
-    {
-      name: 'Test 2',
-      subject: 'Subject 2',
-      date: '25-July-2021',
-    },
-    {
-      name: 'Test 3',
-      subject: 'Subject 3',
-      date: '20-August-2021',
-    },
-  ];
+  const tableKeys = ['name', 'book', 'date'];
 
   return (
     <ImageBackground
@@ -57,12 +100,23 @@ const AssignedTest = () => {
       />
 
       <ScrollView style={{...styles.tableContainer}}>
-        <CustomTable
-          tableHead={tableHead}
-          tableData={tableData}
-          tableKeys={tableKeys}
-        />
+        {assignedTest.length > 0 && (
+          <CustomTable
+            tableHead={tableHead}
+            tableData={assignedTest}
+            tableKeys={tableKeys}
+            isDate={true}
+            dateIndex={2}
+          />
+        )}
+
+        {!isLoading && assignedTest.length < 1 && (
+          <View style={{...styles.notFoundContainer}}>
+            <Text style={{...styles.notFoundText}}>No Record Found!</Text>
+          </View>
+        )}
       </ScrollView>
+      <SpinnerLoader isloading={isLoading} />
     </ImageBackground>
   );
 };

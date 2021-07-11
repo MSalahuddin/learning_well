@@ -10,16 +10,21 @@ import {
 } from 'react-native';
 import CountDown from 'react-native-countdown-component';
 import {Actions} from 'react-native-router-flux';
+import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
 
 import styles from './styles';
 
 import {Images, Metrics, Colors} from '../../theme';
 import {Header, SpinnerLoader} from '../../components';
+import {QUIZ_SAVE_API} from '../../config/WebServices';
+import {createResource} from '../../config/SimpleApiCalls';
 
 class QuizScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
       quiz: null,
       questionIndex: 0,
       answer: null,
@@ -28,17 +33,32 @@ class QuizScreen extends Component {
       wrongAnswer: 0,
       isloading: true,
       chapterName: '',
+      chapterId: '',
     };
   }
 
   componentWillMount() {
+    this.getUserInfo();
     this.getData();
   }
+
+  getUserInfo = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@storage_Key');
+      let parsedValue = JSON.parse(value);
+      if (value !== null) {
+        this.setState({user: parsedValue});
+      }
+    } catch (error) {
+      console.log('error ==> ', error);
+    }
+  };
 
   getData = async () => {
     this.setState({
       quiz: this.props.quiz,
       chapterName: this.props.chapterName,
+      chapterId: this.props.chapterId,
       isloading: false,
     });
     try {
@@ -84,7 +104,6 @@ class QuizScreen extends Component {
       unAnswer,
       wrongAnswer,
     } = this.state;
-    const {chapterName, bookName} = this.props;
 
     if (questionIndex + 1 < quiz.length) {
       if (JSON.parse(quiz[questionIndex].answer) === answer) {
@@ -99,6 +118,39 @@ class QuizScreen extends Component {
     if (questionIndex + 1 < quiz.length) {
       this.setState({questionIndex: questionIndex + 1, answer: null});
     } else {
+      this.saveQuiz();
+    }
+  };
+
+  saveQuiz = async () => {
+    const {user, chapterId, correctAnswer, wrongAnswer, unAnswer} = this.state;
+    const {chapterName, bookName} = this.props;
+
+    const totalQuestion = correctAnswer + wrongAnswer + unAnswer;
+    const percentage = (correctAnswer / totalQuestion) * 100;
+    const datetime = `${moment().format('YYYY-MM-DD')} ${moment().format(
+      'h:mm:ss',
+    )}`;
+
+    let payload = new FormData();
+    payload.append('user_id', user.loginid);
+    payload.append('school_id', user.school_id);
+    payload.append('chapter_id', chapterId);
+    payload.append('right_ans', correctAnswer);
+    payload.append('wrong_ans', wrongAnswer);
+    payload.append('un_ans', unAnswer);
+    payload.append('percentage', percentage);
+    // payload.append('datetime', datetime);
+
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+
+    try {
+      this.setState({isloading: true});
+
+      await createResource(QUIZ_SAVE_API, payload, null, headers);
+
       Actions.quizResultScreen({
         CorrectAnswer: correctAnswer,
         WrongAnswer: wrongAnswer,
@@ -106,6 +158,11 @@ class QuizScreen extends Component {
         chapterName,
         bookName,
       });
+
+      this.setState({isloading: false});
+    } catch (error) {
+      console.log('error ==> ', error);
+      this.setState({isloading: false});
     }
   };
 
@@ -123,7 +180,7 @@ class QuizScreen extends Component {
         <View style={{...styles.questionListContainer}}>
           <View style={{...styles.questionView}}>
             <Text style={{...styles.questionText}}>
-              {questionIndex + 1}. {quiz[questionIndex].question_name}
+              {questionIndex + 1}. {quiz[questionIndex].question_name.trim()}
             </Text>
           </View>
           <View style={{...styles.optionContainer}}>
@@ -133,7 +190,7 @@ class QuizScreen extends Component {
               {answer === 1 && <View style={{...styles.radioInnerCircle}} />}
             </TouchableOpacity>
             <Text style={{...styles.optionText}}>
-              {quiz[questionIndex].answer1}
+              {quiz[questionIndex].answer1.trim()}
             </Text>
           </View>
           <View style={{...styles.optionContainer}}>
@@ -143,7 +200,7 @@ class QuizScreen extends Component {
               {answer === 2 && <View style={{...styles.radioInnerCircle}} />}
             </TouchableOpacity>
             <Text style={{...styles.optionText}}>
-              {quiz[questionIndex].answer2}
+              {quiz[questionIndex].answer2.trim()}
             </Text>
           </View>
           <View style={{...styles.optionContainer}}>
@@ -153,7 +210,7 @@ class QuizScreen extends Component {
               {answer === 3 && <View style={{...styles.radioInnerCircle}} />}
             </TouchableOpacity>
             <Text style={{...styles.optionText}}>
-              {quiz[questionIndex].answer3}
+              {quiz[questionIndex].answer3.trim()}
             </Text>
           </View>
           <View style={{...styles.optionContainer}}>
@@ -163,7 +220,7 @@ class QuizScreen extends Component {
               {answer === 4 && <View style={{...styles.radioInnerCircle}} />}
             </TouchableOpacity>
             <Text style={{...styles.optionText}}>
-              {quiz[questionIndex].answer4}
+              {quiz[questionIndex].answer4.trim()}
             </Text>
           </View>
         </View>

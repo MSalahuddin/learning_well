@@ -146,7 +146,7 @@ class LectureScreen extends Component {
       if (quiz.data?.code == 0) {
         Alert.alert('Message', 'There is no question');
       } else {
-        Actions.quizScreen({ quiz: quiz.data.questions, chapterName, bookName });
+        Actions.quizScreen({ quiz: quiz.data.questions, chapterName, chapterId, bookName });
       }
       //    this.setState({quiz: quiz.data.data, isloading: false})
     } catch (ex) {

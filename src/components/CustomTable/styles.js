@@ -45,6 +45,7 @@ export default StyleSheet.create({
   },
   tdText: {
     fontSize: Metrics.ratio(13),
+    textAlign: 'center',
     color: '#6e6e6e',
   },
 });

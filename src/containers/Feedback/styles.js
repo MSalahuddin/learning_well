@@ -35,6 +35,11 @@ export default StyleSheet.create({
     textAlignVertical: 'top',
     padding: Metrics.ratio(16),
   },
+  messageErrorText: {
+    fontSize: Metrics.ratio(12),
+    color: 'red',
+    marginTop: Metrics.ratio(4),
+  },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',

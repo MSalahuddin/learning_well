@@ -15,7 +15,7 @@ class QuizResultScreen extends Component {
         <Text style={{...styles.label}}>{title}</Text>
 
         <Text style={{...styles.value}}>
-          {title === 'Percentage' ? `${value} %` : value}
+          {title === 'Percentage' ? `${value}%` : value}
         </Text>
       </View>
     );
