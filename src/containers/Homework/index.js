@@ -1,17 +1,19 @@
 import React, {useEffect, useState} from 'react';
-import {ImageBackground, ScrollView} from 'react-native';
+import {ImageBackground, ScrollView, View, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import styles from './styles';
 
 import {Images} from '../../theme';
-import {Header, CustomTable} from '../../components';
+import {Header, CustomTable, SpinnerLoader} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
 import {HOMEWORK_API} from '../../config/WebServices';
 
 const Homework = () => {
+  const [isLoading, setIsLoading] = useState(null);
   const [user, setUser] = useState(null);
+  const [homeworks, setHomeworks] = useState([]);
 
   useEffect(() => {
     getUserInfo();
@@ -23,6 +25,21 @@ const Homework = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
+
+  const getUserInfo = async () => {
+    try {
+      setIsLoading(true);
+      const value = await AsyncStorage.getItem('@storage_Key');
+      let parsedValue = JSON.parse(value);
+      setIsLoading(false);
+      if (value !== null) {
+        setUser(parsedValue);
+      }
+    } catch (error) {
+      console.log('error ==> ', error);
+      setIsLoading(false);
+    }
+  };
 
   const getHomework = async () => {
     let payload = new FormData();
@@ -36,27 +53,15 @@ const Homework = () => {
     };
 
     try {
-      const homework = await createResource(
-        HOMEWORK_API,
-        payload,
-        null,
-        headers,
-      );
-      console.log(homework, 'homework');
-    } catch (error) {
-      console.log('error ==> ', error);
-    }
-  };
-
-  const getUserInfo = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@storage_Key');
-      let parsedValue = JSON.parse(value);
-      if (value !== null) {
-        setUser(parsedValue);
+      setIsLoading(true);
+      const result = await createResource(HOMEWORK_API, payload, null, headers);
+      if (result.code === 1) {
+        setHomeworks(result.homework);
       }
+      setIsLoading(false);
     } catch (error) {
       console.log('error ==> ', error);
+      setIsLoading(false);
     }
   };
 
@@ -71,18 +76,7 @@ const Homework = () => {
     },
   ];
 
-  const tableKeys = ['subject', 'date'];
-
-  const tableData = [
-    {
-      subject: 'Subject 1',
-      date: '30-June-2021',
-    },
-    {
-      subject: 'Subject 2',
-      date: '25-July-2021',
-    },
-  ];
+  const tableKeys = ['book_name', 'exp_date'];
 
   return (
     <ImageBackground
@@ -97,12 +91,23 @@ const Homework = () => {
       />
 
       <ScrollView style={{...styles.tableContainer}}>
-        <CustomTable
-          tableHead={tableHead}
-          tableData={tableData}
-          tableKeys={tableKeys}
-        />
+        {homeworks.length > 0 && (
+          <CustomTable
+            tableHead={tableHead}
+            tableData={homeworks}
+            tableKeys={tableKeys}
+            isDate={true}
+            dateIndex={1}
+          />
+        )}
+
+        {!isLoading && homeworks.length < 1 && (
+          <View style={{...styles.notFoundContainer}}>
+            <Text style={{...styles.notFoundText}}>No Record Found!</Text>
+          </View>
+        )}
       </ScrollView>
+      <SpinnerLoader isloading={isLoading} />
     </ImageBackground>
   );
 };

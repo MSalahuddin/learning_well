@@ -31,7 +31,7 @@ const Home = (props) => {
     {
       name: 'Announcement',
       image: Images.announcementIcon,
-      onPress: '',
+      onPress: () => Actions.Announcement(),
     },
     {
       name: 'Subject',

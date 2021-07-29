@@ -24,8 +24,8 @@ class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userId: 'demo_student', //demo_student
-      password: '112233', //112233
+      userId: 'testdev_student', //demo_student
+      password: '123123', //112233
       validationError: { userIdErr: false, passErr: false },
       isloading: false,
     };

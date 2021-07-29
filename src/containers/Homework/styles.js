@@ -12,4 +12,14 @@ export default StyleSheet.create({
   tableContainer: {
     marginTop: Metrics.screenHeight * 0.065,
   },
+  notFoundContainer: {
+    flex: 1,
+    height: Metrics.screenHeight * 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notFoundText: {
+    fontSize: Metrics.ratio(16),
+    color: '#6e6e6e',
+  },
 });

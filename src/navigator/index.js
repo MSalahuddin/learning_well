@@ -1,36 +1,14 @@
-// @flow
 import React from 'react';
-
-import {
-  TouchableOpacity,
-  Image,
-  View,
-  BackHandler,
-  Keyboard,
-  Animated,
-  Easing,
-  BackAndroid,
-} from 'react-native';
+import {BackHandler} from 'react-native';
 import {connect} from 'react-redux';
-
-import {
-  Stack,
-  Scene,
-  Router,
-  Actions,
-  ActionConst,
-  Route,
-  Schema,
-  Drawer,
-} from 'react-native-router-flux';
-import {TabButtonLeft} from '../components';
-import {Colors, Metrics, Images} from '../theme';
+import {Stack, Scene, Router, Actions} from 'react-native-router-flux';
 
 import styles from './styles';
+import DrawerMenu from './DrawerMenu';
+
 import LoginScreen from '../containers/Login';
 import SignupScreen from '../containers/Signup';
 import HomeScreen from '../containers/Home';
-import DrawerMenu from './DrawerMenu';
 import LectureScreen from '../containers/LectureScreen';
 import VideoPlayerScreen from '../containers/VideoPlayerScreen';
 import EditProfileScreen from '../containers/EditProfile';
@@ -44,7 +22,12 @@ import Result from '../containers/Result';
 import AssignedTest from '../containers/AssignedTest';
 import Feedback from '../containers/Feedback';
 import BookPdf from '../containers/BookPdf';
+import Announcement from '../containers/Announcement';
+
+import {TabButtonLeft} from '../components';
+import {Colors} from '../theme';
 import utils from '../util';
+
 function onBackPress() {
   const scene = Actions.currentScene;
   if (scene === 'Home' || scene === 'loginScreen') {
@@ -71,6 +54,7 @@ const auth = (
     tintColor={Colors.primary}
   />
 );
+
 const navigator = Actions.create(
   <Stack
     titleStyle={styles.title}
@@ -232,6 +216,17 @@ const navigator = Actions.create(
       hideNavBar
       key="BookPdfScreen"
       component={BookPdf}
+      renderLeftButton={() => (
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
+      )}
+    />
+
+    <Scene
+      tintColor="white"
+      title={'Announcement'}
+      hideNavBar
+      key="Announcement"
+      component={Announcement}
       renderLeftButton={() => (
         <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
