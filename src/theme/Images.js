@@ -9,13 +9,17 @@ const homeBackgroundImage2 = require('../assets/homeBackground2.png');
 const sidemenuIcon = require('../assets/icons/sideMenuIcon.png');
 const sideMenuIcon2 = require('../assets/icons/sideMenuIcon2.png');
 const sidemenuBackground = require('../assets/sidemenuBackground.png');
+const sidemenuBackground2 = require('../assets/sidemenuBackground2.jpg');
 const sidemenuProfileIcon = require('../assets/sidemenuProfilePicIcon.png');
 const sidemenuArrowIcon = require('../assets/sidemenuArrowIcon.png');
+const sidemenuArrowIcon2 = require('../assets/sidemenuArrowIcon2.png');
 const sidemenuCallIcon = require('../assets/sidemenuCallIcon.png');
+const sidemenuCallIcon2 = require('../assets/sidemenuCallIcon2.png');
 const sidemenuFileIcon = require('../assets/sidemenuFileIcon.png');
 const sidemenuBellIcon = require('../assets/sidemenuBellIcon.png');
 const sidemenuButtonImage = require('../assets/sidemenuButtonImage.png');
 const sidemenuSendImage = require('../assets/sidemenuSendIcon.png');
+const sidemenuSendImage2 = require('../assets/sidemenuSendIcon2.png');
 const logout_icon = require('../assets/log-out.png');
 
 //course background
@@ -110,12 +114,16 @@ export default {
   english_power,
   //side menu
   sidemenuBackground,
+  sidemenuBackground2,
   sidemenuProfileIcon,
   sidemenuArrowIcon,
+  sidemenuArrowIcon2,
   sidemenuCallIcon,
+  sidemenuCallIcon2,
   sidemenuFileIcon,
   sidemenuBellIcon,
   sidemenuSendImage,
+  sidemenuSendImage2,
   sidemenuButtonImage,
   logout_icon,
   // editProfile

@@ -1,7 +1,7 @@
 // @flow
-import { connect } from "react-redux";
-import React, { Component } from "react";
-import _ from "lodash";
+import {connect} from 'react-redux';
+import React, {Component} from 'react';
+import _ from 'lodash';
 import {
   View,
   ScrollView,
@@ -10,38 +10,39 @@ import {
   Text,
   AsyncStorage,
   ImageBackground,
-  Platform
-} from "react-native";
-import {Actions} from "react-native-router-flux";
-import { Metrics, Colors, Images } from "../../theme";
+  Platform,
+} from 'react-native';
+import {Actions} from 'react-native-router-flux';
+import {Metrics, Colors, Images} from '../../theme';
 // import Icon from "react-native-vector-icons/FontAwesome";
-import styles from "./styles";
+import styles from './styles';
 //import { logout as logout_user } from "../../actions/Login";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { logout as logout_user } from "../../actions/Login";
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {logout as logout_user} from '../../actions/Login';
 import Share from 'react-native-share';
-import  utils  from "../../util";
+import utils from '../../util';
 
-const url = 'https://play.google.com/store/apps/details?id=com.learning_well&hl=en';
+const url =
+  'https://play.google.com/store/apps/details?id=com.learning_well&hl=en';
 const title = 'Learning Well';
 const message = 'Please check the app';
 const options = Platform.select({
   ios: {
     activityItemSources: [
       {
-        placeholderItem: { type: 'url', content: url },
+        placeholderItem: {type: 'url', content: url},
         item: {
-          default: { type: 'url', content: url },
+          default: {type: 'url', content: url},
         },
         subject: {
           default: title,
         },
-        linkMetadata: { originalUrl: url, url, title },
+        linkMetadata: {originalUrl: url, url, title},
       },
       {
-        placeholderItem: { type: 'text', content: message },
+        placeholderItem: {type: 'text', content: message},
         item: {
-          default: { type: 'text', content: message },
+          default: {type: 'text', content: message},
           message: null, // Specify no text to share via Messages app.
         },
       },
@@ -60,70 +61,63 @@ class Sidebar extends Component {
 
     this.state = {
       //   isAccountExpand: false,
-        user:null
-          
+      user: null,
     };
   }
 
-   componentWillMount() {
-    this.getData()
+  componentWillMount() {
+    this.getData();
   }
 
-   getData = async () => {
+  getData = async () => {
     try {
       const value = await AsyncStorage.getItem('@storage_Key');
-      let user = JSON.parse(value)
+      let user = JSON.parse(value);
       if (value !== null) {
-        this.setState({user: user})
+        this.setState({user: user});
       }
     } catch (e) {
       console.log(e);
     }
   };
 
-  logout = () => {
-    
-  }
+  logout = () => {};
 
   onLogout = async () => {
     utils.showYesNoMessage(
-      "Confirm",
-      "Do you want to logout",
+      'Confirm',
+      'Do you want to logout',
       async () => {
         try {
-          await AsyncStorage.setItem('@storage_Key', "");
-          this.props.logout_user("API_LOGOUT");
+          await AsyncStorage.setItem('@storage_Key', '');
+          this.props.logout_user('API_LOGOUT');
           this.props.navigation.closeDrawer();
           setTimeout(() => {
-            Actions.loginScreen({ type:'replace' });
+            Actions.loginScreen({type: 'replace'});
             // this.props.navigation.navigate("loginScreen", {
             //   screen: "loginScreen",
             //   isLogout: true
             // });
-          }, 1000)
+          }, 1000);
           // this.props.updateUser(user)
         } catch (e) {
-          console.log(e,'kkkkkkkklllllllllll')
+          console.log(e, 'kkkkkkkklllllllllll');
           // saving error
         }
       },
-      () => {}
+      () => {},
     );
-    
   };
 
   navigateContactus = () => {
-    this.props.navigation.navigate("contactUsScreen", {
-      screen: "contactUsScreen",
+    this.props.navigation.navigate('contactUsScreen', {
+      screen: 'contactUsScreen',
     });
-    
-  }
+  };
 
   navigateShareApp = () => {
     Share.open(options);
-  }
-
-
+  };
 
   // navigateAgency = () => {
   //   // this.props.get_products("products");
@@ -195,9 +189,8 @@ class Sidebar extends Component {
         style={{
           width: Metrics.screenWidth * 0.62,
           height: Metrics.ratio(1.5),
-
           marginLeft: Metrics.screenWidth * 0.18,
-          backgroundColor: "grey"
+          backgroundColor: '#EEE',
         }}
       />
     );
@@ -227,81 +220,78 @@ class Sidebar extends Component {
   // };
 
   renderMenuHeader = () => {
-    const {login} = this.props
+    const {login} = this.props;
     const {user} = this.state;
     return (
       <View
         style={{
           width: Metrics.screenWidth * 0.8,
           height: Metrics.screenHeight * 0.22,
-          flexDirection: "row",
-          alignItems: "center"
-        }}
-      >
-       <TouchableOpacity onPress = {() => {
-         this.props.navigation.navigate("editProfileScreen", {
-         screen: "editProfileScreen",
-         });
-    }}>
-       <Image
-          style={{
-            width: Metrics.ratio(75),
-            height: Metrics.ratio(75),
-            borderRadius: 100,
-            marginHorizontal: Metrics.ratio(10),
-            backgroundColor: "white",
-            elevation: 8
-          }}
-          source = {Images.sidemenuProfileIcon}
-        />
-       </TouchableOpacity>
+          flexDirection: 'row',
+          alignItems: 'center',
+        }}>
+        <TouchableOpacity
+          onPress={() => {
+            this.props.navigation.navigate('editProfileScreen', {
+              screen: 'editProfileScreen',
+            });
+          }}>
+          <Image
+            style={{
+              width: Metrics.ratio(75),
+              height: Metrics.ratio(75),
+              borderRadius: 100,
+              marginHorizontal: Metrics.ratio(10),
+              backgroundColor: 'white',
+              elevation: 8,
+            }}
+            source={Images.sidemenuProfileIcon}
+          />
+        </TouchableOpacity>
         <View
           style={{
             width: Metrics.screenWidth * 0.35,
-            justifyContent: "center"
-          }}
-        >
-          <View style = {{flexDirection: 'row', width: Metrics.screenWidth * 0.3}}>
-            {user && <Text
-              style={{
-                color: "black",
-                fontSize: Metrics.ratio(16),
-                fontWeight: "bold"
-              }}
-            >
-              {user && user.fullname}
-             {/* {user && user.first_name && user.first_name }
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{flexDirection: 'row', width: Metrics.screenWidth * 0.3}}>
+            {user && (
+              <Text
+                style={{
+                  color: '#FFFFFF',
+                  fontSize: Metrics.ratio(16),
+                  fontWeight: 'bold',
+                }}>
+                {user && user.fullname}
+                {/* {user && user.first_name && user.first_name }
               {" "}
               {user && user.last_name && user.last_name } */}
-              {/* {login && login.data && login.data.data && login.data.data.first_name && login.data.data.first_name }{" "}
+                {/* {login && login.data && login.data.data && login.data.data.first_name && login.data.data.first_name }{" "}
               {login && login.data && login.data.data && login.data.data.last_name && login.data.data.last_name } */}
-            </Text>}
-            
-           
-            </View>
+              </Text>
+            )}
+          </View>
           <Text
             style={{
               fontSize: Metrics.ratio(16),
-              color: "black"
-            }}
-          >
+              color: '#FFFFFF',
+            }}>
             class {user && user.class_id && user.class_id}
           </Text>
         </View>
         {/*  */}
-        <TouchableOpacity onPress = {() => this.props.navigation.closeDrawer()}>
-        <Image
-          style={{
-            width: Metrics.ratio(40),
-            height: Metrics.ratio(40),
-            borderRadius: 100,
-            backgroundColor: Colors.darkStaleBlue,
-            marginLeft: Metrics.ratio(10),
-          }}
-          source = {Images.sidemenuArrowIcon}
-          
-        />
-        </TouchableOpacity>  
+        <TouchableOpacity onPress={() => this.props.navigation.closeDrawer()}>
+          <Image
+            style={{
+              width: Metrics.ratio(40),
+              height: Metrics.ratio(40),
+              borderRadius: 100,
+              // backgroundColor: Colors.darkStaleBlue,
+              marginLeft: Metrics.ratio(10),
+            }}
+            source={Images.sidemenuArrowIcon2}
+          />
+        </TouchableOpacity>
       </View>
     );
   };
@@ -310,21 +300,27 @@ class Sidebar extends Component {
     return (
       <TouchableOpacity style={[styles.listView]} onPress={onPress}>
         <Image
-          style={[{
-            width: Metrics.ratio(20),
-            height: Metrics.ratio(20),
-            marginLeft: Metrics.ratio(20)
-          }, title === 'Notifications' && {
-            width: Metrics.ratio(23),
-            height: Metrics.ratio(28)}]}
-          source = {icon}
+          style={[
+            {
+              width: Metrics.ratio(20),
+              height: Metrics.ratio(20),
+              marginLeft: Metrics.ratio(20),
+            },
+            title === 'Notifications' && {
+              width: Metrics.ratio(23),
+              height: Metrics.ratio(28),
+            },
+          ]}
+          source={icon}
         />
 
         <View
           style={{
-            justifyContent: "center"
-          }}
-        >
+            justifyContent: 'center',
+            marginLeft: Metrics.ratio(25),
+            height: Metrics.ratio(32),
+            flex: 1,
+          }}>
           <Text style={[styles.listTitle]}>{title}</Text>
         </View>
       </TouchableOpacity>
@@ -335,21 +331,28 @@ class Sidebar extends Component {
     return (
       <View
         style={{
-          flex: 1
-        }}
-      >
+          flex: 1,
+        }}>
         {/* {this.renderRow("Notifications", this.navigateActivityLogs, Images.sidemenuBellIcon)} */}
-       
-        {/* {this.renderSeparator()} */}
-       
-        {this.renderRow("Share The App", this.navigateShareApp, Images.sidemenuSendImage)}
-       
-        {/* {this.renderSeparator()} */}
 
-        {this.renderRow("Contact Us", this.navigateContactus, Images.sidemenuCallIcon)}
-        
-        {/* {this.renderSeparator()} */}
-        
+        {this.renderSeparator()}
+
+        {this.renderRow(
+          'Share The App',
+          this.navigateShareApp,
+          Images.sidemenuSendImage2,
+        )}
+
+        {this.renderSeparator()}
+
+        {this.renderRow(
+          'Contact Us',
+          this.navigateContactus,
+          Images.sidemenuCallIcon2,
+        )}
+
+        {this.renderSeparator()}
+
         {/* {this.renderRow(
           "Terms & Conditions",
           this.navigateActivityLogs,
@@ -364,55 +367,72 @@ class Sidebar extends Component {
   };
 
   render() {
-    const { appConfig } = this.props;
+    const {appConfig} = this.props;
 
     return (
-      <ImageBackground 
-      resizeMode="auto"
-      resizeMode="stretch" source={Images.sidemenuBackground} style={styles.container}>
+      <ImageBackground
+        resizeMode="auto"
+        resizeMode="stretch"
+        source={Images.sidemenuBackground2}
+        style={styles.container}>
         {this.renderMenuHeader()}
         {/* {this.renderSeparator()} */}
         {this.renderBody()}
-       <TouchableOpacity onPress = {() => this.onLogout()}>
-       <ImageBackground
+        <TouchableOpacity
+          style={{
+            backgroundColor: Colors.Venice_Blue,
+            width: Metrics.ratio(260),
+            height: Metrics.ratio(50),
+            borderRadius: Metrics.ratio(30),
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+            marginBottom: Metrics.ratio(40),
+            marginLeft: Metrics.screenWidth * 0.04,
+          }}>
+          <Text
+            style={{
+              color: 'white',
+              marginLeft: Metrics.ratio(5),
+              fontSize: Metrics.ratio(14),
+            }}>
+            Logout
+          </Text>
+        </TouchableOpacity>
+        {/* <TouchableOpacity onPress={() => this.onLogout()}>
+          <ImageBackground
             style={{
               width: Metrics.ratio(260),
               height: Metrics.ratio(50),
               borderRadius: Metrics.ratio(30),
-              justifyContent: "center",
-              alignItems: "center",
-              flexDirection: "row",
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'row',
               marginBottom: Metrics.ratio(40),
-              marginLeft: Metrics.screenWidth * 0.04
-              
+              marginLeft: Metrics.screenWidth * 0.04,
             }}
-            source = {Images.sidemenuButtonImage}
-            
-          >
-            <Image style = {{width: 25,  height: 25}} source = {Images.logout_icon}/>
-            {/* <Icon style={{}} size={25} color={Colors.white} name={"chevron-left"} /> */}
+            source={Images.sidemenuButtonImage}>
+            <Image
+              style={{width: 25, height: 25}}
+              source={Images.logout_icon}
+            />
             <Text
               style={{
-                color: "white",
+                color: 'white',
                 marginLeft: Metrics.ratio(5),
-                fontSize: Metrics.ratio(14)
-              }}
-            >
+                fontSize: Metrics.ratio(14),
+              }}>
               Logout
             </Text>
           </ImageBackground>
-       </TouchableOpacity>
-         
+        </TouchableOpacity> */}
       </ImageBackground>
     );
   }
 }
 
-const mapStateToProps = state => ({login: state.login});
+const mapStateToProps = (state) => ({login: state.login});
 
 const actions = {logout_user};
 
-export default connect(
-  mapStateToProps,
-  actions
-)(Sidebar);
+export default connect(mapStateToProps, actions)(Sidebar);
