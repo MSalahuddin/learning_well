@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import React, {Component} from 'react';
 import {
   Text,
   View,
@@ -9,20 +9,19 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 import ProgressImage from 'react-native-image-progress';
 import AsyncStorage from '@react-native-community/async-storage';
-import _ from 'underscore';
 
 import styles from './styles';
 
-import { Images, Metrics, Colors } from '../../theme';
-import { drawerMenuSwitched as navigationChanged } from '../../actions/navigationActions';
-import { request as get_all_chapters } from '../../actions/GetChapters';
-import { request as get_books } from '../../actions/GetBooks';
-import { SpinnerLoader, Header } from '../../components';
-import { get_quiz_API } from '../../config/WebServices';
+import {Images, Metrics, Colors} from '../../theme';
+import {drawerMenuSwitched as navigationChanged} from '../../actions/navigationActions';
+import {request as get_all_chapters} from '../../actions/GetChapters';
+import {request as get_books} from '../../actions/GetBooks';
+import {SpinnerLoader, Header} from '../../components';
+import {get_quiz_API} from '../../config/WebServices';
 import Util from '../../util';
 
 class LectureScreen extends Component {
@@ -52,7 +51,7 @@ class LectureScreen extends Component {
         !nextProps.getChapter.isFetching &&
         nextProps.getChapter.data.code == 1
       ) {
-        let updateResponse = { ...nextProps?.getChapter?.data };
+        let updateResponse = {...nextProps?.getChapter?.data};
         updateResponse.animationResult = updateResponse.animationResult
           ? updateResponse.animationResult
           : [];
@@ -62,7 +61,7 @@ class LectureScreen extends Component {
           chapterGroup = updateResponse?.animationResult.filter((animation) => {
             return animation.ChapterId == chap.id;
           });
-          return Object.assign({}, chap, { animation: chapterGroup });
+          return Object.assign({}, chap, {animation: chapterGroup});
         });
 
         let lecture =
@@ -99,11 +98,11 @@ class LectureScreen extends Component {
                 animationLength += 1;
               }
             });
-            this.setState({ animationLength });
+            this.setState({animationLength});
           },
         );
       } else if (nextProps.login.failure && !nextProps.login.isFetching) {
-        this.setState({ isloading: false });
+        this.setState({isloading: false});
       }
     }
   }
@@ -113,7 +112,7 @@ class LectureScreen extends Component {
       const value = await AsyncStorage.getItem('@storage_Key');
       let user = JSON.parse(value);
       if (value !== null) {
-        this.setState({ user: user }, () => {
+        this.setState({user: user}, () => {
           this.getAllLecture();
         });
       }
@@ -123,37 +122,41 @@ class LectureScreen extends Component {
   };
 
   getAllLecture = () => {
-    const { book } = this.props;
-    const { user } = this.state;
-    let accessToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTMsImVtYWlsIjoidGVzdHVzZXJAbWFzb2xvZ3kuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkOVJSbzhVZWRzYm9LMmRoMUkvLnlRLkNIYjd5akZkME5ieUt3R0VaUzJqU0FGR1VPZjA5MHEiLCJpYXQiOjE1ODg3MDc4NDV9.sdCXG0bJf7zeT5SsyNb1eL7ka6jA_NJJhkNN8khNrrA';
+    const {bookId} = this.props;
+    // const {user} = this.state;
+    // let accessToken =
+    // 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTMsImVtYWlsIjoidGVzdHVzZXJAbWFzb2xvZ3kuY29tIiwicGFzc3dvcmQiOiIkMmIkMTAkOVJSbzhVZWRzYm9LMmRoMUkvLnlRLkNIYjd5akZkME5ieUt3R0VaUzJqU0FGR1VPZjA5MHEiLCJpYXQiOjE1ODg3MDc4NDV9.sdCXG0bJf7zeT5SsyNb1eL7ka6jA_NJJhkNN8khNrrA';
     // user && user.access_token;//login.data && login.data.data && login.data.data.access_token;
-    let bookId = book.Id;
-    let payload = { accessToken, bookId };
+    // let bookId = book.Id;
+    let payload = {bookId};
     if (Util.isConnected()) {
       this.props.get_all_chapters(payload);
     } else {
-      this.setState({ isloading: false });
+      this.setState({isloading: false});
       Alert.alert('Learningwell', 'Please Check Your Internet Connection!');
     }
   };
 
   navigateQuiz = async (chapterId, chapterName) => {
-    const { bookName } = this.props;
+    const {bookName} = this.props;
     try {
       const quiz = await this.getQuiz(chapterId);
-      console.log("🚀 ~ file: index.js ~ line 145 ~ LectureScreen ~ navigateQuiz= ~ quiz", quiz)
       if (quiz.data?.code == 0) {
         Alert.alert('Message', 'There is no question');
       } else {
-        Actions.quizScreen({ quiz: quiz.data.questions, chapterName, chapterId, bookName });
+        Actions.quizScreen({
+          quiz: quiz.data.questions,
+          chapterName,
+          chapterId,
+          bookName,
+        });
       }
       //    this.setState({quiz: quiz.data.data, isloading: false})
     } catch (ex) {
       if (ex && ex.data && ex.data.message) {
         Alert.alert('', ex.data.message);
       }
-      this.setState({ isloading: false });
+      this.setState({isloading: false});
     }
   };
 
@@ -179,7 +182,7 @@ class LectureScreen extends Component {
   };
 
   renderOverlaySpinner = () => {
-    const { isloading } = this.state;
+    const {isloading} = this.state;
     return <SpinnerLoader isloading={isloading} />;
   };
 
@@ -198,15 +201,15 @@ class LectureScreen extends Component {
           <Text style={styles.chapterVideoHeading}>{item.topic}</Text>
         ) : null}
         <TouchableOpacity
-          style={{ ...styles.chapterVideoContainer }}
+          style={{...styles.chapterVideoContainer}}
           onPress={() => {
             this.props.navigationChanged('', 'videoPlayer');
-            Actions.videoPlayerScreen({ lecture: item });
+            Actions.videoPlayerScreen({lecture: item});
           }}>
           <ProgressImage
             resizeMode={'stretch'}
-            style={{ ...styles.chapterVideoProgressImage }}
-            source={{ uri: `https://learningwell.pk/${item.ThumbPath}` }}
+            style={{...styles.chapterVideoProgressImage}}
+            source={{uri: `https://learningwell.pk/${item.ThumbPath}`}}
             indicatorProps={{
               borderWidth: 0,
               color: Colors.Venice_Blue,
@@ -219,7 +222,7 @@ class LectureScreen extends Component {
   };
 
   renderChapterList = () => {
-    const { chapWithAnimation } = this.state;
+    const {chapWithAnimation} = this.state;
     return (
       <ScrollView>
         <View style={{}}>
@@ -244,7 +247,7 @@ class LectureScreen extends Component {
                   />
                 )}
 
-                <View style={{ ...styles.chapterVideoBtnContainer }}>
+                <View style={{...styles.chapterVideoBtnContainer}}>
                   <TouchableOpacity
                     style={{
                       ...styles.chapterVideoBtn,
@@ -253,7 +256,7 @@ class LectureScreen extends Component {
                     onPress={() => {
                       this.navigateQuiz(chap.id, chap.name);
                     }}>
-                    <Text style={{ ...styles.chapterVideoBtnText }}>Quiz</Text>
+                    <Text style={{...styles.chapterVideoBtnText}}>Quiz</Text>
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={{
@@ -261,7 +264,7 @@ class LectureScreen extends Component {
                       marginLeft: Metrics.ratio(8),
                     }}
                     onPress={() => Actions.exercises()}>
-                    <Text style={{ ...styles.chapterVideoBtnText }}>
+                    <Text style={{...styles.chapterVideoBtnText}}>
                       Exercise
                     </Text>
                   </TouchableOpacity>
@@ -275,7 +278,7 @@ class LectureScreen extends Component {
   };
 
   render() {
-    const { lecture, chapters, animationLength } = this.state;
+    const {lecture, chapters, animationLength} = this.state;
     return (
       <ImageBackground
         source={Images.homeBackgroundImage2}
@@ -288,14 +291,14 @@ class LectureScreen extends Component {
           rightImageStyle={styles.rightImageStyle}
         />
 
-        <View style={{ ...styles.courseNameContainer }}>
-          <Text style={{ ...styles.courseName }}>{this.props.bookName}</Text>
-          <Text style={{ ...styles.courseDetails }}>
+        <View style={{...styles.courseNameContainer}}>
+          <Text style={{...styles.courseName}}>{this.props.bookName}</Text>
+          <Text style={{...styles.courseDetails}}>
             {chapters?.length} Chapters | {animationLength} Videos
           </Text>
         </View>
 
-        <View style={{ ...styles.lectureContainer }}>
+        <View style={{...styles.lectureContainer}}>
           {lecture && this.renderChapterList()}
         </View>
 

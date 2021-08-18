@@ -12,6 +12,7 @@ export default StyleSheet.create({
   },
   cardContainerStyle: {
     height: Metrics.screenWidth * 0.25,
+    paddingHorizontal: Metrics.ratio(16),
   },
   cardListContainer: {
     flexDirection: 'row',
@@ -21,7 +22,7 @@ export default StyleSheet.create({
   moreBtn: {
     alignSelf: 'center',
     padding: Metrics.ratio(8),
-    marginVertical: Metrics.ratio(24),
+    marginVertical: Metrics.ratio(8),
   },
   moreIcon: {
     width: Metrics.ratio(40),
@@ -85,6 +86,16 @@ export default StyleSheet.create({
   },
   lectureBtnText: {
     fontSize: Metrics.ratio(14),
-    color: Colors.black,
+  },
+  notFoundContainer: {
+    flex: 1,
+    height: Metrics.screenHeight * 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notFoundText: {
+    fontSize: Metrics.ratio(16),
+    color: '#6e6e6e',
+    textAlign: 'center',
   },
 });

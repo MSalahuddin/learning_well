@@ -29,5 +29,6 @@ export default StyleSheet.create({
   },
   nameStyle: {
     fontSize: Metrics.ratio(14),
+    textAlign: 'center',
   },
 });

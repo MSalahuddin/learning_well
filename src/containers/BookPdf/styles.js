@@ -20,6 +20,10 @@ export default StyleSheet.create({
     width: Metrics.ratio(30),
     height: Metrics.ratio(30),
   },
+  bookNameContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
   bookName: {
     fontSize: Metrics.ratio(32),
     fontWeight: 'bold',
@@ -29,5 +33,16 @@ export default StyleSheet.create({
   pdfStyle: {
     width: Metrics.screenWidth,
     height: Metrics.screenHeight,
+  },
+  notFoundContainer: {
+    flex: 1,
+    height: Metrics.screenHeight * 0.5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notFoundText: {
+    fontSize: Metrics.ratio(16),
+    color: '#6e6e6e',
+    textAlign: 'center',
   },
 });

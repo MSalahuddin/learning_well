@@ -16,17 +16,20 @@ import {SpinnerLoader} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
 import {BOOK_PDF_API} from '../../config/WebServices';
 
-const BookPdf = () => {
+const BookPdf = (props) => {
+  const {bookId, bookName} = props;
+
   const [isLoading, setIsLoading] = useState(null);
   const [bookPdf, setBookPdf] = useState(null);
 
   useEffect(() => {
     getBookPdf();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getBookPdf = async () => {
     let payload = new FormData();
-    payload.append('book_id', 64);
+    payload.append('book_id', bookId);
 
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -60,7 +63,11 @@ const BookPdf = () => {
             style={{...styles.leftBtnImage}}
           />
         </TouchableOpacity>
-        <Text style={{...styles.bookName}}>MathStep-6</Text>
+        <View style={{...styles.bookNameContainer}}>
+          <Text numberOfLines={1} style={{...styles.bookName}}>
+            {bookName}
+          </Text>
+        </View>
       </View>
 
       {bookPdf ? (
@@ -84,6 +91,14 @@ const BookPdf = () => {
           style={{...styles.pdfStyle}}
         />
       ) : null}
+
+      {!isLoading && !bookPdf && (
+        <View style={{...styles.notFoundContainer}}>
+          <Text style={{...styles.notFoundText}}>
+            {'Sorry, something went wrong.\nNo Pdf file found.'}
+          </Text>
+        </View>
+      )}
 
       <SpinnerLoader isloading={isLoading} />
     </ImageBackground>

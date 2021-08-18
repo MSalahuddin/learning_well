@@ -4,6 +4,8 @@ import SplashScreen from 'react-native-splash-screen';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 
+import 'react-native-gesture-handler';
+
 import configureStore from './store';
 import AppNavigator from './navigator';
 
