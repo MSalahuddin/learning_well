@@ -19,11 +19,16 @@ export default StyleSheet.create({
     height: Metrics.ratio(30),
   },
   headerTextContainerStyle: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   headerTextStyle: {
     fontSize: Metrics.ratio(24),
+    color: Colors.white,
+  },
+  headerSubTextStyle: {
+    fontSize: Metrics.ratio(10),
     color: Colors.white,
   },
   rightImageContainerStyle: {

@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {ImageBackground, ScrollView, View, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
 
 import styles from './styles';
 
 import {Images} from '../../theme';
-import {Header, CustomTable, SpinnerLoader} from '../../components';
+import {Header, ListCard, SpinnerLoader} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
 import {HOMEWORK_API} from '../../config/WebServices';
 
@@ -65,41 +66,31 @@ const Homework = () => {
     }
   };
 
-  const tableHead = [
-    {
-      name: 'Subject',
-      image: Images.editPen,
-    },
-    {
-      name: 'Submission Date',
-      image: Images.dateTable,
-    },
-  ];
-
-  const tableKeys = ['book_name', 'exp_date'];
-
   return (
     <ImageBackground
       resizeMode={'cover'}
-      source={Images.homeBackgroundImage2}
+      source={Images.homeBackgroundImage3}
       style={styles.container}>
       <Header
         leftImage={Images.backArrowIcon2}
         leftBtnPress={() => Actions.pop()}
-        rightImage={Images.homeworkNavIcon}
-        rightImageStyle={styles.rightImageStyle}
+        headerText={'Homework'}
+        headerTextStyle={{...styles.headerTextStyle}}
       />
 
       <ScrollView style={{...styles.tableContainer}}>
-        {homeworks.length > 0 && (
-          <CustomTable
-            tableHead={tableHead}
-            tableData={homeworks}
-            tableKeys={tableKeys}
-            isDate={true}
-            dateIndex={1}
-          />
-        )}
+        {homeworks.length > 0 &&
+          homeworks.map((val) => {
+            return (
+              <ListCard
+                centerText={val.book_name}
+                centerTextStyle={{...styles.centerTextStyle}}
+                rightText={`Submission Date: ${moment(val.exp_date).format(
+                  'DD-MMM-YYYY',
+                )}`}
+              />
+            );
+          })}
 
         {!isLoading && homeworks.length < 1 && (
           <View style={{...styles.notFoundContainer}}>

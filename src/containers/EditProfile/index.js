@@ -68,7 +68,7 @@ class EditProfileScreen extends Component {
     return (
       <View style={{...styles.headerBannerContainer}}>
         <Image
-          source={Images.editProfileHeaderIcon}
+          source={Images.editProfileHeaderIcon2}
           style={{...styles.headerBannerImage}}
           resizeMode="cover"
         />
@@ -76,8 +76,6 @@ class EditProfileScreen extends Component {
       </View>
     );
   };
-
-  renderSeprator = () => <View style={{...styles.seprator}} />;
 
   renderAccountDetail = () => {
     const {user} = this.state;
@@ -88,7 +86,7 @@ class EditProfileScreen extends Component {
         <View style={{...styles.phoneNumContainer}}>
           <Image
             resizeMode={'contain'}
-            source={Images.sidemenuCallIcon}
+            source={Images.sidemenuCallIcon2}
             style={{...styles.phoneNumIcon}}
           />
           <Text style={{...styles.phoneNumText}}>{mobile_no}</Text>
@@ -110,7 +108,7 @@ class EditProfileScreen extends Component {
       <View style={{...styles.profileItemContainer}}>
         <Image
           resizeMode={'contain'}
-          source={Images.sidemenuCallIcon}
+          source={Images.usernameIcon}
           style={{...styles.profileItemIcon}}
         />
         <TextInput
@@ -132,7 +130,7 @@ class EditProfileScreen extends Component {
       <View style={{...styles.profileItemContainer}}>
         <Image
           resizeMode={'contain'}
-          source={Images.envelopIcon}
+          source={Images.envelopIcon2}
           style={{...styles.profileItemIcon}}
         />
         <TextInput
@@ -157,7 +155,7 @@ class EditProfileScreen extends Component {
           onPress={() => this.onLogout()}>
           <Image
             resizeMode={'contain'}
-            source={Images.logoutIcon}
+            source={Images.logoutIcon2}
             style={{...styles.signOutIcon}}
           />
           <Text style={{...styles.signOutText}}>Sign out</Text>
@@ -170,7 +168,7 @@ class EditProfileScreen extends Component {
     const {user} = this.state;
     return (
       <ImageBackground
-        source={Images.homeBackgroundImage2}
+        source={Images.homeBackgroundImage3}
         resizeMode="cover"
         style={{...styles.container}}>
         <Header
@@ -181,8 +179,6 @@ class EditProfileScreen extends Component {
         {user && this.renderHeader()}
 
         {user && this.renderAccountDetail()}
-
-        {this.renderSeprator()}
 
         {this.renderProfileDetails()}
 

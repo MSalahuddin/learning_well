@@ -5,15 +5,14 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
-  rightImageStyle: {
-    width: Metrics.ratio(125),
-    height: Metrics.ratio(50),
+  headerTextStyle: {
+    fontWeight: 'bold',
   },
   headingContainer: {
     width: Metrics.screenWidth,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: Metrics.ratio(20),
+    marginTop: Metrics.screenHeight * 0.03,
   },
   thankContainer: {
     flexDirection: 'row',
@@ -27,11 +26,12 @@ export default StyleSheet.create({
   thankText: {
     marginLeft: Metrics.ratio(10),
     fontSize: Metrics.ratio(22),
-    color: Colors.white,
+    color: Colors.black,
   },
   thankMsg: {
     fontSize: Metrics.ratio(12),
-    color: Colors.white,
+    color: Colors.black,
+    fontWeight: 'bold',
   },
   listContainer: {
     marginTop: Metrics.ratio(48),
@@ -43,14 +43,14 @@ export default StyleSheet.create({
   label: {
     flex: 1,
     fontSize: Metrics.ratio(14),
-    color: Colors.black,
+    color: '#808080',
     marginHorizontal: Metrics.ratio(16),
     textAlign: 'right',
   },
   value: {
     flex: 1.5,
     fontSize: Metrics.ratio(14),
-    color: Colors.black,
+    color: '#808080',
     marginHorizontal: Metrics.ratio(16),
     textAlign: 'left',
   },

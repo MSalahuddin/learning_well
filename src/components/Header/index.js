@@ -7,8 +7,10 @@ import styles from './styles';
 const Header = (props) => {
   const {
     headerText,
+    headerSubText,
     headerTextContainerStyle,
     headerTextStyle,
+    headerSubTextStyle,
     leftImage,
     leftImageContainerStyle,
     leftImageStyle,
@@ -20,7 +22,7 @@ const Header = (props) => {
   } = props;
 
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container}}>
       <TouchableOpacity
         disabled={!leftBtnPress}
         style={{...styles.leftImageContainerStyle, ...leftImageContainerStyle}}
@@ -37,9 +39,16 @@ const Header = (props) => {
           ...styles.headerTextContainerStyle,
           ...headerTextContainerStyle,
         }}>
-        <Text style={{...styles.headerTextStyle, ...headerTextStyle}}>
+        <Text
+          numberOfLines={1}
+          style={{...styles.headerTextStyle, ...headerTextStyle}}>
           {headerText}
         </Text>
+        {headerSubText ? (
+          <Text style={{...styles.headerSubTextStyle, ...headerSubTextStyle}}>
+            {headerSubText}
+          </Text>
+        ) : null}
       </View>
 
       <TouchableOpacity
@@ -61,8 +70,10 @@ const Header = (props) => {
 
 Header.defaultProps = {
   headerText: '',
+  headerSubText: '',
   headerTextContainerStyle: {},
   headerTextStyle: {},
+  headerSubTextStyle: {},
   leftImage: undefined,
   leftImageContainerStyle: {},
   leftImageStyle: {},
@@ -75,8 +86,10 @@ Header.defaultProps = {
 
 Header.propTypes = {
   headerText: PropTypes.string,
+  headerSubText: PropTypes.string,
   headerTextContainerStyle: PropTypes.object,
   headerTextStyle: PropTypes.object,
+  headerSubTextStyle: PropTypes.object,
   leftImage: PropTypes.string,
   leftImageContainerStyle: PropTypes.object,
   leftImageStyle: PropTypes.object,

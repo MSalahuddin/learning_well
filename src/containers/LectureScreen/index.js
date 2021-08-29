@@ -13,6 +13,7 @@ import {Actions} from 'react-native-router-flux';
 import axios from 'axios';
 import ProgressImage from 'react-native-image-progress';
 import AsyncStorage from '@react-native-community/async-storage';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
 
@@ -224,7 +225,7 @@ class LectureScreen extends Component {
   renderChapterList = () => {
     const {chapWithAnimation} = this.state;
     return (
-      <ScrollView>
+      <ScrollView style={{paddingHorizontal: Metrics.ratio(16)}}>
         <View style={{}}>
           {chapWithAnimation.map((chap, index) => {
             return (
@@ -249,24 +250,33 @@ class LectureScreen extends Component {
 
                 <View style={{...styles.chapterVideoBtnContainer}}>
                   <TouchableOpacity
-                    style={{
-                      ...styles.chapterVideoBtn,
-                      marginRight: Metrics.ratio(8),
-                    }}
                     onPress={() => {
                       this.navigateQuiz(chap.id, chap.name);
                     }}>
-                    <Text style={{...styles.chapterVideoBtnText}}>Quiz</Text>
+                    <LinearGradient
+                      colors={['#10bef0', '#07509e']}
+                      start={{x: 0.0, y: 2.0}}
+                      end={{x: 1.0, y: 0.0}}
+                      style={{
+                        ...styles.chapterVideoBtn,
+                        marginRight: Metrics.ratio(8),
+                      }}>
+                      <Text style={{...styles.chapterVideoBtnText}}>Quiz</Text>
+                    </LinearGradient>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      ...styles.chapterVideoBtn,
-                      marginLeft: Metrics.ratio(8),
-                    }}
-                    onPress={() => Actions.exercises()}>
-                    <Text style={{...styles.chapterVideoBtnText}}>
-                      Exercise
-                    </Text>
+                  <TouchableOpacity onPress={() => Actions.exercises()}>
+                    <LinearGradient
+                      colors={['#10bef0', '#07509e']}
+                      start={{x: 0.0, y: 2.0}}
+                      end={{x: 1.0, y: 0.0}}
+                      style={{
+                        ...styles.chapterVideoBtn,
+                        marginLeft: Metrics.ratio(8),
+                      }}>
+                      <Text style={{...styles.chapterVideoBtnText}}>
+                        Exercise
+                      </Text>
+                    </LinearGradient>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -281,22 +291,16 @@ class LectureScreen extends Component {
     const {lecture, chapters, animationLength} = this.state;
     return (
       <ImageBackground
-        source={Images.homeBackgroundImage2}
+        source={Images.homeBackgroundImage3}
         resizeMode={'cover'}
         style={[styles.container]}>
         <Header
           leftImage={Images.backArrowIcon2}
           leftBtnPress={() => Actions.pop()}
-          rightImage={Images.lectureNavIcon}
-          rightImageStyle={styles.rightImageStyle}
+          headerText={this.props.bookName}
+          headerSubText={`${chapters?.length} Chapters | ${animationLength} Videos`}
+          headerTextStyle={{...styles.headerTextStyle}}
         />
-
-        <View style={{...styles.courseNameContainer}}>
-          <Text style={{...styles.courseName}}>{this.props.bookName}</Text>
-          <Text style={{...styles.courseDetails}}>
-            {chapters?.length} Chapters | {animationLength} Videos
-          </Text>
-        </View>
 
         <View style={{...styles.lectureContainer}}>
           {lecture && this.renderChapterList()}

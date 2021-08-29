@@ -5,18 +5,17 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
-  rightImageStyle: {
-    width: Metrics.ratio(125),
-    height: Metrics.ratio(50),
+  headerTextStyle: {
+    fontWeight: 'bold',
   },
   questionContainer: {
     marginHorizontal: Metrics.ratio(16),
-    marginTop: Metrics.ratio(40),
   },
   chapterName: {
-    fontSize: Metrics.ratio(15),
-    color: Colors.black,
-    marginBottom: Metrics.ratio(16),
+    fontSize: Metrics.ratio(16),
+    color: '#3D4647',
+    marginBottom: Metrics.screenHeight * 0.05,
+    textAlign: 'center',
   },
   questionListContainer: {
     marginHorizontal: Metrics.ratio(12),
@@ -26,15 +25,6 @@ export default StyleSheet.create({
     paddingVertical: Metrics.ratio(10),
     backgroundColor: Colors.Venice_Blue,
     borderRadius: Metrics.ratio(50),
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.23,
-    shadowRadius: 2.62,
-
-    elevation: 4,
   },
   questionText: {
     fontSize: Metrics.ratio(15),
@@ -49,15 +39,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: Metrics.ratio(50),
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
-    elevation: 2,
+    backgroundColor: Colors.white,
   },
   radioCircle: {
     height: Metrics.ratio(18),
@@ -76,7 +58,7 @@ export default StyleSheet.create({
   },
   optionText: {
     fontSize: Metrics.ratio(15),
-    color: Colors.black,
+    color: '#808080',
     marginLeft: Metrics.ratio(8),
   },
   buttonContainer: {

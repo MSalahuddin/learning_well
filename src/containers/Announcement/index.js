@@ -1,12 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  ImageBackground,
-  ScrollView,
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-} from 'react-native';
+import {ImageBackground, ScrollView, View, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
@@ -14,7 +7,7 @@ import moment from 'moment';
 import styles from './styles';
 
 import {Images} from '../../theme';
-import {Header, SpinnerLoader} from '../../components';
+import {Header, ListCard, SpinnerLoader} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
 import {ANNOUNCEMENT_API} from '../../config/WebServices';
 
@@ -78,7 +71,7 @@ const Announcement = () => {
   return (
     <ImageBackground
       resizeMode={'cover'}
-      source={Images.homeBackgroundImage2}
+      source={Images.homeBackgroundImage3}
       style={styles.container}>
       <Header
         leftImage={Images.backArrowIcon2}
@@ -89,32 +82,18 @@ const Announcement = () => {
 
       <ScrollView style={{...styles.tableContainer}}>
         {announcements.length > 0 &&
-          announcements.map((val, index) => (
-            <View
-              // eslint-disable-next-line react-native/no-inline-styles
-              style={{
-                ...styles.cardContainer,
-                borderBottomWidth: index === announcements.length - 1 ? 0 : 1,
-              }}>
-              <TouchableOpacity style={{...styles.cardRow}}>
-                <View style={{...styles.cardImageContainer}}>
-                  <Image
-                    source={Images.webIcon}
-                    resizeMode={'contain'}
-                    style={{...styles.cardImage}}
-                  />
-                </View>
-                <View style={{...styles.cardDetailRow}}>
-                  <Text style={{...styles.cardTitleText}}>{val.title}</Text>
-                  <Text style={{...styles.cardExpiryText}}>
-                    {`Expiry Date: ${moment(val.expiry_date).format(
-                      'DD-MMM-YYYY',
-                    )}`}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            </View>
-          ))}
+          announcements.map((val) => {
+            return (
+              <ListCard
+                centerText={val.announcement}
+                centerTextStyle={{...styles.centerTextStyle}}
+                rightText={`Expiry Date: ${moment(val.expiry_date).format(
+                  'DD-MMM-YYYY',
+                )}`}
+              />
+            );
+          })}
+
         {!isLoading && announcements.length < 1 && (
           <View style={{...styles.notFoundContainer}}>
             <Text style={{...styles.notFoundText}}>No Record Found!</Text>

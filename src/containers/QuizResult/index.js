@@ -34,7 +34,7 @@ class QuizResultScreen extends Component {
 
     return (
       <ImageBackground
-        source={Images.homeBackgroundImage2}
+        source={Images.homeBackgroundImage3}
         resizeMode={'cover'}
         style={{...styles.container}}>
         <Header
@@ -44,8 +44,10 @@ class QuizResultScreen extends Component {
               screen: 'lectureScreen',
             });
           }}
-          rightImage={Images.quizResultNavIcon}
-          rightImageStyle={{...styles.rightImageStyle}}
+          headerText={'Quiz Result'}
+          headerTextStyle={{...styles.headerTextStyle}}
+          // rightImage={Images.quizResultNavIcon}
+          // rightImageStyle={{...styles.rightImageStyle}}
         />
 
         <View style={{...styles.headingContainer}}>

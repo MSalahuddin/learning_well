@@ -8,7 +8,7 @@ export default StyleSheet.create({
   },
   headerBannerContainer: {
     width: Metrics.screenWidth,
-    marginTop: Metrics.ratio(-16),
+    marginTop: Metrics.screenHeight * 0.03,
     marginBottom: Metrics.ratio(16),
     justifyContent: 'center',
     alignItems: 'center',
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     bottom: Metrics.ratio(10),
   },
   accountContainer: {
-    paddingHorizontal: Metrics.screenWidth * 0.025,
+    paddingHorizontal: Metrics.ratio(16),
     marginBottom: Metrics.ratio(16),
   },
   accountHeading: {
@@ -54,7 +54,7 @@ export default StyleSheet.create({
     marginBottom: Metrics.ratio(4),
   },
   profileDetailContainer: {
-    paddingHorizontal: Metrics.screenWidth * 0.025,
+    paddingHorizontal: Metrics.ratio(16),
     marginBottom: Metrics.ratio(16),
   },
   profileDetailHeading: {
@@ -63,7 +63,7 @@ export default StyleSheet.create({
     marginTop: Metrics.ratio(16),
   },
   profileItemContainer: {
-    paddingLeft: Metrics.screenWidth * 0.025,
+    paddingLeft: Metrics.ratio(16),
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -76,11 +76,9 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: Metrics.ratio(13),
     color: 'black',
-    borderBottomColor: Colors.white,
-    borderBottomWidth: Metrics.ratio(1),
   },
   signOutContainer: {
-    paddingLeft: Metrics.screenWidth * 0.025,
+    paddingLeft: Metrics.ratio(16),
   },
   signOutRow: {
     flexDirection: 'row',
@@ -96,7 +94,5 @@ export default StyleSheet.create({
     color: 'black',
     flex: 1,
     paddingVertical: Metrics.ratio(16),
-    borderBottomColor: Colors.white,
-    borderBottomWidth: Metrics.ratio(1),
   },
 });

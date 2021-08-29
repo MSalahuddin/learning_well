@@ -1,18 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {
-  ImageBackground,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {ImageBackground, View, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import Pdf from 'react-native-pdf';
 
 import styles from './styles';
 
 import {Images} from '../../theme';
-import {SpinnerLoader} from '../../components';
+import {SpinnerLoader, Header} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
 import {BOOK_PDF_API} from '../../config/WebServices';
 
@@ -51,24 +45,14 @@ const BookPdf = (props) => {
   return (
     <ImageBackground
       resizeMode={'cover'}
-      source={Images.homeBackgroundImage2}
+      source={Images.homeBackgroundImage3}
       style={styles.container}>
-      <View style={{...styles.headerContainer}}>
-        <TouchableOpacity
-          onPress={() => Actions.pop()}
-          style={{...styles.leftBtn}}>
-          <Image
-            source={Images.backArrowIcon2}
-            resizeMode={'contain'}
-            style={{...styles.leftBtnImage}}
-          />
-        </TouchableOpacity>
-        <View style={{...styles.bookNameContainer}}>
-          <Text numberOfLines={1} style={{...styles.bookName}}>
-            {bookName}
-          </Text>
-        </View>
-      </View>
+      <Header
+        leftImage={Images.backArrowIcon2}
+        leftBtnPress={() => Actions.pop()}
+        headerText={bookName}
+        headerTextStyle={{...styles.headerTextStyle}}
+      />
 
       {bookPdf ? (
         <Pdf

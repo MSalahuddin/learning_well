@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {ImageBackground, ScrollView, View, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
 
 import styles from './styles';
 
 import {Images} from '../../theme';
-import {Header, CustomTable, SpinnerLoader} from '../../components';
+import {Header, ListCard, SpinnerLoader} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
 import {QUIZ_RESULT_API} from '../../config/WebServices';
 
@@ -67,44 +68,28 @@ const Result = () => {
     }
   };
 
-  const tableHead = [
-    {
-      name: 'Name',
-      image: null,
-    },
-    {
-      name: 'Subject',
-      image: Images.editPen,
-    },
-    {
-      name: 'Date',
-      image: Images.dateTable,
-    },
-  ];
-
-  const tableKeys = ['chapter_name', 'book_name', 'date'];
-
   return (
     <ImageBackground
       resizeMode={'cover'}
-      source={Images.homeBackgroundImage2}
+      source={Images.homeBackgroundImage3}
       style={styles.container}>
       <Header
         leftImage={Images.backArrowIcon2}
         leftBtnPress={() => Actions.pop()}
-        rightImage={Images.resultNavIcon}
-        rightImageStyle={styles.rightImageStyle}
+        headerText={'Result'}
+        headerTextStyle={{...styles.headerTextStyle}}
       />
       <ScrollView style={{...styles.tableContainer}}>
-        {quizResults.length > 0 && (
-          <CustomTable
-            tableHead={tableHead}
-            tableData={quizResults}
-            tableKeys={tableKeys}
-            isDate={true}
-            dateIndex={2}
-          />
-        )}
+        {quizResults.length > 0 &&
+          quizResults.map((val) => {
+            return (
+              <ListCard
+                leftTopText={val.book_name}
+                leftBottomText={val.chapter_name}
+                rightText={`Date: ${moment(val.date).format('DD-MMM-YYYY')}`}
+              />
+            );
+          })}
 
         {!isLoading && quizResults.length < 1 && (
           <View style={{...styles.notFoundContainer}}>

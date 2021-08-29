@@ -12,6 +12,7 @@ import CountDown from 'react-native-countdown-component';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
 
@@ -178,11 +179,15 @@ class QuizScreen extends Component {
       <View style={{...styles.questionContainer}}>
         <Text style={{...styles.chapterName}}>{chapterName}</Text>
         <View style={{...styles.questionListContainer}}>
-          <View style={{...styles.questionView}}>
+          <LinearGradient
+            colors={['#10bef0', '#07509e']}
+            start={{x: 0.0, y: 2.0}}
+            end={{x: 1.0, y: 0.0}}
+            style={{...styles.questionView}}>
             <Text style={{...styles.questionText}}>
               {questionIndex + 1}. {quiz[questionIndex].question_name.trim()}
             </Text>
-          </View>
+          </LinearGradient>
           <View style={{...styles.optionContainer}}>
             <TouchableOpacity
               onPress={() => this.setState({answer: 1})}
@@ -232,25 +237,18 @@ class QuizScreen extends Component {
     const {quiz} = this.state;
     return (
       <ImageBackground
-        source={Images.homeBackgroundImage2}
+        source={Images.homeBackgroundImage3}
         resizeMode={'cover'}
         style={{...styles.container}}>
         <Header
           leftImage={Images.backArrowIcon2}
           leftBtnPress={() => Actions.pop()}
-          rightImage={Images.quizNavIcon}
-          rightImageStyle={{...styles.rightImageStyle}}
+          headerText={'Quiz'}
+          headerTextStyle={{...styles.headerTextStyle}}
         />
 
         {quiz && (
-          <View
-            style={{
-              width: Metrics.screenWidth * 0.4,
-              height: Metrics.ratio(50),
-              marginHorizontal: Metrics.ratio(50),
-              marginVertical: Metrics.ratio(10),
-              paddingRight: Metrics.ratio(80),
-            }}>
+          <View style={{paddingVertical: Metrics.screenHeight * 0.03}}>
             <CountDown
               until={60 * 10}
               onFinish={() => alert('finished')}
@@ -278,10 +276,14 @@ class QuizScreen extends Component {
               {/* <TouchableOpacity onPress={() => {}} style={{...styles.button}}>
                 <Text style={{...styles.buttonText}}>Previous</Text>
               </TouchableOpacity> */}
-              <TouchableOpacity
-                onPress={this.onNextQuestion}
-                style={{...styles.button}}>
-                <Text style={{...styles.buttonText}}>Next</Text>
+              <TouchableOpacity onPress={this.onNextQuestion}>
+                <LinearGradient
+                  colors={['#10bef0', '#07509e']}
+                  start={{x: 0.0, y: 2.0}}
+                  end={{x: 1.0, y: 0.0}}
+                  style={{...styles.button}}>
+                  <Text style={{...styles.buttonText}}>Next</Text>
+                </LinearGradient>
               </TouchableOpacity>
             </View>
           )}

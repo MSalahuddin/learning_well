@@ -3,6 +3,7 @@ const backgroundImage = require('../assets/Images/background.png');
 const backgroundImage1 = require('../assets/Images/background1.png');
 const homeBackgroundImage = require('../assets/homeBackground.png');
 const homeBackgroundImage2 = require('../assets/homeBackground2.png');
+const homeBackgroundImage3 = require('../assets/homeBackground3.jpg');
 
 // side menu icon
 
@@ -52,6 +53,7 @@ const logo = require('../assets/logo.png');
 const contactUsIcon = require('../assets/icons/contactUsIcon.png');
 const mailIcon = require('../assets/icons/mailIcon.png');
 const webIcon = require('../assets/icons/webIcon.png');
+const paperAndPencilIcon = require('../assets/icons/paper_and_pencil.png');
 const facebookIcon = require('../assets/icons/facebookIcon.png');
 const subjectNavIcon = require('../assets/icons/subjectNavIcon.png');
 const moreIcon = require('../assets/icons/moreIcon.png');
@@ -72,11 +74,15 @@ const feedbackNavIcon = require('../assets/icons/feedbackNavIcon.png');
 //edit profile
 
 const editProfileHeaderIcon = require('../assets/editProfileHeaderIcon.png');
+const editProfileHeaderIcon2 = require('../assets/editProfileHeaderIcon2.jpg');
 const envelopIcon = require('../assets/envelop.png');
+const envelopIcon2 = require('../assets/envelop2.png');
+const usernameIcon = require('../assets/usernameIcon.png');
 const genderIcon = require('../assets/genderIcon.png');
 const locationIcon = require('../assets/locationIcon.png');
 const birthdayIcon = require('../assets/birthdayIcon.png');
 const logoutIcon = require('../assets/logoutIcon.png');
+const logoutIcon2 = require('../assets/logoutIcon2.png');
 // courses
 const mathematics = require('../assets/Images/mathematics.png');
 
@@ -100,6 +106,7 @@ export default {
   mathematics,
   homeBackgroundImage,
   homeBackgroundImage2,
+  homeBackgroundImage3,
   sidemenuIcon,
   sideMenuIcon2,
   mathematicsBackground,
@@ -128,12 +135,16 @@ export default {
   logout_icon,
   // editProfile
   editProfileHeaderIcon,
+  editProfileHeaderIcon2,
   editProfileBackground,
   envelopIcon,
+  envelopIcon2,
+  usernameIcon,
   genderIcon,
   locationIcon,
   birthdayIcon,
   logoutIcon,
+  logoutIcon2,
   // others
   videoThumbnail,
   backArrowIcon,
@@ -143,6 +154,7 @@ export default {
   contactUsIcon,
   mailIcon,
   webIcon,
+  paperAndPencilIcon,
   facebookIcon,
   subjectNavIcon,
   moreIcon,

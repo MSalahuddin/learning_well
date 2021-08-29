@@ -2,11 +2,12 @@ import React, {useState, useEffect} from 'react';
 import {ImageBackground, ScrollView, View, Text} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
+import moment from 'moment';
 
 import styles from './styles';
 
 import {Images} from '../../theme';
-import {Header, CustomTable, SpinnerLoader} from '../../components';
+import {Header, ListCard, SpinnerLoader} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
 import {ASSIGNED_TEST_API} from '../../config/WebServices';
 
@@ -59,7 +60,6 @@ const AssignedTest = () => {
         null,
         headers,
       );
-      console.log(result, 'result');
       if (result.code === 1) {
         setAssignedTest(result.assignedtest);
       }
@@ -70,46 +70,31 @@ const AssignedTest = () => {
     }
   };
 
-  const tableHead = [
-    {
-      name: 'Name',
-      image: null,
-    },
-    {
-      name: 'Subject',
-      image: Images.editPen,
-    },
-    {
-      name: 'Date',
-      image: Images.dateTable,
-    },
-  ];
-
-  const tableKeys = ['name', 'book', 'date'];
-
   return (
     <ImageBackground
       resizeMode={'cover'}
-      source={Images.homeBackgroundImage2}
-      style={styles.container}>
+      source={Images.homeBackgroundImage3}
+      style={{...styles.container}}>
       <Header
         leftImage={Images.backArrowIcon2}
         leftBtnPress={() => Actions.pop()}
-        rightImage={Images.assignedTestNavIcon}
-        rightImageStyle={styles.rightImageStyle}
+        headerText={'Assigned Test'}
+        headerTextStyle={{...styles.headerTextStyle}}
       />
 
       <ScrollView style={{...styles.tableContainer}}>
-        {assignedTest.length > 0 && (
-          <CustomTable
-            tableHead={tableHead}
-            tableData={assignedTest}
-            tableKeys={tableKeys}
-            isDate={true}
-            dateIndex={2}
-          />
-        )}
-
+        {assignedTest.length > 0 &&
+          assignedTest.map((val, index) => {
+            return (
+              <ListCard
+                onPress={() => {}}
+                leftTopText={val.book}
+                leftBottomText={'Chapter'}
+                centerText={`Test ${index + 1}`}
+                rightText={`Date: ${moment(val.date).format('DD-MMM-YYYY')}`}
+              />
+            );
+          })}
         {!isLoading && assignedTest.length < 1 && (
           <View style={{...styles.notFoundContainer}}>
             <Text style={{...styles.notFoundText}}>No Record Found!</Text>

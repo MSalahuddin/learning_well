@@ -5,6 +5,9 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
+  headerTextStyle: {
+    fontWeight: 'bold',
+  },
   headerContainer: {
     paddingVertical: Metrics.ratio(16),
     flexDirection: 'row',

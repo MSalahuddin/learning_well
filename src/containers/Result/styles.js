@@ -5,16 +5,15 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
-  rightImageStyle: {
-    width: Metrics.ratio(125),
-    height: Metrics.ratio(50),
+  headerTextStyle: {
+    fontWeight: 'bold',
   },
   tableContainer: {
-    marginTop: Metrics.screenHeight * 0.065,
+    marginTop: Metrics.screenHeight * 0.03,
   },
   notFoundContainer: {
     flex: 1,
-    height: Metrics.screenHeight * 0.5,
+    height: Metrics.screenHeight * 0.8,
     justifyContent: 'center',
     alignItems: 'center',
   },

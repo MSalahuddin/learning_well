@@ -5,9 +5,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
-  rightImageStyle: {
-    width: Metrics.ratio(90.3),
-    height: Metrics.ratio(71.6),
+  headerTextStyle: {
+    fontWeight: 'bold',
   },
   courseNameContainer: {
     marginHorizontal: Metrics.ratio(16),
@@ -23,9 +22,8 @@ export default StyleSheet.create({
     fontSize: Metrics.ratio(10),
   },
   lectureContainer: {
-    marginTop: Metrics.ratio(8),
+    marginTop: Metrics.screenHeight * 0.01,
     marginBottom: Metrics.screenHeight * 0.17,
-    paddingHorizontal: Metrics.ratio(16),
   },
   chapterHeadingText: {
     fontSize: Metrics.ratio(16),
