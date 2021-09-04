@@ -29,12 +29,12 @@ const Home = (props) => {
 
   const cardList = [
     {
-      name: 'Announcement',
+      name: 'Announcements',
       image: Images.announcementIcon,
       onPress: () => Actions.Announcement(),
     },
     {
-      name: 'Subject',
+      name: 'Subjects',
       image: Images.subjectIcon,
       onPress: () => Actions.Subjects(),
     },
@@ -49,7 +49,7 @@ const Home = (props) => {
       onPress: () => Actions.AssignedTest(),
     },
     {
-      name: 'Result',
+      name: 'Quiz Result',
       image: Images.resultIcon,
       onPress: () => Actions.Result(),
     },
