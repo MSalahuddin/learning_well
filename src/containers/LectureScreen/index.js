@@ -250,11 +250,16 @@ class LectureScreen extends Component {
 
                 <View style={{...styles.chapterVideoBtnContainer}}>
                   <TouchableOpacity
+                    disabled={!Number(chap.is_quiz)}
                     onPress={() => {
                       this.navigateQuiz(chap.id, chap.name);
                     }}>
                     <LinearGradient
-                      colors={['#10bef0', '#07509e']}
+                      colors={
+                        Number(chap.is_quiz)
+                          ? ['#10bef0', '#07509e']
+                          : ['#6c757d', '#6c757d']
+                      }
                       start={{x: 0.0, y: 2.0}}
                       end={{x: 1.0, y: 0.0}}
                       style={{
@@ -264,20 +269,22 @@ class LectureScreen extends Component {
                       <Text style={{...styles.chapterVideoBtnText}}>Quiz</Text>
                     </LinearGradient>
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => Actions.exercises()}>
-                    <LinearGradient
-                      colors={['#10bef0', '#07509e']}
-                      start={{x: 0.0, y: 2.0}}
-                      end={{x: 1.0, y: 0.0}}
-                      style={{
-                        ...styles.chapterVideoBtn,
-                        marginLeft: Metrics.ratio(8),
-                      }}>
-                      <Text style={{...styles.chapterVideoBtnText}}>
-                        Exercise
-                      </Text>
-                    </LinearGradient>
-                  </TouchableOpacity>
+                  {Number(chap.is_exercise) ? (
+                    <TouchableOpacity onPress={() => Actions.exercises()}>
+                      <LinearGradient
+                        colors={['#10bef0', '#07509e']}
+                        start={{x: 0.0, y: 2.0}}
+                        end={{x: 1.0, y: 0.0}}
+                        style={{
+                          ...styles.chapterVideoBtn,
+                          marginLeft: Metrics.ratio(8),
+                        }}>
+                        <Text style={{...styles.chapterVideoBtnText}}>
+                          Exercise
+                        </Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  ) : null}
                 </View>
               </View>
             );

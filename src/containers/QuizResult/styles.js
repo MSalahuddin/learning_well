@@ -8,11 +8,14 @@ export default StyleSheet.create({
   headerTextStyle: {
     fontWeight: 'bold',
   },
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
   headingContainer: {
     width: Metrics.screenWidth,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: Metrics.screenHeight * 0.03,
   },
   thankContainer: {
     flexDirection: 'row',

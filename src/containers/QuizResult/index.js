@@ -50,31 +50,33 @@ class QuizResultScreen extends Component {
           // rightImageStyle={{...styles.rightImageStyle}}
         />
 
-        <View style={{...styles.headingContainer}}>
-          <View style={{...styles.thankContainer}}>
-            <Image
-              source={Images.greenTick}
-              resizeMode={'contain'}
-              style={{...styles.thankImage}}
-            />
-            <Text style={{...styles.thankText}}>Thank You</Text>
+        <View style={{...styles.contentContainer}}>
+          <View style={{...styles.headingContainer}}>
+            <View style={{...styles.thankContainer}}>
+              <Image
+                source={Images.greenTick}
+                resizeMode={'contain'}
+                style={{...styles.thankImage}}
+              />
+              <Text style={{...styles.thankText}}>Thank You</Text>
+            </View>
+            <Text style={{...styles.thankMsg}}>
+              Your Quiz is submitted to teacher
+            </Text>
           </View>
-          <Text style={{...styles.thankMsg}}>
-            Your Quiz is submitted to teacher
-          </Text>
-        </View>
 
-        <View style={{...styles.listContainer}}>
-          {this.renderRow('Book', bookName)}
-          {this.renderRow('Chapter', chapterName)}
-          {this.renderRow('Correct', CorrectAnswer)}
-          {this.renderRow('Wrong', WrongAnswer)}
-          {this.renderRow('Unanswer', unAnswer)}
-          {this.renderRow('Percentage', percentage)}
-          {this.renderRow(
-            'Date',
-            `${moment().format('L')} - ${moment().format('LTS')}`,
-          )}
+          <View style={{...styles.listContainer}}>
+            {this.renderRow('Book', bookName)}
+            {this.renderRow('Chapter', chapterName)}
+            {this.renderRow('Correct', CorrectAnswer)}
+            {this.renderRow('Wrong', WrongAnswer)}
+            {this.renderRow('Unanswer', unAnswer)}
+            {this.renderRow('Percentage', percentage)}
+            {this.renderRow(
+              'Date',
+              `${moment().format('L')} - ${moment().format('LTS')}`,
+            )}
+          </View>
         </View>
       </ImageBackground>
     );

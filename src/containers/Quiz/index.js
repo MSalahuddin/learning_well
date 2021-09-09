@@ -167,6 +167,15 @@ class QuizScreen extends Component {
     }
   };
 
+  handleBackButton = () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to quit?',
+      [{text: 'Cancel'}, {text: 'Confirm', onPress: Actions.pop}],
+      {cancelable: false},
+    );
+  };
+
   renderOverlaySpinner = () => {
     const {isloading} = this.state;
     return <SpinnerLoader isloading={isloading} />;
@@ -242,7 +251,7 @@ class QuizScreen extends Component {
         style={{...styles.container}}>
         <Header
           leftImage={Images.backArrowIcon2}
-          leftBtnPress={() => Actions.pop()}
+          leftBtnPress={this.handleBackButton}
           headerText={'Quiz'}
           headerTextStyle={{...styles.headerTextStyle}}
         />
