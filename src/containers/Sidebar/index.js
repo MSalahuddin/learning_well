@@ -81,8 +81,6 @@ class Sidebar extends Component {
     }
   };
 
-  logout = () => {};
-
   onLogout = async () => {
     utils.showYesNoMessage(
       'Confirm',
@@ -389,7 +387,8 @@ class Sidebar extends Component {
             flexDirection: 'row',
             marginBottom: Metrics.ratio(40),
             marginLeft: Metrics.screenWidth * 0.04,
-          }}>
+          }}
+          onPress={() => this.onLogout()}>
           <Text
             style={{
               color: 'white',

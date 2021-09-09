@@ -74,7 +74,7 @@ const feedbackNavIcon = require('../assets/icons/feedbackNavIcon.png');
 //edit profile
 
 const editProfileHeaderIcon = require('../assets/editProfileHeaderIcon.png');
-const editProfileHeaderIcon2 = require('../assets/editProfileHeaderIcon2.jpg');
+const editProfileHeaderIcon2 = require('../assets/editProfileHeaderIcon2.png');
 const envelopIcon = require('../assets/envelop.png');
 const envelopIcon2 = require('../assets/envelop2.png');
 const usernameIcon = require('../assets/usernameIcon.png');
