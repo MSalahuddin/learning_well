@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ImageBackground, ScrollView, View, Text} from 'react-native';
+import {
+  ImageBackground,
+  ScrollView,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
@@ -15,6 +22,7 @@ const Homework = () => {
   const [isLoading, setIsLoading] = useState(null);
   const [user, setUser] = useState(null);
   const [homeworks, setHomeworks] = useState([]);
+  const [selectedHomework, setSelectedHomework] = useState({});
 
   useEffect(() => {
     getUserInfo();
@@ -66,6 +74,40 @@ const Homework = () => {
     }
   };
 
+  const renderPopListItem = (label, value) => {
+    return (
+      <View style={{...styles.popupItemContainer}}>
+        <Text style={{...styles.popupItemLabel}}>{label}</Text>
+        <Text style={{...styles.popupItemValue}}>{value}</Text>
+      </View>
+    );
+  };
+
+  const renderHomeworkDetails = () => {
+    return (
+      <TouchableOpacity
+        style={{...styles.popupBackdrop}}
+        onPress={() => setSelectedHomework({})}>
+        <View style={{...styles.popupContainer}}>
+          <View style={{...styles.popupIconContainer}}>
+            <Image
+              source={Images.paperAndPencilIcon}
+              resizeMode={'contain'}
+              style={{...styles.popupIcon}}
+            />
+          </View>
+          {renderPopListItem('Book Name', selectedHomework.book_name)}
+          {renderPopListItem('Homework', selectedHomework.homework)}
+          {renderPopListItem('Status', selectedHomework.homework_status)}
+          {renderPopListItem(
+            'Submission Date',
+            moment(selectedHomework.exp_date).format('DD-MMM-YYYY'),
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ImageBackground
       resizeMode={'cover'}
@@ -81,6 +123,7 @@ const Homework = () => {
       <ScrollView style={{...styles.tableContainer}}>
         {homeworks.length > 0 &&
           homeworks.map((val) => {
+            console.log(val, 'val');
             return (
               <ListCard
                 centerText={val.book_name}
@@ -88,6 +131,7 @@ const Homework = () => {
                 rightText={`Submission Date: ${moment(val.exp_date).format(
                   'DD-MMM-YYYY',
                 )}`}
+                onPress={() => setSelectedHomework(val)}
               />
             );
           })}
@@ -98,6 +142,9 @@ const Homework = () => {
           </View>
         )}
       </ScrollView>
+
+      {selectedHomework.id ? renderHomeworkDetails() : null}
+
       <SpinnerLoader isloading={isLoading} />
     </ImageBackground>
   );
