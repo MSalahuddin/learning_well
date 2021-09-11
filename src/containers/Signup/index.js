@@ -10,7 +10,8 @@ import {
   Alert,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import ModalDropdown from 'react-native-modal-dropdown';
+// import ModalDropdown from 'react-native-modal-dropdown';
+import ModalSelector from 'react-native-modal-selector';
 
 import styles from './styles';
 
@@ -31,6 +32,16 @@ class SignupScreen extends Component {
       mobileNo: '',
       classId: 0,
       isloading: false,
+      classOptions: [
+        {label: 'Class 1', key: 1},
+        {label: 'Class 2', key: 2},
+        {label: 'Class 3', key: 3},
+        {label: 'Class 4', key: 4},
+        {label: 'Class 5', key: 5},
+        {label: 'Class 6', key: 6},
+        {label: 'Class 7', key: 7},
+        {label: 'Class 8', key: 8},
+      ],
     };
   }
 
@@ -124,9 +135,9 @@ class SignupScreen extends Component {
     }
   };
 
-  onDropdonSelect = (val) => {
-    this.setState({classId: parseInt(val) + 1});
-  };
+  // onDropdonSelect = (val) => {
+  //   this.setState({classId: parseInt(val) + 1});
+  // };
 
   renderOverlaySpinner = () => {
     const {isloading} = this.state;
@@ -159,30 +170,30 @@ class SignupScreen extends Component {
     );
   };
 
-  renderDropdown = () => {
-    return (
-      <ModalDropdown
-        defaultValue={'Select Class'}
-        options={[
-          'Class 1',
-          'Class 2',
-          'Class 3',
-          'Class 4',
-          'Class 5',
-          'Class 6',
-          'Class 7',
-          'Class 8',
-        ]}
-        style={{...styles.modalDropdown}}
-        dropdownStyle={{...styles.dropdownStyle}}
-        textStyle={{...styles.textStyle}}
-        animated={true}
-        onSelect={(val) => {
-          this.onDropdonSelect(val);
-        }}
-      />
-    );
-  };
+  // renderDropdown = () => {
+  //   return (
+  //     <ModalDropdown
+  //       defaultValue={'Select Class'}
+  //       options={[
+  //         'Class 1',
+  //         'Class 2',
+  //         'Class 3',
+  //         'Class 4',
+  //         'Class 5',
+  //         'Class 6',
+  //         'Class 7',
+  //         'Class 8',
+  //       ]}
+  //       style={{...styles.modalDropdown}}
+  //       dropdownStyle={{...styles.dropdownStyle}}
+  //       textStyle={{...styles.textStyle}}
+  //       animated={true}
+  //       onSelect={(val) => {
+  //         this.onDropdonSelect(val);
+  //       }}
+  //     />
+  //   );
+  // };
 
   render() {
     return (
@@ -242,7 +253,19 @@ class SignupScreen extends Component {
                 'mobileNo',
               )}
 
-              {this.renderDropdown()}
+              {/* {this.renderDropdown()} */}
+
+              <ModalSelector
+                selectStyle={{...styles.selectStyle}}
+                initValueTextStyle={{...styles.initValueTextStyle}}
+                optionTextStyle={{...styles.optionTextStyle}}
+                cancelTextStyle={{...styles.cancelTextStyle}}
+                selectTextStyle={{...styles.selectTextStyle}}
+                data={this.state.classOptions}
+                initValue={'Select Class'}
+                key={'Select Class'}
+                onChange={(val) => this.setState({classId: parseInt(val.key)})}
+              />
 
               <TouchableOpacity
                 style={{...styles.submitButton}}

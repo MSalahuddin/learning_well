@@ -6508,6 +6508,13 @@ react-native-modal-dropdown@^0.7.0:
     deprecated-react-native-listview "0.0.5"
     prop-types "^15.6.0"
 
+react-native-modal-selector@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-selector/-/react-native-modal-selector-2.1.0.tgz#eb4e38254af8a54d6ab5244533e15ee91f132e26"
+  integrity sha512-aXOF8tC69XXfI6kbIskRRLe8xcexiYc21GD0s8gNz/Pl1FT8921PuLz647uY2le+fsJsztX6Taaf3mij/Noc+A==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-modalize@^2.0.8:
   version "2.0.8"
   resolved "https://registry.yarnpkg.com/react-native-modalize/-/react-native-modalize-2.0.8.tgz#5dcb2c56d82e3dbd271582f832e7e02ae4cbb503"
