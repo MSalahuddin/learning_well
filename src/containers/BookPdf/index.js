@@ -1,20 +1,23 @@
 import React, {useState, useEffect} from 'react';
-import {ImageBackground, View, Text} from 'react-native';
+import {ImageBackground, View, Text, ScrollView} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import Pdf from 'react-native-pdf';
+import {createImageProgress} from 'react-native-image-progress';
+import FastImage from 'react-native-fast-image';
 
 import styles from './styles';
 
 import {Images} from '../../theme';
 import {SpinnerLoader, Header} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
-import {BOOK_PDF_API} from '../../config/WebServices';
+import {BOOK_PAGES_API} from '../../config/WebServices';
+
+const Image = createImageProgress(FastImage);
 
 const BookPdf = (props) => {
   const {bookId, bookName} = props;
 
   const [isLoading, setIsLoading] = useState(null);
-  const [bookPdf, setBookPdf] = useState(null);
+  const [bookPdf, setBookPdf] = useState([]);
 
   useEffect(() => {
     getBookPdf();
@@ -24,6 +27,7 @@ const BookPdf = (props) => {
   const getBookPdf = async () => {
     let payload = new FormData();
     payload.append('book_id', bookId);
+    payload.append('start_value', 0);
 
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -31,9 +35,14 @@ const BookPdf = (props) => {
 
     try {
       setIsLoading(true);
-      const result = await createResource(BOOK_PDF_API, payload, null, headers);
-      if (result.code === 1 && result.bookpdf[0].file_path) {
-        setBookPdf(result.bookpdf[0].file_path);
+      const result = await createResource(
+        BOOK_PAGES_API,
+        payload,
+        null,
+        headers,
+      );
+      if (result.code === 1 && result.bookpages.length) {
+        setBookPdf(result.bookpages);
       }
       setIsLoading(false);
     } catch (error) {
@@ -54,7 +63,7 @@ const BookPdf = (props) => {
         headerTextStyle={{...styles.headerTextStyle}}
       />
 
-      {bookPdf ? (
+      {/* {bookPdf.length ? (
         <Pdf
           source={{
             uri: `https://learningwell.pk/${bookPdf}`,
@@ -74,12 +83,31 @@ const BookPdf = (props) => {
           }}
           style={{...styles.pdfStyle}}
         />
+      ) : null} */}
+
+      {bookPdf.length ? (
+        <ScrollView style={{...styles.bookContainer}}>
+          {bookPdf.map((bookPage) => {
+            return (
+              <View style={{...styles.bookPageContainer}}>
+                <Image
+                  style={{...styles.bookPageImage}}
+                  source={{
+                    uri: `https://learningwell.pk/${bookPage.image_path}`,
+                    priority: FastImage.priority.high,
+                  }}
+                  resizeMode={FastImage.resizeMode.stretch}
+                />
+              </View>
+            );
+          })}
+        </ScrollView>
       ) : null}
 
-      {!isLoading && !bookPdf && (
+      {!isLoading && !bookPdf.length && (
         <View style={{...styles.notFoundContainer}}>
           <Text style={{...styles.notFoundText}}>
-            {'Sorry, something went wrong.\nNo Pdf file found.'}
+            {'Sorry, something went wrong.\nNo book found.'}
           </Text>
         </View>
       )}

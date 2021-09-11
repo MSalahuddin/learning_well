@@ -37,6 +37,17 @@ export default StyleSheet.create({
     width: Metrics.screenWidth,
     height: Metrics.screenHeight,
   },
+  bookContainer: {
+    flex: 1,
+  },
+  bookPageContainer: {
+    height: Metrics.screenHeight * 0.852,
+    width: Metrics.screenWidth,
+  },
+  bookPageImage: {
+    width: '100%',
+    height: '100%',
+  },
   notFoundContainer: {
     flex: 1,
     height: Metrics.screenHeight * 0.5,
