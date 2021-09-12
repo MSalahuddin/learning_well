@@ -13,3 +13,4 @@ export const FEEDBACK_API = `${baseUrl}feedback.php`;
 export const ASSIGNED_TEST_API = `${baseUrl}assignedtest.php`;
 export const BOOK_PDF_API = `${baseUrl}bookpdf.php`;
 export const BOOK_PAGES_API = `${baseUrl}bookpages.php`;
+export const EXERCISES_API = `${baseUrl}exercises.php`;

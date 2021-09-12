@@ -8,6 +8,9 @@ export default StyleSheet.create({
   leftImageContainerStyle: {
     alignSelf: 'flex-start',
   },
+  headerTextStyle: {
+    fontWeight: 'bold',
+  },
   rightImageStyle: {
     width: Metrics.ratio(125),
     height: Metrics.ratio(85),
@@ -26,7 +29,7 @@ export default StyleSheet.create({
     fontSize: Metrics.ratio(10),
   },
   exercisesContainer: {
-    marginTop: Metrics.ratio(8),
+    marginTop: Metrics.ratio(16),
     paddingHorizontal: Metrics.ratio(16),
   },
   chapterName: {
@@ -37,12 +40,13 @@ export default StyleSheet.create({
   },
   chapterExercies: {
     fontSize: Metrics.ratio(12),
+    fontWeight: 'bold',
     color: 'black',
     marginTop: Metrics.ratio(4),
   },
   exerciseListContainer: {
     marginVertical: Metrics.ratio(24),
-    marginLeft: Metrics.ratio(16),
+    marginLeft: Metrics.ratio(8),
   },
   exerciseListItem: {
     flexDirection: 'row',
@@ -127,5 +131,37 @@ export default StyleSheet.create({
     fontSize: Metrics.ratio(13),
     fontWeight: 'bold',
     color: '#000',
+  },
+  notFoundContainer: {
+    flex: 1,
+    height: Metrics.screenHeight * 0.8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notFoundText: {
+    fontSize: Metrics.ratio(16),
+    color: '#6e6e6e',
+  },
+  videoPreviewCard: {
+    height: Metrics.screenWidth * 0.5,
+    overflow: 'hidden',
+    marginBottom: Metrics.ratio(24),
+    borderRadius: Metrics.ratio(16),
+    borderColor: Colors.white,
+    borderWidth: Metrics.ratio(1),
+    backgroundColor: '#EEE',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  videoPreviewImage: {
+    width: '100%',
+    height: '100%',
   },
 });

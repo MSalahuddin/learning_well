@@ -1,72 +1,127 @@
-// @flow
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
   ImageBackground,
   TouchableOpacity,
   ScrollView,
-  Image,
-  TextInput,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
+import ProgressImage from 'react-native-image-progress';
+import {useDispatch} from 'react-redux';
 
 import styles from './styles';
 
 import {Images, Colors} from '../../theme';
-import {Header} from '../../components';
+import {Header, SpinnerLoader} from '../../components';
+import {createResource} from '../../config/SimpleApiCalls';
+import {EXERCISES_API} from '../../config/WebServices';
+import {drawerMenuSwitched as navigationChanged} from '../../actions/navigationActions';
 
-const Exercises = () => {
-  const [exerciseAnswer, setExerciseAnswer] = useState('');
+const Exercises = (props) => {
+  const dispatch = useDispatch();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [exercises, setExercises] = useState([]);
+  const [selectedExercises, setSelectedExercises] = useState({});
+  // const [exerciseAnswer, setExerciseAnswer] = useState('');
+
+  useEffect(() => {
+    if (props.chapterId) {
+      getExercises();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.chapterId]);
+
+  const getExercises = async () => {
+    let payload = new FormData();
+    payload.append('chapter_id', props.chapterId);
+
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+
+    try {
+      setIsLoading(true);
+      const result = await createResource(
+        EXERCISES_API,
+        payload,
+        null,
+        headers,
+      );
+      if (result.code === 1 && result.exercises.length) {
+        setExercises(result.exercises);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log('error ==> ', error);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <ImageBackground
       resizeMode={'cover'}
-      source={Images.homeBackgroundImage2}
+      source={Images.homeBackgroundImage3}
       style={styles.container}>
       <Header
         leftImage={Images.backArrowIcon2}
         leftBtnPress={() => Actions.pop()}
-        leftImageContainerStyle={{...styles.leftImageContainerStyle}}
-        rightImage={Images.exerciseNavIcon}
-        rightImageStyle={styles.rightImageStyle}
+        headerText={props.bookName}
+        headerTextStyle={{...styles.headerTextStyle}}
       />
 
-      <View style={{...styles.courseNameContainer}}>
-        <Text style={{...styles.courseName}}>{'Subject 1'}</Text>
-        <Text style={{...styles.courseDetails}}>
-          {13} Chapters | {100} Videos
-        </Text>
-      </View>
+      {exercises.length ? (
+        <ScrollView>
+          <View style={{...styles.exercisesContainer}}>
+            <Text style={{...styles.chapterName}}>{props.chapterName}</Text>
+            <Text style={{...styles.chapterExercies}}>{'Exercises'}</Text>
 
-      <ScrollView>
-        <View style={{...styles.exercisesContainer}}>
-          <Text style={{...styles.chapterName}}>{'Chapter 1'}</Text>
-          <Text style={{...styles.chapterExercies}}>{'Exercises'}</Text>
+            <View style={{...styles.exerciseListContainer}}>
+              {exercises.map((exercise) => {
+                return (
+                  <TouchableOpacity
+                    style={{...styles.exerciseListItem}}
+                    onPress={() => setSelectedExercises(exercise)}>
+                    <View style={{...styles.listBullet}} />
+                    <Text style={{...styles.exerciseName}}>
+                      <Text style={{...styles.exerciseNumber}}>
+                        {exercise.exercise_topic.split(':')[0]}
+                      </Text>{' '}
+                      {exercise.exercise_topic.split(':')[1]}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
 
-          <View style={{...styles.exerciseListContainer}}>
-            <TouchableOpacity style={{...styles.exerciseListItem}}>
-              <View style={{...styles.listBullet}} />
-              <Text style={{...styles.exerciseName}}>
-                <Text style={{...styles.exerciseNumber}}>
-                  {'Exercise 1.2: 1.'}
-                </Text>{' '}
-                {'Write the following numbers in expanded form.'}
-              </Text>
-            </TouchableOpacity>
+            {selectedExercises?.exercise_path ? (
+              <TouchableOpacity
+                style={{...styles.videoPreviewCard}}
+                onPress={() => {
+                  dispatch(navigationChanged('', 'videoPlayer'));
+                  Actions.VideoPlayer({
+                    videoUrl: selectedExercises.exercise_path,
+                    topic: selectedExercises.exercise_topic,
+                  });
+                }}>
+                <ProgressImage
+                  resizeMode={'stretch'}
+                  style={{...styles.videoPreviewImage}}
+                  source={{
+                    uri:
+                      'https://images.unsplash.com/photo-1509228468518-180dd4864904?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fG1hdGh8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
+                  }}
+                  indicatorProps={{
+                    borderWidth: 0,
+                    color: Colors.Venice_Blue,
+                    unfilledColor: 'rgba(200, 200, 200, 0.2)',
+                  }}
+                />
+              </TouchableOpacity>
+            ) : null}
 
-            <TouchableOpacity style={{...styles.exerciseListItem}}>
-              <View style={{...styles.listBullet}} />
-              <Text style={{...styles.exerciseName}}>
-                <Text style={{...styles.exerciseNumber}}>
-                  {'Exercise 1.2: 1.'}
-                </Text>{' '}
-                {'Write the following numbers in expanded form.'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{...styles.exerciseContainer}}>
+            {/* <View style={{...styles.exerciseContainer}}>
             <Text style={{...styles.exerciseNameHeading}}>{'Exercise 1'}</Text>
             <View style={{...styles.exerciseQuestionContainer}}>
               <View style={{...styles.questionImageContainer}}>
@@ -106,9 +161,18 @@ const Exercises = () => {
                 </Text>
               </TouchableOpacity>
             </View>
+          </View> */}
           </View>
+        </ScrollView>
+      ) : null}
+
+      {!isLoading && exercises.length < 1 && (
+        <View style={{...styles.notFoundContainer}}>
+          <Text style={{...styles.notFoundText}}>No Record Found!</Text>
         </View>
-      </ScrollView>
+      )}
+
+      <SpinnerLoader isloading={isLoading} />
     </ImageBackground>
   );
 };

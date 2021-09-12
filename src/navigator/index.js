@@ -11,6 +11,7 @@ import SignupScreen from '../containers/Signup';
 import HomeScreen from '../containers/Home';
 import LectureScreen from '../containers/LectureScreen';
 import VideoPlayerScreen from '../containers/VideoPlayerScreen';
+import VideoPlayer from '../containers/VideoPlayer';
 import EditProfileScreen from '../containers/EditProfile';
 import QuizScreen from '../containers/Quiz';
 import QuizResultScreen from '../containers/QuizResult';
@@ -205,6 +206,17 @@ const navigator = Actions.create(
       hideNavBar
       key="videoPlayerScreen"
       component={VideoPlayerScreen}
+      renderLeftButton={() => (
+        <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
+      )}
+    />
+
+    <Scene
+      tintColor="white"
+      title={'VideoPlayer'}
+      hideNavBar
+      key="VideoPlayer"
+      component={VideoPlayer}
       renderLeftButton={() => (
         <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}

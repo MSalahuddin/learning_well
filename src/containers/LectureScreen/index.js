@@ -270,7 +270,14 @@ class LectureScreen extends Component {
                     </LinearGradient>
                   </TouchableOpacity>
                   {Number(chap.is_exercise) ? (
-                    <TouchableOpacity onPress={() => Actions.exercises()}>
+                    <TouchableOpacity
+                      onPress={() =>
+                        Actions.exercises({
+                          bookName: this.props.bookName,
+                          chapterId: chap.id,
+                          chapterName: chap.name,
+                        })
+                      }>
                       <LinearGradient
                         colors={['#10bef0', '#07509e']}
                         start={{x: 0.0, y: 2.0}}
