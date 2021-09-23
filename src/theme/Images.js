@@ -46,6 +46,7 @@ const english_power = require('../assets/english_power.png');
 // others
 
 const videoThumbnail = require('../assets/videoThumbnail.jpg');
+const videoThumbnail2 = require('../assets/videoThumbnail2.png');
 const backArrowIcon = require('../assets/backArrow.png');
 const backArrowIcon2 = require('../assets/icons/backArrowIcon.png');
 const editIcon = require('../assets/edit_icon.png');
@@ -147,6 +148,7 @@ export default {
   logoutIcon2,
   // others
   videoThumbnail,
+  videoThumbnail2,
   backArrowIcon,
   backArrowIcon2,
   editIcon,

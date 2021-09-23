@@ -5,14 +5,14 @@ import {
   ImageBackground,
   TouchableOpacity,
   ScrollView,
+  Image,
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import ProgressImage from 'react-native-image-progress';
 import {useDispatch} from 'react-redux';
 
 import styles from './styles';
 
-import {Images, Colors} from '../../theme';
+import {Images} from '../../theme';
 import {Header, SpinnerLoader} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
 import {EXERCISES_API} from '../../config/WebServices';
@@ -105,18 +105,10 @@ const Exercises = (props) => {
                     topic: selectedExercises.exercise_topic,
                   });
                 }}>
-                <ProgressImage
-                  resizeMode={'stretch'}
-                  style={{...styles.videoPreviewImage}}
-                  source={{
-                    uri:
-                      'https://images.unsplash.com/photo-1509228468518-180dd4864904?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fG1hdGh8ZW58MHwwfDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60',
-                  }}
-                  indicatorProps={{
-                    borderWidth: 0,
-                    color: Colors.Venice_Blue,
-                    unfilledColor: 'rgba(200, 200, 200, 0.2)',
-                  }}
+                <Image
+                  resizeMode={'contain'}
+                  style={{...styles.videoPreviewDemoImage}}
+                  source={Images.videoThumbnail2}
                 />
               </TouchableOpacity>
             ) : null}

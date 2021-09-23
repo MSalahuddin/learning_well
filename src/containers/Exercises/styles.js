@@ -143,25 +143,13 @@ export default StyleSheet.create({
     color: '#6e6e6e',
   },
   videoPreviewCard: {
-    height: Metrics.screenWidth * 0.5,
-    overflow: 'hidden',
+    height: Metrics.screenWidth * 0.55,
+    width: Metrics.screenWidth - Metrics.ratio(32),
     marginBottom: Metrics.ratio(24),
     borderRadius: Metrics.ratio(16),
-    borderColor: Colors.white,
-    borderWidth: Metrics.ratio(1),
-    backgroundColor: '#EEE',
-
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
-  videoPreviewImage: {
-    width: '100%',
+  videoPreviewDemoImage: {
     height: '100%',
+    width: '100%',
   },
 });
