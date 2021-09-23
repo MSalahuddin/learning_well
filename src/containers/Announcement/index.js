@@ -1,5 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ImageBackground, ScrollView, View, Text} from 'react-native';
+import {
+  ImageBackground,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
@@ -15,6 +22,7 @@ const Announcement = () => {
   const [user, setUser] = useState(null);
   const [announcements, setAnnouncements] = useState([]);
   const [isLoading, setIsLoading] = useState(null);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState({});
 
   useEffect(() => {
     getUserInfo();
@@ -68,6 +76,42 @@ const Announcement = () => {
     }
   };
 
+  const renderPopListItem = (label, value) => {
+    return (
+      <View style={{...styles.popupItemContainer}}>
+        <Text style={{...styles.popupItemLabel}}>{label}</Text>
+        <Text style={{...styles.popupItemValue}}>{value}</Text>
+      </View>
+    );
+  };
+
+  const renderAnnouncementDetails = () => {
+    return (
+      <TouchableOpacity
+        style={{...styles.popupBackdrop}}
+        onPress={() => setSelectedAnnouncement({})}>
+        <View style={{...styles.popupContainer}}>
+          <View style={{...styles.popupIconContainer}}>
+            <Image
+              source={Images.paperAndPencilIcon}
+              resizeMode={'contain'}
+              style={{...styles.popupIcon}}
+            />
+          </View>
+          {renderPopListItem('Title', selectedAnnouncement?.title)}
+          {renderPopListItem(
+            'Announcement',
+            selectedAnnouncement?.announcement,
+          )}
+          {renderPopListItem(
+            'Expiry Date',
+            moment(selectedAnnouncement?.expiry_date).format('DD-MMM-YYYY'),
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ImageBackground
       resizeMode={'cover'}
@@ -90,6 +134,7 @@ const Announcement = () => {
                 rightText={`Expiry Date: ${moment(val.expiry_date).format(
                   'DD-MMM-YYYY',
                 )}`}
+                onPress={() => setSelectedAnnouncement(val)}
               />
             );
           })}
@@ -100,6 +145,9 @@ const Announcement = () => {
           </View>
         )}
       </ScrollView>
+
+      {selectedAnnouncement?.announcement ? renderAnnouncementDetails() : null}
+
       <SpinnerLoader isloading={isLoading} />
     </ImageBackground>
   );

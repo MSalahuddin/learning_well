@@ -1,5 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import {ImageBackground, ScrollView, View, Text} from 'react-native';
+import {
+  ImageBackground,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
@@ -15,6 +22,7 @@ const Result = () => {
   const [isLoading, setIsLoading] = useState(null);
   const [user, setUser] = useState(null);
   const [quizResults, setQuizResults] = useState([]);
+  const [selectedQuizResult, setSelectedQuizResult] = useState({});
 
   useEffect(() => {
     getUserInfo();
@@ -68,6 +76,46 @@ const Result = () => {
     }
   };
 
+  const renderPopListItem = (label, value) => {
+    return (
+      <View style={{...styles.popupItemContainer}}>
+        <Text style={{...styles.popupItemLabel}}>{label}</Text>
+        <Text style={{...styles.popupItemValue}}>{value}</Text>
+      </View>
+    );
+  };
+
+  const renderQuizResultsDetails = () => {
+    return (
+      <TouchableOpacity
+        style={{...styles.popupBackdrop}}
+        onPress={() => setSelectedQuizResult({})}>
+        <View style={{...styles.popupContainer}}>
+          <View style={{...styles.popupIconContainer}}>
+            <Image
+              source={Images.paperAndPencilIcon}
+              resizeMode={'contain'}
+              style={{...styles.popupIcon}}
+            />
+          </View>
+          {renderPopListItem('Book', selectedQuizResult?.book_name)}
+          {renderPopListItem('Chapter', selectedQuizResult?.chapter_name)}
+          {renderPopListItem('Correct', selectedQuizResult?.right_ans)}
+          {renderPopListItem('Wrong', selectedQuizResult?.wrong_ans)}
+          {renderPopListItem('Unanswer', selectedQuizResult?.un_ans)}
+          {renderPopListItem(
+            'Percentage',
+            `${selectedQuizResult?.percentage}%`,
+          )}
+          {renderPopListItem(
+            'Date',
+            moment(selectedQuizResult?.expiry_date).format('DD-MMM-YYYY'),
+          )}
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <ImageBackground
       resizeMode={'cover'}
@@ -76,17 +124,19 @@ const Result = () => {
       <Header
         leftImage={Images.backArrowIcon2}
         leftBtnPress={() => Actions.pop()}
-        headerText={'Result'}
+        headerText={'Quiz Result'}
         headerTextStyle={{...styles.headerTextStyle}}
       />
       <ScrollView style={{...styles.tableContainer}}>
         {quizResults.length > 0 &&
           quizResults.map((val) => {
+            console.log(val, 'val');
             return (
               <ListCard
                 leftTopText={val.book_name}
                 leftBottomText={val.chapter_name}
                 rightText={`Date: ${moment(val.date).format('DD-MMM-YYYY')}`}
+                onPress={() => setSelectedQuizResult(val)}
               />
             );
           })}
@@ -97,6 +147,9 @@ const Result = () => {
           </View>
         )}
       </ScrollView>
+
+      {selectedQuizResult?.id ? renderQuizResultsDetails() : null}
+
       <SpinnerLoader isloading={isLoading} />
     </ImageBackground>
   );
