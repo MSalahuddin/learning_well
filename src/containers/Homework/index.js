@@ -123,7 +123,6 @@ const Homework = () => {
       <ScrollView style={{...styles.tableContainer}}>
         {homeworks.length > 0 &&
           homeworks.map((val) => {
-            console.log(val, 'val');
             return (
               <ListCard
                 centerText={val.book_name}

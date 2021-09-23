@@ -138,26 +138,33 @@ class LectureScreen extends Component {
     }
   };
 
-  navigateQuiz = async (chapterId, chapterName) => {
-    const {bookName} = this.props;
-    try {
-      const quiz = await this.getQuiz(chapterId);
-      if (quiz.data?.code == 0) {
-        Alert.alert('Message', 'There is no question');
-      } else {
-        Actions.quizScreen({
-          quiz: quiz.data.questions,
-          chapterName,
-          chapterId,
-          bookName,
-        });
+  navigateQuiz = async (chapterId, chapterName, isQuiz) => {
+    if (Number(isQuiz)) {
+      const {bookName} = this.props;
+      try {
+        const quiz = await this.getQuiz(chapterId);
+        if (quiz.data?.code == 0) {
+          Alert.alert('Message', 'There is no question');
+        } else {
+          Actions.quizScreen({
+            quiz: quiz.data.questions,
+            chapterName,
+            chapterId,
+            bookName,
+          });
+        }
+        //    this.setState({quiz: quiz.data.data, isloading: false})
+      } catch (ex) {
+        if (ex && ex.data && ex.data.message) {
+          Alert.alert('', ex.data.message);
+        }
+        this.setState({isloading: false});
       }
-      //    this.setState({quiz: quiz.data.data, isloading: false})
-    } catch (ex) {
-      if (ex && ex.data && ex.data.message) {
-        Alert.alert('', ex.data.message);
-      }
-      this.setState({isloading: false});
+    } else {
+      Alert.alert(
+        'Message',
+        "Please try again later, there's no quiz at the moment.",
+      );
     }
   };
 
@@ -250,10 +257,9 @@ class LectureScreen extends Component {
 
                 <View style={{...styles.chapterVideoBtnContainer}}>
                   <TouchableOpacity
-                    disabled={!Number(chap.is_quiz)}
-                    onPress={() => {
-                      this.navigateQuiz(chap.id, chap.name);
-                    }}>
+                    onPress={() =>
+                      this.navigateQuiz(chap.id, chap.name, chap.is_quiz)
+                    }>
                     <LinearGradient
                       colors={
                         Number(chap.is_quiz)

@@ -89,6 +89,7 @@ class Subjects extends Component {
 
   onPressBook = (selectedSubject) => {
     this.modalizeRef.close();
+    this.setState({bookBtnPress: false});
     Actions.BookPdfScreen({
       bookId: selectedSubject?.bookId,
       bookName: selectedSubject?.bookName,
@@ -97,6 +98,7 @@ class Subjects extends Component {
 
   onPressLectures = (selectedSubject) => {
     this.modalizeRef.close();
+    this.setState({lecturesBtnPress: false});
     Actions.lectureScreen({
       bookId: selectedSubject?.bookId,
       bookName: selectedSubject?.bookName,

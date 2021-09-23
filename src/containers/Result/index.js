@@ -130,7 +130,6 @@ const Result = () => {
       <ScrollView style={{...styles.tableContainer}}>
         {quizResults.length > 0 &&
           quizResults.map((val) => {
-            console.log(val, 'val');
             return (
               <ListCard
                 leftTopText={val.book_name}
