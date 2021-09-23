@@ -197,46 +197,46 @@ class QuizScreen extends Component {
               {questionIndex + 1}. {quiz[questionIndex].question_name.trim()}
             </Text>
           </LinearGradient>
-          <View style={{...styles.optionContainer}}>
-            <TouchableOpacity
-              onPress={() => this.setState({answer: 1})}
-              style={{...styles.radioCircle}}>
+          <TouchableOpacity
+            style={{...styles.optionContainer}}
+            onPress={() => this.setState({answer: 1})}>
+            <View style={{...styles.radioCircle}}>
               {answer === 1 && <View style={{...styles.radioInnerCircle}} />}
-            </TouchableOpacity>
+            </View>
             <Text style={{...styles.optionText}}>
               {quiz[questionIndex].answer1.trim()}
             </Text>
-          </View>
-          <View style={{...styles.optionContainer}}>
-            <TouchableOpacity
-              onPress={() => this.setState({answer: 2})}
-              style={{...styles.radioCircle}}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{...styles.optionContainer}}
+            onPress={() => this.setState({answer: 2})}>
+            <View style={{...styles.radioCircle}}>
               {answer === 2 && <View style={{...styles.radioInnerCircle}} />}
-            </TouchableOpacity>
+            </View>
             <Text style={{...styles.optionText}}>
               {quiz[questionIndex].answer2.trim()}
             </Text>
-          </View>
-          <View style={{...styles.optionContainer}}>
-            <TouchableOpacity
-              onPress={() => this.setState({answer: 3})}
-              style={{...styles.radioCircle}}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{...styles.optionContainer}}
+            onPress={() => this.setState({answer: 3})}>
+            <View style={{...styles.radioCircle}}>
               {answer === 3 && <View style={{...styles.radioInnerCircle}} />}
-            </TouchableOpacity>
+            </View>
             <Text style={{...styles.optionText}}>
               {quiz[questionIndex].answer3.trim()}
             </Text>
-          </View>
-          <View style={{...styles.optionContainer}}>
-            <TouchableOpacity
-              onPress={() => this.setState({answer: 4})}
-              style={{...styles.radioCircle}}>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{...styles.optionContainer}}
+            onPress={() => this.setState({answer: 4})}>
+            <View style={{...styles.radioCircle}}>
               {answer === 4 && <View style={{...styles.radioInnerCircle}} />}
-            </TouchableOpacity>
+            </View>
             <Text style={{...styles.optionText}}>
               {quiz[questionIndex].answer4.trim()}
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     );
