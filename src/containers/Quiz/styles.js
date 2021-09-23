@@ -57,6 +57,7 @@ export default StyleSheet.create({
     backgroundColor: Colors.Venice_Blue,
   },
   optionText: {
+    flex: 1,
     fontSize: Metrics.ratio(15),
     color: '#808080',
     marginLeft: Metrics.ratio(8),
