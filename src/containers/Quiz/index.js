@@ -123,6 +123,16 @@ class QuizScreen extends Component {
     }
   };
 
+  handleQuizTimeout = () => {
+    const {quiz, correctAnswer, wrongAnswer} = this.state;
+    let unAnswer = quiz.length - correctAnswer - wrongAnswer;
+
+    Alert.alert('Ooops!', 'You have reached the time limit set for the quiz.');
+    this.setState({unAnswer}, () => {
+      this.saveQuiz();
+    });
+  };
+
   saveQuiz = async () => {
     const {user, chapterId, correctAnswer, wrongAnswer, unAnswer} = this.state;
     const {chapterName, bookName} = this.props;
@@ -260,8 +270,7 @@ class QuizScreen extends Component {
           <View style={{paddingVertical: Metrics.screenHeight * 0.03}}>
             <CountDown
               until={60 * 10}
-              onFinish={() => alert('finished')}
-              onPress={() => alert('hello')}
+              onFinish={this.handleQuizTimeout}
               size={20}
               digitStyle={{
                 backgroundColor: Colors.black,
