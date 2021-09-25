@@ -142,10 +142,13 @@ export default StyleSheet.create({
     fontSize: Metrics.ratio(16),
     color: '#6e6e6e',
   },
+  videoPreviewCardContainer: {
+    marginBottom: Metrics.ratio(24),
+  },
   videoPreviewCard: {
     height: Metrics.screenWidth * 0.55,
     width: Metrics.screenWidth - Metrics.ratio(32),
-    marginBottom: Metrics.ratio(24),
+    marginBottom: Metrics.ratio(8),
     borderRadius: Metrics.ratio(16),
   },
   videoPreviewDemoImage: {

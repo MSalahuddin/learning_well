@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
   Text,
   View,
@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {useDispatch} from 'react-redux';
+import * as Animatable from 'react-native-animatable';
 
 import styles from './styles';
 
@@ -20,6 +21,7 @@ import {drawerMenuSwitched as navigationChanged} from '../../actions/navigationA
 
 const Exercises = (props) => {
   const dispatch = useDispatch();
+  const videoCardRef = useRef();
 
   const [isLoading, setIsLoading] = useState(false);
   const [exercises, setExercises] = useState([]);
@@ -59,6 +61,11 @@ const Exercises = (props) => {
     }
   };
 
+  const onPressExercise = (exercise) => {
+    setSelectedExercises(exercise);
+    videoCardRef.current.fadeInDown(800);
+  };
+
   return (
     <ImageBackground
       resizeMode={'cover'}
@@ -82,7 +89,7 @@ const Exercises = (props) => {
                 return (
                   <TouchableOpacity
                     style={{...styles.exerciseListItem}}
-                    onPress={() => setSelectedExercises(exercise)}>
+                    onPress={() => onPressExercise(exercise)}>
                     <View style={{...styles.listBullet}} />
                     <Text style={{...styles.exerciseName}}>
                       <Text style={{...styles.exerciseNumber}}>
@@ -95,23 +102,35 @@ const Exercises = (props) => {
               })}
             </View>
 
-            {selectedExercises?.exercise_path ? (
-              <TouchableOpacity
-                style={{...styles.videoPreviewCard}}
-                onPress={() => {
-                  dispatch(navigationChanged('', 'videoPlayer'));
-                  Actions.VideoPlayer({
-                    videoUrl: selectedExercises.exercise_path,
-                    topic: selectedExercises.exercise_topic,
-                  });
-                }}>
-                <Image
-                  resizeMode={'contain'}
-                  style={{...styles.videoPreviewDemoImage}}
-                  source={Images.videoThumbnail2}
-                />
-              </TouchableOpacity>
-            ) : null}
+            <Animatable.View
+              ref={videoCardRef}
+              style={{...styles.videoPreviewCardContainer}}>
+              {selectedExercises?.exercise_path ? (
+                <>
+                  <TouchableOpacity
+                    style={{...styles.videoPreviewCard}}
+                    onPress={() => {
+                      dispatch(navigationChanged('', 'videoPlayer'));
+                      Actions.VideoPlayer({
+                        videoUrl: selectedExercises.exercise_path,
+                        topic: selectedExercises.exercise_topic,
+                      });
+                    }}>
+                    <Image
+                      resizeMode={'contain'}
+                      style={{...styles.videoPreviewDemoImage}}
+                      source={Images.videoThumbnail2}
+                    />
+                  </TouchableOpacity>
+                  <Text style={{...styles.exerciseName}}>
+                    <Text style={{...styles.exerciseNumber}}>
+                      {selectedExercises.exercise_topic.split(':')[0]}
+                    </Text>{' '}
+                    {selectedExercises.exercise_topic.split(':')[1]}
+                  </Text>
+                </>
+              ) : null}
+            </Animatable.View>
 
             {/* <View style={{...styles.exerciseContainer}}>
             <Text style={{...styles.exerciseNameHeading}}>{'Exercise 1'}</Text>
