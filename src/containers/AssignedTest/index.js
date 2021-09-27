@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {ImageBackground, ScrollView, View, Text} from 'react-native';
+import {ImageBackground, ScrollView, View, Text, Alert} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
@@ -9,7 +9,7 @@ import styles from './styles';
 import {Images} from '../../theme';
 import {Header, ListCard, SpinnerLoader} from '../../components';
 import {createResource} from '../../config/SimpleApiCalls';
-import {ASSIGNED_TEST_API} from '../../config/WebServices';
+import {ASSIGNED_TEST_API, START_TEST_API} from '../../config/WebServices';
 
 const AssignedTest = () => {
   const [isLoading, setIsLoading] = useState(null);
@@ -70,6 +70,41 @@ const AssignedTest = () => {
     }
   };
 
+  const onPressAssignedTest = async ({testId, chapterName, bookName}) => {
+    let payload = new FormData();
+    payload.append('test_id', testId);
+    payload.append('user_id', user.loginid);
+    payload.append('school_id', user.school_id);
+
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+
+    try {
+      setIsLoading(true);
+      const result = await createResource(
+        START_TEST_API,
+        payload,
+        null,
+        headers,
+      );
+      if (result.code === 1) {
+        // Actions.TestScreen({
+        //   // quiz: result.data.questions,
+        //   chapterName,
+        //   chapterId: testId,
+        //   bookName,
+        // });
+      } else if (result.code === 0) {
+        Alert.alert('Message', result.msg);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.log('error ==> ', error);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <ImageBackground
       resizeMode={'cover'}
@@ -87,10 +122,16 @@ const AssignedTest = () => {
           assignedTest.map((val, index) => {
             return (
               <ListCard
-                onPress={() => {}}
+                onPress={() =>
+                  onPressAssignedTest({
+                    chapterName: val.name,
+                    testId: val.id,
+                    bookName: val.book,
+                  })
+                }
                 leftTopText={val.book}
                 leftBottomText={'Chapter'}
-                centerText={`Test ${index + 1}`}
+                centerText={val.name}
                 rightText={`Date: ${moment(val.date).format('DD-MMM-YYYY')}`}
               />
             );
