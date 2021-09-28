@@ -70,7 +70,7 @@ const AssignedTest = () => {
     }
   };
 
-  const onPressAssignedTest = async ({testId, chapterName, bookName}) => {
+  const onPressAssignedTest = async ({testId, testName, bookName}) => {
     let payload = new FormData();
     payload.append('test_id', testId);
     payload.append('user_id', user.loginid);
@@ -89,12 +89,12 @@ const AssignedTest = () => {
         headers,
       );
       if (result.code === 1) {
-        // Actions.TestScreen({
-        //   // quiz: result.data.questions,
-        //   chapterName,
-        //   chapterId: testId,
-        //   bookName,
-        // });
+        Actions.StartTest({
+          quiz: result.starttest,
+          testName,
+          testId,
+          bookName,
+        });
       } else if (result.code === 0) {
         Alert.alert('Message', result.msg);
       }
@@ -124,8 +124,8 @@ const AssignedTest = () => {
               <ListCard
                 onPress={() =>
                   onPressAssignedTest({
-                    chapterName: val.name,
                     testId: val.id,
+                    testName: val.name,
                     bookName: val.book,
                   })
                 }

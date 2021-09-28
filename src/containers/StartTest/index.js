@@ -16,31 +16,30 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
 
-import {Images, Metrics, Colors} from '../../theme';
+import {Images} from '../../theme';
 import {Header, SpinnerLoader} from '../../components';
 import {QUIZ_SAVE_API} from '../../config/WebServices';
 import {createResource} from '../../config/SimpleApiCalls';
 
-class TestScreen extends Component {
+class StartTest extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
       quiz: this.props.quiz,
+      testName: this.props.testName,
+      testId: this.props.testId,
+      user: null,
       questionIndex: 0,
       answer: null,
       correctAnswer: 0,
       unAnswer: 0,
       wrongAnswer: 0,
       isloading: false,
-      chapterName: this.props.chapterName,
-      chapterId: this.props.chapterId,
     };
   }
 
   componentWillMount() {
     this.getUserInfo();
-    // this.getData();
   }
 
   getUserInfo = async () => {
@@ -54,15 +53,6 @@ class TestScreen extends Component {
       console.log('error ==> ', error);
     }
   };
-
-  // getData = async () => {
-  //   this.setState({
-  //     quiz: this.props.quiz,
-  //     chapterName: this.props.chapterName,
-  //     chapterId: this.props.chapterId,
-  //     isloading: false,
-  //   });
-  // };
 
   onNextQuestion = () => {
     const {
@@ -102,43 +92,51 @@ class TestScreen extends Component {
   };
 
   saveQuiz = async () => {
-    const {user, chapterId, correctAnswer, wrongAnswer, unAnswer} = this.state;
-    const {chapterName, bookName} = this.props;
+    const {user, testId, correctAnswer, wrongAnswer, unAnswer} = this.state;
+    const {testName, bookName} = this.props;
 
     const totalQuestion = correctAnswer + wrongAnswer + unAnswer;
     const percentage = (correctAnswer / totalQuestion) * 100;
-    const datetime = `${moment().format('YYYY-MM-DD')} ${moment().format(
-      'h:mm:ss',
-    )}`;
+    // const datetime = `${moment().format('YYYY-MM-DD')} ${moment().format(
+    //   'h:mm:ss',
+    // )}`;
 
-    let payload = new FormData();
-    payload.append('user_id', user.loginid);
-    payload.append('school_id', user.school_id);
-    payload.append('chapter_id', chapterId);
-    payload.append('right_ans', correctAnswer);
-    payload.append('wrong_ans', wrongAnswer);
-    payload.append('un_ans', unAnswer);
-    payload.append('percentage', percentage);
+    // let payload = new FormData();
+    // payload.append('user_id', user.loginid);
+    // payload.append('school_id', user.school_id);
+    // payload.append('test_id', testId);
+    // payload.append('right_ans', correctAnswer);
+    // payload.append('wrong_ans', wrongAnswer);
+    // payload.append('un_ans', unAnswer);
+    // payload.append('percentage', percentage);
+
+    console.log({
+      test_id: testId,
+      user_id: user.loginid,
+      school_id: user.school_id,
+      right_ans: correctAnswer,
+      wrong_ans: wrongAnswer,
+      un_ans: unAnswer,
+      percentage: percentage,
+    });
+
     // payload.append('datetime', datetime);
 
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    };
+    // const headers = {
+    //   'Content-Type': 'application/x-www-form-urlencoded',
+    // };
 
     try {
-      this.setState({isloading: true});
-
-      await createResource(QUIZ_SAVE_API, payload, null, headers);
-
-      Actions.quizResultScreen({
-        CorrectAnswer: correctAnswer,
-        WrongAnswer: wrongAnswer,
-        unAnswer: unAnswer + 1,
-        chapterName,
-        bookName,
-      });
-
-      this.setState({isloading: false});
+      // this.setState({isloading: true});
+      // await createResource(QUIZ_SAVE_API, payload, null, headers);
+      // Actions.quizResultScreen({
+      //   CorrectAnswer: correctAnswer,
+      //   WrongAnswer: wrongAnswer,
+      //   unAnswer: unAnswer + 1,
+      //   testName,
+      //   bookName,
+      // });
+      // this.setState({isloading: false});
     } catch (error) {
       console.log('error ==> ', error);
       this.setState({isloading: false});
@@ -160,11 +158,11 @@ class TestScreen extends Component {
   };
 
   renderQuestion = () => {
-    const {quiz, questionIndex, answer, chapterName} = this.state;
+    const {quiz, questionIndex, answer, testName} = this.state;
 
     return (
       <View style={{...styles.questionContainer}}>
-        <Text style={{...styles.chapterName}}>{chapterName}</Text>
+        <Text style={{...styles.testName}}>{testName}</Text>
         <View style={{...styles.questionListContainer}}>
           <LinearGradient
             colors={['#10bef0', '#07509e']}
@@ -235,22 +233,18 @@ class TestScreen extends Component {
         />
 
         {quiz && (
-          <View style={{paddingVertical: Metrics.screenHeight * 0.03}}>
+          <View style={{...styles.countDownCounter}}>
             <CountDown
               until={60 * 10}
               onFinish={this.handleQuizTimeout}
               size={20}
-              digitStyle={{
-                backgroundColor: Colors.black,
-                borderWidth: 2,
-                borderColor: 'black',
-              }}
-              digitTxtStyle={{color: 'white'}}
-              timeLabelStyle={{color: 'black', fontWeight: 'bold'}}
               timeToShow={['M', 'S']}
               timeLabels={{m: 'Min', s: 'Sec'}}
               showSeparator
-              separatorStyle={{color: 'black', marginTop: Metrics.ratio(-20)}}
+              digitStyle={{...styles.digitStyle}}
+              digitTxtStyle={{...styles.digitTxtStyle}}
+              timeLabelStyle={{...styles.timeLabelStyle}}
+              separatorStyle={{...styles.separatorStyle}}
             />
           </View>
         )}
@@ -284,4 +278,4 @@ const mapStateToProps = () => ({});
 
 const actions = {};
 
-export default connect(mapStateToProps, actions)(TestScreen);
+export default connect(mapStateToProps, actions)(StartTest);

@@ -11,7 +11,7 @@ export default StyleSheet.create({
   questionContainer: {
     marginHorizontal: Metrics.ratio(16),
   },
-  chapterName: {
+  testName: {
     fontSize: Metrics.ratio(16),
     color: '#3D4647',
     marginBottom: Metrics.screenHeight * 0.05,
@@ -24,7 +24,7 @@ export default StyleSheet.create({
     paddingHorizontal: Metrics.ratio(14),
     paddingVertical: Metrics.ratio(10),
     backgroundColor: Colors.Venice_Blue,
-    borderRadius: Metrics.ratio(50),
+    borderRadius: Metrics.ratio(25),
   },
   questionText: {
     fontSize: Metrics.ratio(15),
@@ -80,5 +80,24 @@ export default StyleSheet.create({
   buttonText: {
     fontSize: Metrics.ratio(14),
     color: Colors.white,
+  },
+  countDownCounter: {
+    paddingVertical: Metrics.screenHeight * 0.03,
+  },
+  digitStyle: {
+    backgroundColor: Colors.black,
+    borderWidth: 2,
+    borderColor: 'black',
+  },
+  digitTxtStyle: {
+    color: 'white',
+  },
+  timeLabelStyle: {
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  separatorStyle: {
+    color: 'black',
+    marginTop: Metrics.ratio(-20),
   },
 });

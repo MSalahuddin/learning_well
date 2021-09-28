@@ -24,7 +24,7 @@ import AssignedTest from '../containers/AssignedTest';
 import Feedback from '../containers/Feedback';
 import BookPdf from '../containers/BookPdf';
 import Announcement from '../containers/Announcement';
-import TestScreen from '../containers/Test';
+import StartTest from '../containers/StartTest';
 
 import {TabButtonLeft} from '../components';
 import {Colors} from '../theme';
@@ -98,10 +98,10 @@ const navigator = Actions.create(
     />
     <Scene
       tintColor="white"
-      title={'TestScreen'}
+      title={'StartTest'}
       hideNavBar
-      key="TestScreen"
-      component={TestScreen}
+      key="StartTest"
+      component={StartTest}
       renderLeftButton={() => (
         <TabButtonLeft imagesArray={['rightArrow']} actions={[Actions.pop]} />
       )}
