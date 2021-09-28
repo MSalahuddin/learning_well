@@ -59,4 +59,27 @@ export default StyleSheet.create({
     color: '#6e6e6e',
     textAlign: 'center',
   },
+  loadMoreBtnContainer: {
+    alignSelf: 'center',
+    borderRadius: Metrics.ratio(50),
+    marginVertical: Metrics.ratio(16),
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  loadMoreBtn: {
+    paddingVertical: Metrics.ratio(8),
+    paddingHorizontal: Metrics.ratio(16),
+    borderRadius: Metrics.ratio(50),
+  },
+  loadMoreBtnText: {
+    fontSize: Metrics.ratio(14),
+    color: 'white',
+  },
 });

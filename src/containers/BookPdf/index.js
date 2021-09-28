@@ -1,8 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {ImageBackground, View, Text, ScrollView} from 'react-native';
+import {
+  ImageBackground,
+  View,
+  Text,
+  TouchableOpacity,
+  FlatList,
+} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import {createImageProgress} from 'react-native-image-progress';
 import FastImage from 'react-native-fast-image';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
 
@@ -18,16 +25,18 @@ const BookPdf = (props) => {
 
   const [isLoading, setIsLoading] = useState(null);
   const [bookPdf, setBookPdf] = useState([]);
+  const [startValue, setStartValue] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     getBookPdf();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [startValue]);
 
   const getBookPdf = async () => {
     let payload = new FormData();
     payload.append('book_id', bookId);
-    payload.append('start_value', 0);
+    payload.append('start_value', startValue);
 
     const headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -42,13 +51,18 @@ const BookPdf = (props) => {
         headers,
       );
       if (result.code === 1 && result.bookpages.length) {
-        setBookPdf(result.bookpages);
+        setBookPdf([...bookPdf, ...result.bookpages]);
+        setTotalPages(result.totalpages);
       }
       setIsLoading(false);
     } catch (error) {
       console.log('error ==> ', error);
       setIsLoading(false);
     }
+  };
+
+  const onPressLoadMore = () => {
+    setStartValue(startValue + 15);
   };
 
   return (
@@ -86,22 +100,38 @@ const BookPdf = (props) => {
       ) : null} */}
 
       {bookPdf.length ? (
-        <ScrollView style={{...styles.bookContainer}}>
-          {bookPdf.map((bookPage) => {
+        <FlatList
+          data={bookPdf}
+          renderItem={({item}) => {
             return (
               <View style={{...styles.bookPageContainer}}>
                 <Image
                   style={{...styles.bookPageImage}}
                   source={{
-                    uri: `https://learningwell.pk/${bookPage.image_path}`,
+                    uri: `https://learningwell.pk/${item.image_path}`,
                     priority: FastImage.priority.high,
                   }}
                   resizeMode={FastImage.resizeMode.stretch}
                 />
               </View>
             );
-          })}
-        </ScrollView>
+          }}
+          ListFooterComponent={() =>
+            startValue < totalPages ? (
+              <TouchableOpacity
+                onPress={onPressLoadMore}
+                style={{...styles.loadMoreBtnContainer}}>
+                <LinearGradient
+                  colors={['#10bef0', '#07509e']}
+                  start={{x: 0.0, y: 2.0}}
+                  end={{x: 1.0, y: 0.0}}
+                  style={{...styles.loadMoreBtn}}>
+                  <Text style={{...styles.loadMoreBtnText}}>Load More</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+            ) : null
+          }
+        />
       ) : null}
 
       {!isLoading && !bookPdf.length && (
