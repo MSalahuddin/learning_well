@@ -32,7 +32,6 @@ export const createResource = (URL, DATA, TOKEN, HEADERS) => {
         },
       })
       .then((response) => {
-        console.log(response);
         resolve(response.data);
       })
       .catch((error) => {

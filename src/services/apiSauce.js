@@ -1,5 +1,5 @@
 // import base64 from "base-64";
-import { create } from "apisauce";
+import {create} from 'apisauce';
 // import {
 //     API_LOG,
 //     API_TIMEOUT,
@@ -9,10 +9,10 @@ import { create } from "apisauce";
 // import { DataHelper, ErrorsObjectsHelper } from "../helpers";
 
 // import Utils from "../util";
-import { baseUrl } from "../config/WebServices";
+import {baseUrl} from '../config/WebServices';
 const base_Url = baseUrl;
 
-getUpdatedHeader = headers => {
+getUpdatedHeader = (headers) => {
   //const accessToken = DataHelper.getAccessToken();
   const accessToken = undefined;
   if (!headers) {
@@ -24,7 +24,7 @@ getUpdatedHeader = headers => {
   if (accessToken) {
     return {
       ...headers,
-      Authorization: `Basic ${accessToken}`
+      Authorization: `Basic ${accessToken}`,
     };
   } else {
     return headers;
@@ -33,9 +33,9 @@ getUpdatedHeader = headers => {
 
 const api = create({
   headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json"
-  }
+    'Content-Type': 'application/json',
+    Accept: 'application/json',
+  },
 });
 
 class ApiSauce {
@@ -70,12 +70,11 @@ class ApiSauce {
   // for normal post requests
 
   async post(url, data, headers) {
-
     //const updatedHeader = getUpdatedHeader(headers);
     updatedHeader = {
-      "Content-Type": "application/x-www-form-urlencoded"
+      'Content-Type': 'application/x-www-form-urlencoded',
     };
-    const response = await api.post(url, data, { headers: updatedHeader });
+    const response = await api.post(url, data, {headers: updatedHeader});
     return new Promise((resolve, reject) => {
       this.handlePromise(resolve, reject, response);
     });
@@ -85,7 +84,7 @@ class ApiSauce {
     const token = data && data.accessToken && data.accessToken;
 
     api.setHeaders({
-      Authorization: `${token}`
+      Authorization: `${token}`,
     });
     const response = await api.get(url);
 
@@ -125,27 +124,46 @@ class ApiSauce {
   //   }
 
   handlePromise = (resolve, reject, response) => {
-    console.log(response, '//////////////')
     if (response.ok && response.status === 200) {
       resolve(response.data);
-    } else if (!response.ok && response.status === 400 && response.data && !response.data.success) {
-      reject(response.data.message)
-    }
-    else if (!response.ok && response.status === 400 && response.data && response.data.length) {
-      reject(response.data)
+    } else if (
+      !response.ok &&
+      response.status === 400 &&
+      response.data &&
+      !response.data.success
+    ) {
+      reject(response.data.message);
+    } else if (
+      !response.ok &&
+      response.status === 400 &&
+      response.data &&
+      response.data.length
+    ) {
+      reject(response.data);
     }
     // else if(!response.ok && response.status === 400 && response.data && !response.data.error ){
     //   reject(response.problem)
     // } else if(!response.ok && response.status === 400 && response.data && response.data.error === 1){
     //   reject(response.data.message)
     // }
-    else if (!response.ok && response.originalError && response.status === null) {
-      reject(response.originalError.message)
-    }
-    else if (!response.ok && response.originalError && response.status === 400) {
-      reject(response.data)
-    } else if (!response.ok && response.status == 404 && response.originalError) {
-      reject(response.data.message)
+    else if (
+      !response.ok &&
+      response.originalError &&
+      response.status === null
+    ) {
+      reject(response.originalError.message);
+    } else if (
+      !response.ok &&
+      response.originalError &&
+      response.status === 400
+    ) {
+      reject(response.data);
+    } else if (
+      !response.ok &&
+      response.status == 404 &&
+      response.originalError
+    ) {
+      reject(response.data.message);
     }
   };
 }

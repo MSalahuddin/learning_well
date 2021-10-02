@@ -31,6 +31,7 @@ const socialBackground = require('../assets/socialstudiesBackground.png');
 const urduBackground = require('../assets/urduBackground.png');
 const competatitiveBackground = require('../assets/copetatitiveBackground.png');
 const editProfileBackground = require('../assets/editProfileBackground.png');
+const launchScreenBackground = require('../assets/launch_screen.png');
 const quizBackground = require('../assets/quizScreenBackground.png');
 const quizResultBackground = require('../assets/quizResultBackground.png');
 const contactus = require('../assets/contactus.jpg');
@@ -138,6 +139,7 @@ export default {
   editProfileHeaderIcon,
   editProfileHeaderIcon2,
   editProfileBackground,
+  launchScreenBackground,
   envelopIcon,
   envelopIcon2,
   usernameIcon,
