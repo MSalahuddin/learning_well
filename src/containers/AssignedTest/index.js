@@ -1,8 +1,17 @@
 import React, {useState, useEffect} from 'react';
-import {ImageBackground, ScrollView, View, Text, Alert} from 'react-native';
+import {
+  ImageBackground,
+  ScrollView,
+  View,
+  Text,
+  Alert,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
 import moment from 'moment';
+import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
 
@@ -15,6 +24,7 @@ const AssignedTest = () => {
   const [isLoading, setIsLoading] = useState(null);
   const [user, setUser] = useState(null);
   const [assignedTest, setAssignedTest] = useState([]);
+  const [selectedAssignedTest, setSelectedAssignedTest] = useState({});
 
   useEffect(() => {
     getUserInfo();
@@ -70,7 +80,7 @@ const AssignedTest = () => {
     }
   };
 
-  const onPressAssignedTest = async ({testId, testName, bookName}) => {
+  const onPressStartTest = async ({testId, testName, bookName}) => {
     let payload = new FormData();
     payload.append('test_id', testId);
     payload.append('user_id', user.loginid);
@@ -91,6 +101,7 @@ const AssignedTest = () => {
       if (result.code === 1) {
         Actions.StartTest({
           quiz: result.starttest,
+          resultId: result.result_id,
           testName,
           testId,
           bookName,
@@ -103,6 +114,57 @@ const AssignedTest = () => {
       console.log('error ==> ', error);
       setIsLoading(false);
     }
+  };
+
+  const renderPopListItem = (label, value) => {
+    return (
+      <View style={{...styles.popupItemContainer}}>
+        <Text style={{...styles.popupItemLabel}}>{label}</Text>
+        <Text style={{...styles.popupItemValue}}>{value}</Text>
+      </View>
+    );
+  };
+
+  const renderAssignedTestDetails = () => {
+    return (
+      <TouchableOpacity
+        style={{...styles.popupBackdrop}}
+        onPress={() => setSelectedAssignedTest({})}>
+        <View style={{...styles.popupContainer}}>
+          <View style={{...styles.popupIconContainer}}>
+            <Image
+              source={Images.paperAndPencilIcon}
+              resizeMode={'contain'}
+              style={{...styles.popupIcon}}
+            />
+          </View>
+          {renderPopListItem('Name', selectedAssignedTest?.name)}
+          {renderPopListItem('Book', selectedAssignedTest?.book)}
+          {renderPopListItem('Chapter', selectedAssignedTest?.chapter)}
+          {renderPopListItem(
+            'Date',
+            moment(selectedAssignedTest?.date).format('DD-MMM-YYYY'),
+          )}
+          <TouchableOpacity
+            style={{...styles.startTestBtnContainer}}
+            onPress={() =>
+              onPressStartTest({
+                testId: selectedAssignedTest.id,
+                testName: selectedAssignedTest.name,
+                bookName: selectedAssignedTest.book,
+              })
+            }>
+            <LinearGradient
+              colors={['#10bef0', '#07509e']}
+              start={{x: 0.0, y: 2.0}}
+              end={{x: 1.0, y: 0.0}}
+              style={{...styles.startTestBtnGradient}}>
+              <Text style={{...styles.startTestBtnText}}>Start Test</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -119,20 +181,14 @@ const AssignedTest = () => {
 
       <ScrollView style={{...styles.tableContainer}}>
         {assignedTest.length > 0 &&
-          assignedTest.map((val, index) => {
+          assignedTest.map((val) => {
             return (
               <ListCard
-                onPress={() =>
-                  onPressAssignedTest({
-                    testId: val.id,
-                    testName: val.name,
-                    bookName: val.book,
-                  })
-                }
                 leftTopText={val.book}
                 leftBottomText={'Chapter'}
                 centerText={val.name}
                 rightText={`Date: ${moment(val.date).format('DD-MMM-YYYY')}`}
+                onPress={() => setSelectedAssignedTest(val)}
               />
             );
           })}
@@ -142,6 +198,9 @@ const AssignedTest = () => {
           </View>
         )}
       </ScrollView>
+
+      {selectedAssignedTest?.id ? renderAssignedTestDetails() : null}
+
       <SpinnerLoader isloading={isLoading} />
     </ImageBackground>
   );

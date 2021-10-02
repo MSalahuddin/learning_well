@@ -11,7 +11,6 @@ import {
 import CountDown from 'react-native-countdown-component';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
-import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
@@ -21,6 +20,12 @@ import {Header, SpinnerLoader} from '../../components';
 import {QUIZ_SAVE_API} from '../../config/WebServices';
 import {createResource} from '../../config/SimpleApiCalls';
 
+const ansStatusEnum = {
+  CORRECT_ANSWER: 2,
+  WRONG_ANSWER: 1,
+  UN_ANSWER: 3,
+};
+
 class StartTest extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +33,7 @@ class StartTest extends Component {
       quiz: this.props.quiz,
       testName: this.props.testName,
       testId: this.props.testId,
+      resultId: this.props.resultId,
       user: null,
       questionIndex: 0,
       answer: null,
@@ -35,6 +41,7 @@ class StartTest extends Component {
       unAnswer: 0,
       wrongAnswer: 0,
       isloading: false,
+      question_save: [],
     };
   }
 
@@ -56,23 +63,73 @@ class StartTest extends Component {
 
   onNextQuestion = () => {
     const {
+      user,
       quiz,
       questionIndex,
       answer,
       correctAnswer,
       unAnswer,
       wrongAnswer,
+      question_save,
+      resultId,
     } = this.state;
 
-    if (questionIndex + 1 < quiz.length) {
-      if (JSON.parse(quiz[questionIndex].answer) === answer) {
-        this.setState({correctAnswer: correctAnswer + 1});
-      } else if (answer === null) {
-        this.setState({unAnswer: unAnswer + 1});
-      } else {
-        this.setState({wrongAnswer: wrongAnswer + 1});
-      }
+    if (JSON.parse(quiz[questionIndex].answer) === answer) {
+      const answerDetail = {
+        test_id: quiz[questionIndex].test_id,
+        user_id: user.loginid,
+        result_id: resultId,
+        question_id: quiz[questionIndex].question_id,
+        user_ans: answer,
+        ans_status: ansStatusEnum.CORRECT_ANSWER,
+      };
+
+      this.setState(
+        {
+          question_save: [...question_save, answerDetail],
+          correctAnswer: correctAnswer + 1,
+        },
+        this.setNextQuestion,
+      );
+    } else if (answer === null) {
+      const answerDetail = {
+        test_id: quiz[questionIndex].test_id,
+        user_id: user.loginid,
+        result_id: resultId,
+        question_id: quiz[questionIndex].question_id,
+        user_ans: 5, // If user not select any option
+        ans_status: ansStatusEnum.UN_ANSWER,
+      };
+
+      this.setState(
+        {
+          question_save: [...question_save, answerDetail],
+          unAnswer: unAnswer + 1,
+        },
+        this.setNextQuestion,
+      );
+    } else {
+      const answerDetail = {
+        test_id: quiz[questionIndex].test_id,
+        user_id: user.loginid,
+        result_id: resultId,
+        question_id: quiz[questionIndex].question_id,
+        user_ans: answer,
+        ans_status: ansStatusEnum.WRONG_ANSWER,
+      };
+
+      this.setState(
+        {
+          question_save: [...question_save, answerDetail],
+          wrongAnswer: wrongAnswer + 1,
+        },
+        this.setNextQuestion,
+      );
     }
+  };
+
+  setNextQuestion = () => {
+    const {quiz, questionIndex} = this.state;
 
     if (questionIndex + 1 < quiz.length) {
       this.setState({questionIndex: questionIndex + 1, answer: null});
@@ -86,57 +143,62 @@ class StartTest extends Component {
     let unAnswer = quiz.length - correctAnswer - wrongAnswer;
 
     Alert.alert('Ooops!', 'You have reached the time limit set for the quiz.');
-    this.setState({unAnswer}, () => {
-      this.saveQuiz();
-    });
+    setTimeout(() => {
+      this.setState({unAnswer}, () => {
+        this.saveQuiz();
+      });
+    }, 3000);
   };
 
   saveQuiz = async () => {
-    const {user, testId, correctAnswer, wrongAnswer, unAnswer} = this.state;
-    const {testName, bookName} = this.props;
+    const {
+      user,
+      testId,
+      correctAnswer,
+      wrongAnswer,
+      unAnswer,
+      resultId,
+      question_save,
+    } = this.state;
 
     const totalQuestion = correctAnswer + wrongAnswer + unAnswer;
     const percentage = (correctAnswer / totalQuestion) * 100;
-    // const datetime = `${moment().format('YYYY-MM-DD')} ${moment().format(
-    //   'h:mm:ss',
-    // )}`;
 
-    // let payload = new FormData();
-    // payload.append('user_id', user.loginid);
-    // payload.append('school_id', user.school_id);
-    // payload.append('test_id', testId);
-    // payload.append('right_ans', correctAnswer);
-    // payload.append('wrong_ans', wrongAnswer);
-    // payload.append('un_ans', unAnswer);
-    // payload.append('percentage', percentage);
+    const json = {
+      resultsave: {
+        test_id: testId,
+        user_id: user.loginid,
+        result_id: resultId,
+        school_id: user.school_id,
+        right_ans: correctAnswer,
+        wrong_ans: wrongAnswer,
+        un_ans: unAnswer,
+        percentage: percentage,
+      },
+      question_save,
+    };
 
-    console.log({
-      test_id: testId,
-      user_id: user.loginid,
-      school_id: user.school_id,
-      right_ans: correctAnswer,
-      wrong_ans: wrongAnswer,
-      un_ans: unAnswer,
-      percentage: percentage,
-    });
+    let payload = new FormData();
+    payload.append('result_id', resultId);
+    payload.append('json', JSON.stringify(json));
 
-    // payload.append('datetime', datetime);
-
-    // const headers = {
-    //   'Content-Type': 'application/x-www-form-urlencoded',
-    // };
+    const headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
 
     try {
-      // this.setState({isloading: true});
-      // await createResource(QUIZ_SAVE_API, payload, null, headers);
-      // Actions.quizResultScreen({
-      //   CorrectAnswer: correctAnswer,
-      //   WrongAnswer: wrongAnswer,
-      //   unAnswer: unAnswer + 1,
-      //   testName,
-      //   bookName,
-      // });
-      // this.setState({isloading: false});
+      this.setState({isloading: true});
+
+      await createResource(QUIZ_SAVE_API, payload, null, headers);
+
+      this.setState({isloading: false});
+
+      Alert.alert(
+        'Congratulations!',
+        'Your test has been successfully uploaded.',
+        [{text: 'Ok', onPress: Actions.pop}],
+        {cancelable: false},
+      );
     } catch (error) {
       console.log('error ==> ', error);
       this.setState({isloading: false});
