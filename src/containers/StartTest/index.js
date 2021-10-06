@@ -17,7 +17,7 @@ import styles from './styles';
 
 import {Images} from '../../theme';
 import {Header, SpinnerLoader} from '../../components';
-import {QUIZ_SAVE_API} from '../../config/WebServices';
+import {SAVE_TEST_API} from '../../config/WebServices';
 import {createResource} from '../../config/SimpleApiCalls';
 
 const ansStatusEnum = {
@@ -76,12 +76,12 @@ class StartTest extends Component {
 
     if (JSON.parse(quiz[questionIndex].answer) === answer) {
       const answerDetail = {
-        test_id: quiz[questionIndex].test_id,
-        user_id: user.loginid,
-        result_id: resultId,
-        question_id: quiz[questionIndex].question_id,
-        user_ans: answer,
-        ans_status: ansStatusEnum.CORRECT_ANSWER,
+        test_id: quiz[questionIndex].test_id.toString(),
+        user_id: user.loginid.toString(),
+        result_id: resultId.toString(),
+        question_id: quiz[questionIndex].question_id.toString(),
+        user_ans: answer.toString(),
+        ans_status: ansStatusEnum.CORRECT_ANSWER.toString(),
       };
 
       this.setState(
@@ -93,12 +93,12 @@ class StartTest extends Component {
       );
     } else if (answer === null) {
       const answerDetail = {
-        test_id: quiz[questionIndex].test_id,
-        user_id: user.loginid,
-        result_id: resultId,
-        question_id: quiz[questionIndex].question_id,
-        user_ans: 5, // If user not select any option
-        ans_status: ansStatusEnum.UN_ANSWER,
+        test_id: quiz[questionIndex].test_id.toString(),
+        user_id: user.loginid.toString(),
+        result_id: resultId.toString(),
+        question_id: quiz[questionIndex].question_id.toString(),
+        user_ans: '5', // If user not select any option
+        ans_status: ansStatusEnum.UN_ANSWER.toString(),
       };
 
       this.setState(
@@ -110,12 +110,12 @@ class StartTest extends Component {
       );
     } else {
       const answerDetail = {
-        test_id: quiz[questionIndex].test_id,
-        user_id: user.loginid,
-        result_id: resultId,
-        question_id: quiz[questionIndex].question_id,
-        user_ans: answer,
-        ans_status: ansStatusEnum.WRONG_ANSWER,
+        test_id: quiz[questionIndex].test_id.toString(),
+        user_id: user.loginid.toString(),
+        result_id: resultId.toString(),
+        question_id: quiz[questionIndex].question_id.toString(),
+        user_ans: answer.toString(),
+        ans_status: ansStatusEnum.WRONG_ANSWER.toString(),
       };
 
       this.setState(
@@ -166,20 +166,20 @@ class StartTest extends Component {
 
     const json = {
       resultsave: {
-        test_id: testId,
-        user_id: user.loginid,
-        result_id: resultId,
-        school_id: user.school_id,
-        right_ans: correctAnswer,
-        wrong_ans: wrongAnswer,
-        un_ans: unAnswer,
-        percentage: percentage,
+        test_id: testId.toString(),
+        user_id: user.loginid.toString(),
+        result_id: resultId.toString(),
+        school_id: user.school_id.toString(),
+        right_ans: correctAnswer.toString(),
+        wrong_ans: wrongAnswer.toString(),
+        un_ans: unAnswer.toString(),
+        percentage: percentage.toString(),
       },
       question_save,
     };
 
     let payload = new FormData();
-    payload.append('result_id', resultId);
+    payload.append('result_id', resultId.toString());
     payload.append('json', JSON.stringify(json));
 
     const headers = {
@@ -189,7 +189,7 @@ class StartTest extends Component {
     try {
       this.setState({isloading: true});
 
-      await createResource(QUIZ_SAVE_API, payload, null, headers);
+      await createResource(SAVE_TEST_API, payload, null, headers);
 
       this.setState({isloading: false});
 

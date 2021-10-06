@@ -15,4 +15,5 @@ export const BOOK_PDF_API = `${baseUrl}bookpdf.php`;
 export const BOOK_PAGES_API = `${baseUrl}bookpages.php`;
 export const EXERCISES_API = `${baseUrl}exercises.php`;
 export const START_TEST_API = `${baseUrl}starttest.php`;
+export const SAVE_TEST_API = `${baseUrl}savetest.php`;
 export const VERSION_API = `${baseUrl}version.php`;
