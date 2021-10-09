@@ -79,7 +79,7 @@ class EditProfileScreen extends Component {
 
   renderAccountDetail = () => {
     const {user} = this.state;
-    const {mobile_no} = user;
+    const {school_name} = user;
     return (
       <View style={{...styles.accountContainer}}>
         <Text style={{...styles.accountHeading}}>Account Details</Text>
@@ -89,7 +89,7 @@ class EditProfileScreen extends Component {
             source={Images.sidemenuCallIcon2}
             style={{...styles.phoneNumIcon}}
           />
-          <Text style={{...styles.phoneNumText}}>{mobile_no}</Text>
+          <Text style={{...styles.phoneNumText}}>{school_name}</Text>
         </View>
       </View>
     );
