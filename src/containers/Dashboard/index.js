@@ -93,6 +93,7 @@ class Subjects extends Component {
     Actions.BookPdfScreen({
       bookId: selectedSubject?.bookId,
       bookName: selectedSubject?.bookName,
+      isUrdu: selectedSubject.isUrdu,
     });
   };
 
@@ -102,6 +103,7 @@ class Subjects extends Component {
     Actions.lectureScreen({
       bookId: selectedSubject?.bookId,
       bookName: selectedSubject?.bookName,
+      isUrdu: selectedSubject.isUrdu,
     });
   };
 
@@ -166,7 +168,7 @@ class Subjects extends Component {
         {books.length > 0 ? (
           <ScrollView>
             <View style={{...styles.cardListContainer}}>
-              {books?.map(({BookName, Id}, index) => {
+              {books?.map(({BookName, Id, is_urdu}, index) => {
                 if (index < itemPerPage) {
                   return (
                     <Card
@@ -175,6 +177,7 @@ class Subjects extends Component {
                         this.onPressSubject({
                           bookId: Id,
                           bookName: BookName,
+                          isUrdu: is_urdu === '1',
                         })
                       }
                       containerStyle={styles.cardContainerStyle}

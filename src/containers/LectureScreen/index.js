@@ -140,7 +140,7 @@ class LectureScreen extends Component {
 
   navigateQuiz = async (chapterId, chapterName, isQuiz) => {
     if (Number(isQuiz)) {
-      const {bookName} = this.props;
+      const {bookName, isUrdu} = this.props;
       try {
         const quiz = await this.getQuiz(chapterId);
         if (quiz.data?.code == 0) {
@@ -151,6 +151,7 @@ class LectureScreen extends Component {
             chapterName,
             chapterId,
             bookName,
+            isUrdu,
           });
         }
         //    this.setState({quiz: quiz.data.data, isloading: false})

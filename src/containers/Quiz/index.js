@@ -11,12 +11,12 @@ import {
 import CountDown from 'react-native-countdown-component';
 import {Actions} from 'react-native-router-flux';
 import AsyncStorage from '@react-native-community/async-storage';
-import moment from 'moment';
+// import moment from 'moment';
 import LinearGradient from 'react-native-linear-gradient';
 
 import styles from './styles';
 
-import {Images, Metrics, Colors} from '../../theme';
+import {Images, Metrics} from '../../theme';
 import {Header, SpinnerLoader} from '../../components';
 import {QUIZ_SAVE_API} from '../../config/WebServices';
 import {createResource} from '../../config/SimpleApiCalls';
@@ -60,6 +60,7 @@ class QuizScreen extends Component {
       quiz: this.props.quiz,
       chapterName: this.props.chapterName,
       chapterId: this.props.chapterId,
+      isUrdu: this.props.isUrdu,
       isloading: false,
     });
     try {
@@ -139,9 +140,9 @@ class QuizScreen extends Component {
 
     const totalQuestion = correctAnswer + wrongAnswer + unAnswer;
     const percentage = (correctAnswer / totalQuestion) * 100;
-    const datetime = `${moment().format('YYYY-MM-DD')} ${moment().format(
-      'h:mm:ss',
-    )}`;
+    // const datetime = `${moment().format('YYYY-MM-DD')} ${moment().format(
+    //   'h:mm:ss',
+    // )}`;
 
     let payload = new FormData();
     payload.append('user_id', user.loginid);
@@ -192,7 +193,7 @@ class QuizScreen extends Component {
   };
 
   renderQuestion = () => {
-    const {quiz, questionIndex, answer, chapterName} = this.state;
+    const {quiz, questionIndex, answer, chapterName, isUrdu} = this.state;
 
     return (
       <View style={{...styles.questionContainer}}>
@@ -208,7 +209,11 @@ class QuizScreen extends Component {
             </Text>
           </LinearGradient>
           <TouchableOpacity
-            style={{...styles.optionContainer}}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.optionContainer,
+              flexDirection: isUrdu ? 'row-reverse' : 'row',
+            }}
             onPress={() => this.setState({answer: 1})}>
             <View style={{...styles.radioCircle}}>
               {answer === 1 && <View style={{...styles.radioInnerCircle}} />}
@@ -218,7 +223,11 @@ class QuizScreen extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{...styles.optionContainer}}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.optionContainer,
+              flexDirection: isUrdu ? 'row-reverse' : 'row',
+            }}
             onPress={() => this.setState({answer: 2})}>
             <View style={{...styles.radioCircle}}>
               {answer === 2 && <View style={{...styles.radioInnerCircle}} />}
@@ -228,7 +237,11 @@ class QuizScreen extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{...styles.optionContainer}}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.optionContainer,
+              flexDirection: isUrdu ? 'row-reverse' : 'row',
+            }}
             onPress={() => this.setState({answer: 3})}>
             <View style={{...styles.radioCircle}}>
               {answer === 3 && <View style={{...styles.radioInnerCircle}} />}
@@ -238,7 +251,11 @@ class QuizScreen extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{...styles.optionContainer}}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.optionContainer,
+              flexDirection: isUrdu ? 'row-reverse' : 'row',
+            }}
             onPress={() => this.setState({answer: 4})}>
             <View style={{...styles.radioCircle}}>
               {answer === 4 && <View style={{...styles.radioInnerCircle}} />}
@@ -272,17 +289,13 @@ class QuizScreen extends Component {
               until={60 * 10}
               onFinish={this.handleQuizTimeout}
               size={20}
-              digitStyle={{
-                backgroundColor: Colors.black,
-                borderWidth: 2,
-                borderColor: 'black',
-              }}
-              digitTxtStyle={{color: 'white'}}
-              timeLabelStyle={{color: 'black', fontWeight: 'bold'}}
               timeToShow={['M', 'S']}
               timeLabels={{m: 'Min', s: 'Sec'}}
               showSeparator
-              separatorStyle={{color: 'black', marginTop: Metrics.ratio(-20)}}
+              digitStyle={{...styles.digitStyle}}
+              digitTxtStyle={{...styles.digitTxtStyle}}
+              timeLabelStyle={{...styles.timeLabelStyle}}
+              separatorStyle={{...styles.separatorStyle}}
             />
           </View>
         )}
