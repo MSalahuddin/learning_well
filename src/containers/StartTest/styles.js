@@ -36,7 +36,6 @@ export default StyleSheet.create({
     paddingVertical: Metrics.ratio(10),
     borderColor: Colors.Venice_Blue,
     borderWidth: Metrics.ratio(1),
-    flexDirection: 'row',
     alignItems: 'center',
     borderRadius: Metrics.ratio(50),
     backgroundColor: Colors.white,
@@ -60,7 +59,7 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: Metrics.ratio(15),
     color: '#808080',
-    marginLeft: Metrics.ratio(8),
+    marginHorizontal: Metrics.ratio(8),
   },
   buttonContainer: {
     flexDirection: 'row',

@@ -102,6 +102,7 @@ const AssignedTest = () => {
         Actions.StartTest({
           quiz: result.starttest,
           resultId: result.result_id,
+          isUrdu: result.is_urdu === '1',
           testName,
           testId,
           bookName,

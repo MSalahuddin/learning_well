@@ -34,6 +34,7 @@ class StartTest extends Component {
       testName: this.props.testName,
       testId: this.props.testId,
       resultId: this.props.resultId,
+      isUrdu: this.props.isUrdu,
       user: null,
       questionIndex: 0,
       answer: null,
@@ -220,7 +221,7 @@ class StartTest extends Component {
   };
 
   renderQuestion = () => {
-    const {quiz, questionIndex, answer, testName} = this.state;
+    const {quiz, questionIndex, answer, testName, isUrdu} = this.state;
 
     return (
       <View style={{...styles.questionContainer}}>
@@ -236,7 +237,11 @@ class StartTest extends Component {
             </Text>
           </LinearGradient>
           <TouchableOpacity
-            style={{...styles.optionContainer}}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.optionContainer,
+              flexDirection: isUrdu ? 'row-reverse' : 'row',
+            }}
             onPress={() => this.setState({answer: 1})}>
             <View style={{...styles.radioCircle}}>
               {answer === 1 && <View style={{...styles.radioInnerCircle}} />}
@@ -246,7 +251,11 @@ class StartTest extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{...styles.optionContainer}}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.optionContainer,
+              flexDirection: isUrdu ? 'row-reverse' : 'row',
+            }}
             onPress={() => this.setState({answer: 2})}>
             <View style={{...styles.radioCircle}}>
               {answer === 2 && <View style={{...styles.radioInnerCircle}} />}
@@ -256,7 +265,11 @@ class StartTest extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{...styles.optionContainer}}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.optionContainer,
+              flexDirection: isUrdu ? 'row-reverse' : 'row',
+            }}
             onPress={() => this.setState({answer: 3})}>
             <View style={{...styles.radioCircle}}>
               {answer === 3 && <View style={{...styles.radioInnerCircle}} />}
@@ -266,7 +279,11 @@ class StartTest extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{...styles.optionContainer}}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.optionContainer,
+              flexDirection: isUrdu ? 'row-reverse' : 'row',
+            }}
             onPress={() => this.setState({answer: 4})}>
             <View style={{...styles.radioCircle}}>
               {answer === 4 && <View style={{...styles.radioInnerCircle}} />}
